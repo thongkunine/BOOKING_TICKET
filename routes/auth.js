@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var userController = require('../controllers/users')
-let { CreateSuccessResponse, CreateCookieResponse } = require('../utils/responseHandler')
+let { CreateSuccessResponse, CreateCookieResponse } = require('../utils/responseHandler');
 let jwt = require('jsonwebtoken')
 let constants = require('../utils/constants')
 let { check_authentication } = require('../utils/check_auth')
@@ -19,7 +19,7 @@ let fs = require('fs')
 router.post('/signup', SignUpValidator, validate, async function (req, res, next) {
     try {
         let newUser = await userController.CreateAnUser(
-            req.body.username, req.body.password, req.body.email, 'user'
+            req.body.username, req.body.password, req.body.email, 'User'
         )
         CreateSuccessResponse(res, 200, newUser)
     } catch (error) {
@@ -67,7 +67,7 @@ router.post('/forgotpassword', async function (req, res, next) {
         user.resetPasswordToken = crypto.randomBytes(32).toString('hex');
         user.resetPasswordTokenExp = (new Date(Date.now() + 10 * 60 * 1000));
         await user.save();
-        let url = 'http://localhost:3000/auth/resetpassword/' + user.resetPasswordToken;
+        let url = 'http://localhost:4000/auth/resetpassword/' + user.resetPasswordToken;
         await mailer.sendMailForgotPassword(user.email, url);
         CreateSuccessResponse(res, 200, url)
     } catch (error) {

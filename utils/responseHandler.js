@@ -16,8 +16,7 @@ module.exports = {
             expires: new Date(exp),
             signed: true
         });
-        console.log(CreateCookieResponse);
-
+        console.log("Cookie đã được tạo:", key);
     }
 
 }

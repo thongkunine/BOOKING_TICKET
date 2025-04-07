@@ -1,6 +1,6 @@
 module.exports = {
-    SECRET_KEY: "badminton_",
-    SECRET_KEY_COOKIE: "badminton_",
+    SECRET_KEY: "booking_event",
+    SECRET_KEY_COOKIE: "booking_event",
     USER_PERMISSION:["user","mod","admin"],
     MOD_PERMISSION:["mod","admin"],
     ADMIN_PERMISSION:["admin"],
