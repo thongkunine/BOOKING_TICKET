@@ -1,4 +1,5 @@
 let roleSchema = require('../schemas/role')
+
 module.exports={
     GetAllRoles:async function(){
         return await roleSchema.find({});

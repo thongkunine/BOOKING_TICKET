@@ -7,6 +7,7 @@ let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseH
 router.get('/', async function(req, res) {
     try {
         let seats = await seatController.GetAllSeats();
+        res.render('seats', { seats });
         CreateSuccessResponse(res, 200, seats);
     } catch (error) {
         CreateErrorResponse(res, 500, error.message);

@@ -32,7 +32,6 @@ router.post('/', async function(req, res) {
         res.status(400).send({ success: false, message: error.message });
     }
 });
-
 // UPDATE ticket by ID
 router.put('/:id', async function(req, res) {
     try {
