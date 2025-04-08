@@ -90,8 +90,8 @@ router.post('/resetpassword/:token', async function (req, res, next) {
 })
 //storage
 let avatarDir = path.join(__dirname, "../avatars");
-let authURL = "http://localhost:3000/auth/avatars/";
-let serverCDN = 'http://localhost:4000/upload';
+let authURL = "http://localhost:4000/auth/avatars/";
+let serverCDN = 'http://localhost:5000/upload';
 let storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, avatarDir),
     filename: (req, file, cb) => cb(null,
