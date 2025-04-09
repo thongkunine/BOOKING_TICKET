@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Xóa người dùng</title>
+</head>
+<body>
+  <h1>Xác nhận xóa người dùng</h1>
+  <p>Bạn có chắc chắn muốn vô hiệu hóa người dùng này không?</p>
+  <button id="confirmDelete">Xác nhận</button>
+  <a href="user.html">Huỷ</a>
+
+  <script>
+    // Lấy ID từ URL và gọi API DELETE
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get('id');
+
+    document.getElementById('confirmDelete').addEventListener('click', () => {
+      fetch(`http://localhost:4000/users/${userId}`, {
+        method: 'DELETE'
+      })
+      .then(res => res.json())
+      .then(data => {
+        alert("Đã xóa người dùng!");
+        window.location.href = "user.html";
+      })
+      .catch(err => {
+        console.error("Lỗi khi xóa:", err);
+      });
+    });
+  </script>
+</body>
+</html>

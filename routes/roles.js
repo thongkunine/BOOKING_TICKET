@@ -2,7 +2,6 @@
 var express = require('express');
 var router = express.Router();
 var roleController = require('../controllers/roles')
-let roleSchema = require('../schemas/role')
 let {CreateSuccessResponse,CreateErrorResponse} = require('../utils/responseHandler')
 
 /* GET users listing. */

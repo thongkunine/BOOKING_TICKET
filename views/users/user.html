@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Danh sách người dùng</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <h1>Danh sách người dùng</h1>
+  <a href="add-user.html"><button>Thêm người dùng</button></a>
+  <table id="usersTable">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Trạng thái</th>
+        <th>Số lần đăng nhập</th>
+        <th>Ngày tạo</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Dữ liệu người dùng sẽ được chèn ở đây -->
+    </tbody>
+  </table>
+
+  <script>
+    fetch('http://localhost:4000/users')
+      .then(response => response.json())
+      .then(result => {
+        const users = result.data;
+        const tableBody = document.querySelector("#usersTable tbody");
+
+        users.forEach(user => {
+          const row = document.createElement("tr");
+
+          row.innerHTML = `
+            <td>${user.username}</td>
+            <td>${user.email}</td>
+            <td class="role">${user.role.name}</td>
+            <td>${user.status ? "Hoạt động" : "Không hoạt động"}</td>
+            <td>${user.loginCount}</td>
+            <td>${new Date(user.createdAt).toLocaleString()}</td>
+            <td>
+              <a href="edit-user.html?id=${user._id}"><button>Sửa</button></a>
+              <a href="delete-user.html?id=${user._id}"><button>Xóa</button></a>
+            </td>
+          `;
+
+          tableBody.appendChild(row);
+        });
+      })
+      .catch(error => {
+        console.error("Lỗi khi lấy dữ liệu người dùng:", error);
+      });
+  </script>
+</body>
+</html>

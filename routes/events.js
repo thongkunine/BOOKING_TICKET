@@ -3,6 +3,7 @@ let router = express.Router();
 let eventController = require('../controllers/events');
 let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseHandler');
 
+
 // GET all events
 router.get('/', async function(req, res) { 
     try {
