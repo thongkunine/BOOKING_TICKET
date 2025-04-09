@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .login-container {
+            max-width: 400px;
+            width: 100%;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .login-header h2 {
+            color: #333;
+            font-weight: 600;
+        }
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+        .btn-primary {
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #4a90e2;
+            border: none;
+            font-weight: 500;
+            width: 100%;
+        }
+        .btn-primary:hover {
+            background-color: #357abd;
+        }
+        .form-check {
+            margin-bottom: 15px;
+        }
+        .form-check-input:checked {
+            background-color: #4a90e2;
+            border-color: #4a90e2;
+        }
+        .alert {
+            display: none;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        .loading i {
+            font-size: 24px;
+            color: #4a90e2;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .register-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .register-link a {
+            color: #4a90e2;
+            text-decoration: none;
+        }
+        .register-link a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h2>Đăng nhập</h2>
+        </div>
+        
+        <div class="alert alert-danger" id="errorAlert" role="alert"></div>
+        <div class="alert alert-success" id="successAlert" role="alert"></div>
+        
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner"></i> Đang xử lý...
+        </div>
+        
+        <form id="loginForm">
+            <div class="mb-3">
+                <label for="username" class="form-label">Tên đăng nhập</label>
+                <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="rememberMe">
+                <label class="form-check-label" for="rememberMe">
+                    Ghi nhớ đăng nhập
+                </label>
+            </div>
+            <div class="text-end mb-3">
+                <a href="forgot-password.html" class="text-decoration-none">Quên mật khẩu?</a>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-sign-in-alt"></i> Đăng nhập
+            </button>
+        </form>
+        
+        <div class="register-link">
+            <p>Chưa có tài khoản? <a href="signup.html">Đăng ký ngay</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const errorAlert = document.getElementById('errorAlert');
+            const successAlert = document.getElementById('successAlert');
+            const loading = document.getElementById('loading');
+            
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            const token = localStorage.getItem('token');
+            console.log('Token từ localStorage:', token ? 'Có' : 'Không');
+            
+            if (token) {
+                console.log('Đã tìm thấy token, kiểm tra tính hợp lệ...');
+                
+                // Hiển thị loading
+                loading.style.display = 'block';
+                
+                // Kiểm tra tính hợp lệ của token
+                fetch('http://localhost:4000/auth/me', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    console.log('Phản hồi kiểm tra token:', response);
+                    
+                    if (response.ok) {
+                        console.log('Token hợp lệ, chuyển hướng đến trang profile');
+                        window.location.href = 'profile.html';
+                    } else {
+                        console.log('Token không hợp lệ, xóa token và yêu cầu đăng nhập lại');
+                        localStorage.removeItem('token');
+                        loading.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi kiểm tra token:', error);
+                    localStorage.removeItem('token');
+                    loading.style.display = 'none';
+                });
+            }
+            
+            // Xử lý đăng nhập
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Ẩn thông báo cũ
+                errorAlert.style.display = 'none';
+                successAlert.style.display = 'none';
+                
+                // Hiển thị loading
+                loading.style.display = 'block';
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+                
+                try {
+                    const response = await fetch('http://localhost:4000/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        }),
+                        credentials: 'include' // Quan trọng để nhận cookie từ server
+                    });
+                    
+                    console.log('Phản hồi đăng nhập:', response);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Dữ liệu đăng nhập:', data);
+                        
+                        // Kiểm tra cấu trúc dữ liệu phản hồi
+                        if (data && data.data) {
+                            // Xử lý token nếu cần
+                            let token = data.data;
+                            
+                            // Kiểm tra và xử lý token nếu có tiền tố "token="
+                            if (token.startsWith('token=')) {
+                                token = token.substring(6);
+                                console.log('Đã xử lý token, loại bỏ tiền tố "token="');
+                            }
+                            
+                            // Giải mã URL nếu cần
+                            try {
+                                if (token.includes('%')) {
+                                    token = decodeURIComponent(token);
+                                    console.log('Đã giải mã URL cho token');
+                                }
+                            } catch (e) {
+                                console.error('Lỗi khi giải mã URL token:', e);
+                            }
+                            
+                            // Lưu token vào localStorage
+                            localStorage.setItem('token', token);
+                            console.log('Đã lưu token:', token);
+                            
+                            // Hiển thị thông báo thành công
+                            successAlert.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
+                            successAlert.style.display = 'block';
+                            
+                            // Chuyển hướng đến trang profile sau 1 giây
+                            setTimeout(() => {
+                                window.location.href = 'profile.html';
+                            }, 1000);
+                        } else {
+                            console.error('Cấu trúc dữ liệu không hợp lệ:', data);
+                            throw new Error('Dữ liệu đăng nhập không hợp lệ: Không tìm thấy token');
+                        }
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Đăng nhập thất bại');
+                    }
+                } catch (error) {
+                    console.error('Lỗi đăng nhập:', error);
+                    
+                    // Ẩn loading
+                    loading.style.display = 'none';
+                    
+                    // Hiển thị thông báo lỗi
+                    errorAlert.textContent = 'Lỗi: ' + error.message;
+                    errorAlert.style.display = 'block';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

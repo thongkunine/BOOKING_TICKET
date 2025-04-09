@@ -19,6 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Thêm route để truy cập ảnh từ thư mục avatars
+app.use('/avatars', express.static(path.join(__dirname, 'avatars')));
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 

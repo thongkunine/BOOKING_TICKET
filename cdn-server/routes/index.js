@@ -5,7 +5,7 @@ let path = require('path')
 let { CreateSuccessResponse } = require('../utils/responseHandler')
 
 let avatarDir = path.join(__dirname, "../avatars")
-let authURL = "http://localhost:4000/avatars/"
+let cdnURL = "http://localhost:5000/avatars/"
 let storage = multer.diskStorage({
     destination: (req, file, cb) => cb(null, avatarDir),
     filename: (req, file, cb) => cb(null,
@@ -26,7 +26,7 @@ let upload = multer({
     }
 })
 router.post("/upload",upload.single('avatar'),async function (req, res, next) {
-  let avatarURL = authURL+req.file.filename;
+  let avatarURL = cdnURL+req.file.filename;
   CreateSuccessResponse(res,200,avatarURL) 
 })
 router.get("/avatars/:filename",function (req, res, next) {

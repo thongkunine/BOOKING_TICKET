@@ -8,19 +8,26 @@ module.exports = {
             token = req.signedCookies.token;
         } else {
             let authorizedtoken = req.headers.authorization;
-            if (!authorizedtoken.startsWith("Bearer")) {
+            if (authorizedtoken.startsWith("Bearer ")) {
                 token = authorizedtoken.split(" ")[1];
-            } 
+            } else {
+                token = authorizedtoken;
+            }
         }
         if (!token) {
             next(new Error("ban chua dang nhap"));
         } else {
-            let result = jwt.verify(token, constants.SECRET_KEY);
-            if (result.exp > Date.now()) {
-                let user = await userController.GetUserByID(result.id);
-                req.user = user;
-                next();
-            } else {
+            try {
+                let result = jwt.verify(token, constants.SECRET_KEY);
+                if (result.exp > Date.now()) {
+                    let user = await userController.GetUserByID(result.id);
+                    req.user = user;
+                    next();
+                } else {
+                    next(new Error("ban chua dang nhap"));
+                }
+            } catch (error) {
+                console.error("Lỗi xác thực token:", error);
                 next(new Error("ban chua dang nhap"));
             }
         }

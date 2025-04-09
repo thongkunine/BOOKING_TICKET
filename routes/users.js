@@ -4,7 +4,7 @@ var router = express.Router();
 let userController = require('../controllers/users')
 let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseHandler')
 let{check_authentication,check_authorization} = require('../utils/check_auth');
-let constants = require('../utils/constants');
+const constants = require('../utils/constants');
 
 /* GET users listing. */
 

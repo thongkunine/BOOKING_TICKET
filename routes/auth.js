@@ -63,29 +63,62 @@ router.post('/change_password', check_authentication,
 router.post('/forgotpassword', async function (req, res, next) {
     try {
         let email = req.body.email;
+        if (!email) {
+            return res.status(400).json({ message: "Email là bắt buộc" });
+        }
+        
         let user = await userController.GetUserByEmail(email);
+        if (!user) {
+            return res.status(404).json({ message: "Không tìm thấy tài khoản với email này" });
+        }
+        
         user.resetPasswordToken = crypto.randomBytes(32).toString('hex');
         user.resetPasswordTokenExp = (new Date(Date.now() + 10 * 60 * 1000));
         await user.save();
-        let url = 'http://localhost:4000/auth/resetpassword/' + user.resetPasswordToken;
-        await mailer.sendMailForgotPassword(user.email, url);
-        CreateSuccessResponse(res, 200, url)
+        
+        // Tạo URL với token dưới dạng query parameter
+        let url = `http://localhost:4000/teamplate/login/login_signup/reset-password.html?token=${user.resetPasswordToken}`;
+        
+        try {
+            await mailer.sendMailForgotPassword(user.email, url);
+            CreateSuccessResponse(res, 200, { message: "Email đặt lại mật khẩu đã được gửi" });
+        } catch (emailError) {
+            console.error("Lỗi gửi email:", emailError);
+            return res.status(500).json({ message: "Không thể gửi email đặt lại mật khẩu" });
+        }
     } catch (error) {
-        next(error)
+        console.error("Lỗi xử lý quên mật khẩu:", error);
+        next(error);
     }
 })
-router.post('/resetpassword/:token', async function (req, res, next) {
+router.post('/resetpassword', async function (req, res, next) {
     try {
-        let token = req.params.token;
+        let token = req.body.token;
         let password = req.body.password;
+        
+        if (!token || !password) {
+            return res.status(400).json({ message: "Token và mật khẩu mới là bắt buộc" });
+        }
+        
         let user = await userController.GetUserByToken(token);
+        if (!user) {
+            return res.status(404).json({ message: "Token không hợp lệ hoặc đã hết hạn" });
+        }
+        
+        // Kiểm tra thời gian hết hạn của token
+        if (user.resetPasswordTokenExp < Date.now()) {
+            return res.status(400).json({ message: "Token đã hết hạn" });
+        }
+        
         user.password = password;
         user.resetPasswordToken = null;
         user.resetPasswordTokenExp = null;
         await user.save();
-        CreateSuccessResponse(res, 200, user)
+        
+        CreateSuccessResponse(res, 200, { message: "Đặt lại mật khẩu thành công" });
     } catch (error) {
-        next(error)
+        console.error("Lỗi đặt lại mật khẩu:", error);
+        next(error);
     }
 })
 //storage
@@ -114,19 +147,22 @@ let upload = multer({
 
 //upload
 router.post("/change_avatar", check_authentication, upload.single('avatar'), async function (req, res, next) {
-    let imgPath = path.join(avatarDir, req.file.filename);
-    let newform = new FormData();
-    newform.append('avatar', fs.createReadStream(imgPath))
-    let result = await axios.post(serverCDN, newform, {
-        headers: {
-            'Content-Type': 'multipart/form-data'
-        }
-    })
-    fs.unlinkSync(imgPath)
-    // let avatarURL = authURL + req.file.filename;
-    req.user.avatarUrl = result.data.data;
-    await req.user.save()
-    CreateSuccessResponse(res, 200,req.user )
+    try {
+        let imgPath = path.join(avatarDir, req.file.filename);
+        let newform = new FormData();
+        newform.append('avatar', fs.createReadStream(imgPath))
+        let result = await axios.post(serverCDN, newform, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
+        fs.unlinkSync(imgPath)
+        req.user.avatarUrl = result.data.data;
+        await req.user.save()
+        CreateSuccessResponse(res, 200, req.user)
+    } catch (error) {
+        next(error)
+    }
 })
 
 router.get("/avatars/:filename", function (req, res, next) {

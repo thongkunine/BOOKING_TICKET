@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thông tin cá nhân</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .profile-container {
+            max-width: 700px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .profile-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .profile-header h2 {
+            color: #333;
+            font-weight: 600;
+        }
+        .avatar-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .avatar-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 3px solid #4a90e2;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .avatar-upload {
+            position: relative;
+            display: inline-block;
+        }
+        .avatar-upload-btn {
+            padding: 8px 15px;
+            background-color: #4a90e2;
+            color: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .avatar-upload-btn:hover {
+            background-color: #357abd;
+        }
+        .avatar-input {
+            display: none;
+        }
+        .info-section {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .info-section h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        .info-item {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        .info-label {
+            font-weight: 500;
+            min-width: 120px;
+            color: #555;
+        }
+        .info-value {
+            color: #333;
+        }
+        .form-control {
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        .form-control:focus {
+            border-color: #4a90e2;
+            box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+        }
+        .btn-primary {
+            padding: 12px 20px;
+            border-radius: 8px;
+            background-color: #4a90e2;
+            border: none;
+            font-weight: 500;
+        }
+        .btn-primary:hover {
+            background-color: #357abd;
+        }
+        .btn-danger {
+            padding: 12px 20px;
+            border-radius: 8px;
+            background-color: #dc3545;
+            border: none;
+            font-weight: 500;
+        }
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        .alert {
+            display: none;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+        .loading {
+            text-align: center;
+            padding: 20px;
+            display: none;
+        }
+        .loading i {
+            font-size: 24px;
+            color: #4a90e2;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-container">
+            <div class="profile-header">
+                <h2>Thông tin cá nhân</h2>
+            </div>
+            
+            <div class="alert alert-danger" id="errorAlert" role="alert"></div>
+            <div class="alert alert-success" id="successAlert" role="alert"></div>
+            
+            <div class="loading" id="loading">
+                <i class="fas fa-spinner"></i> Đang tải...
+            </div>
+            
+            <div class="avatar-container">
+                <img id="avatarImg" src="http://localhost:5000/avatars/1744210355640-anhcv.jpg" class="avatar-img" alt="Avatar">
+                <div class="avatar-upload">
+                    <label for="avatarInput" class="avatar-upload-btn">
+                        <i class="fas fa-camera"></i> Thay đổi ảnh đại diện
+                    </label>
+                    <input type="file" id="avatarInput" class="avatar-input" accept="image/*">
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h4><i class="fas fa-user"></i> Thông tin tài khoản</h4>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-user-circle"></i> Tên đăng nhập:</span>
+                    <span class="info-value" id="username">Đang tải...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-envelope"></i> Email:</span>
+                    <span class="info-value" id="email">Đang tải...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-user-tag"></i> Vai trò:</span>
+                    <span class="info-value" id="role">Đang tải...</span>
+                </div>
+                <div class="info-item">
+                    <span class="info-label"><i class="fas fa-id-card"></i> ID người dùng:</span>
+                    <span class="info-value" id="userId">Đang tải...</span>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h4><i class="fas fa-lock"></i> Đổi mật khẩu</h4>
+                <form id="changePasswordForm">
+                    <div class="mb-3">
+                        <label for="oldPassword" class="form-label">Mật khẩu hiện tại</label>
+                        <input type="password" class="form-control" id="oldPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="newPassword" class="form-label">Mật khẩu mới</label>
+                        <input type="password" class="form-control" id="newPassword" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmNewPassword" class="form-label">Xác nhận mật khẩu mới</label>
+                        <input type="password" class="form-control" id="confirmNewPassword" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Đổi mật khẩu
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center mt-4">
+                <button class="btn btn-danger" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                </button>
+                <a href="forgot-password.html" class="btn btn-secondary ms-2">
+                    <i class="fas fa-key"></i> Quên mật khẩu
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorAlert = document.getElementById('errorAlert');
+            const successAlert = document.getElementById('successAlert');
+            const loading = document.getElementById('loading');
+            
+            // Hiển thị loading
+            loading.style.display = 'block';
+            
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            const token = localStorage.getItem('token');
+            console.log('Token từ localStorage:', token ? 'Có' : 'Không');
+            
+            if (!token) {
+                console.log('Không tìm thấy token, chuyển hướng về trang đăng nhập');
+                errorAlert.textContent = 'Bạn chưa đăng nhập. Đang chuyển hướng về trang đăng nhập...';
+                errorAlert.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            // Xử lý token nếu cần
+            let processedToken = token;
+            if (processedToken.startsWith('token=')) {
+                processedToken = processedToken.substring(6);
+                console.log('Đã xử lý token, loại bỏ tiền tố "token="');
+            }
+            
+            // Giải mã URL nếu cần
+            try {
+                if (processedToken.includes('%')) {
+                    processedToken = decodeURIComponent(processedToken);
+                    console.log('Đã giải mã URL cho token');
+                }
+            } catch (e) {
+                console.error('Lỗi khi giải mã URL token:', e);
+            }
+            
+            // Lấy thông tin người dùng
+            fetchUserData(processedToken);
+            
+            // Xử lý đổi mật khẩu
+            document.getElementById('changePasswordForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Ẩn thông báo cũ
+                errorAlert.style.display = 'none';
+                successAlert.style.display = 'none';
+                
+                const oldPassword = document.getElementById('oldPassword').value;
+                const newPassword = document.getElementById('newPassword').value;
+                const confirmNewPassword = document.getElementById('confirmNewPassword').value;
+                
+                if (newPassword !== confirmNewPassword) {
+                    errorAlert.textContent = 'Mật khẩu mới không khớp!';
+                    errorAlert.style.display = 'block';
+                    return;
+                }
+                
+                try {
+                    const response = await fetch('http://localhost:4000/auth/change_password', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${processedToken}`,
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            oldpassword: oldPassword,
+                            newpassword: newPassword
+                        })
+                    });
+                    
+                    const data = await response.json();
+                    if (response.ok) {
+                        successAlert.textContent = 'Đổi mật khẩu thành công!';
+                        successAlert.style.display = 'block';
+                        document.getElementById('changePasswordForm').reset();
+                    } else {
+                        errorAlert.textContent = 'Đổi mật khẩu thất bại: ' + (data.message || 'Lỗi không xác định');
+                        errorAlert.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Lỗi:', error);
+                    errorAlert.textContent = 'Có lỗi xảy ra: ' + error.message;
+                    errorAlert.style.display = 'block';
+                }
+            });
+            
+            // Xử lý thay đổi avatar
+            document.getElementById('avatarInput').addEventListener('change', async function(e) {
+                const file = e.target.files[0];
+                if (!file) return;
+                
+                // Ẩn thông báo cũ
+                errorAlert.style.display = 'none';
+                successAlert.style.display = 'none';
+                
+                try {
+                    const formData = new FormData();
+                    formData.append('avatar', file);
+                    
+                    const response = await fetch('http://localhost:4000/auth/change_avatar', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${processedToken}`
+                        },
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    if (response.ok) {
+                        document.getElementById('avatarImg').src = data.data.avatarUrl;
+                        successAlert.textContent = 'Thay đổi ảnh đại diện thành công!';
+                        successAlert.style.display = 'block';
+                    } else {
+                        errorAlert.textContent = 'Thay đổi ảnh đại diện thất bại: ' + (data.message || 'Lỗi không xác định');
+                        errorAlert.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Lỗi:', error);
+                    errorAlert.textContent = 'Có lỗi xảy ra: ' + error.message;
+                    errorAlert.style.display = 'block';
+                }
+            });
+            
+            // Xử lý đăng xuất
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                // Hiển thị loading
+                loading.style.display = 'block';
+                
+                // Xóa token khỏi localStorage
+                localStorage.removeItem('token');
+                console.log('Đã xóa token khỏi localStorage');
+                
+                // Hiển thị thông báo thành công
+                successAlert.textContent = 'Đăng xuất thành công! Đang chuyển hướng...';
+                successAlert.style.display = 'block';
+                
+                // Chuyển hướng đến trang đăng nhập sau 1 giây
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 1000);
+            });
+        });
+        
+        // Hàm lấy thông tin người dùng
+        async function fetchUserData(token) {
+            try {
+                console.log('Đang gửi request đến /auth/me với token');
+                
+                // Đảm bảo token được gửi đúng định dạng
+                const authHeader = token.startsWith('Bearer ') ? token : `Bearer ${token}`;
+                console.log('Authorization header:', authHeader);
+                
+                const response = await fetch('http://localhost:4000/auth/me', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': authHeader,
+                        'Content-Type': 'application/json'
+                    },
+                    credentials: 'include'
+                });
+                
+                console.log('Phản hồi:', response);
+                console.log('Status:', response.status);
+                console.log('Status Text:', response.statusText);
+                
+                // Kiểm tra trạng thái phản hồi
+                if (!response.ok) {
+                    let errorData;
+                    try {
+                        errorData = await response.json();
+                        console.error('Lỗi từ server:', errorData);
+                    } catch (e) {
+                        console.error('Không thể parse JSON từ phản hồi lỗi:', e);
+                        errorData = { message: 'Không thể xác định lỗi' };
+                    }
+                    
+                    // Nếu token không hợp lệ, chuyển hướng đến trang đăng nhập
+                    if (response.status === 401 || response.status === 403) {
+                        console.error('Token không hợp lệ hoặc đã hết hạn');
+                        localStorage.removeItem('token');
+                        window.location.href = 'login.html';
+                        return;
+                    }
+                    
+                    throw new Error(`Lỗi HTTP: ${response.status} - ${errorData.message || 'Không xác định'}`);
+                }
+                
+                // Lấy dữ liệu người dùng
+                let userData;
+                try {
+                    userData = await response.json();
+                    console.log('Dữ liệu người dùng:', userData);
+                    
+                    // Kiểm tra cấu trúc dữ liệu
+                    if (!userData || !userData.data) {
+                        console.error('Dữ liệu không hợp lệ:', userData);
+                        throw new Error('Dữ liệu người dùng không hợp lệ');
+                    }
+                    
+                    const user = userData.data;
+                    console.log('Thông tin người dùng:', {
+                        id: user._id,
+                        username: user.username,
+                        email: user.email,
+                        role: user.role,
+                        avatarUrl: user.avatarUrl
+                    });
+                    
+                    // Hiển thị thông tin người dùng
+                    document.getElementById('userId').textContent = user._id || 'Không có';
+                    document.getElementById('username').textContent = user.username || 'Không có';
+                    document.getElementById('email').textContent = user.email || 'Không có';
+                    
+                    // Hiển thị vai trò
+                    if (user.role && user.role.name) {
+                        document.getElementById('role').textContent = user.role.name || 'Không có';
+                    } else {
+                        document.getElementById('role').textContent = 'Không có';
+                    }
+                    
+                    // Hiển thị avatar nếu có
+                    if (user.avatarUrl) {
+                        console.log('Cập nhật avatar từ API:', user.avatarUrl);
+                        // Kiểm tra nếu URL bắt đầu bằng http://localhost:4000/avatars/ thì thay thế bằng http://localhost:5000/avatars/
+                        let avatarUrl = user.avatarUrl;
+                        if (avatarUrl.startsWith('http://localhost:4000/avatars/')) {
+                            avatarUrl = avatarUrl.replace('http://localhost:4000/avatars/', 'http://localhost:5000/avatars/');
+                            console.log('Đã chuyển đổi URL avatar từ port 4000 sang port 5000:', avatarUrl);
+                        }
+                        document.getElementById('avatarImg').src = avatarUrl;
+                    } else {
+                        // Nếu không có ảnh từ API, giữ nguyên ảnh mặc định
+                        console.log('Không có ảnh avatar từ API, giữ nguyên ảnh mặc định');
+                    }
+                    
+                    console.log('Đã hiển thị thông tin người dùng thành công');
+                    
+                    // Ẩn loading
+                    document.getElementById('loading').style.display = 'none';
+                } catch (e) {
+                    console.error('Không thể parse JSON từ phản hồi:', e);
+                    throw new Error('Dữ liệu phản hồi không hợp lệ');
+                }
+            } catch (error) {
+                console.error('Lỗi khi lấy thông tin người dùng:', error);
+                
+                // Ẩn loading
+                document.getElementById('loading').style.display = 'none';
+                
+                // Hiển thị thông báo lỗi
+                const errorAlert = document.getElementById('errorAlert');
+                errorAlert.textContent = 'Có lỗi xảy ra: ' + error.message;
+                errorAlert.style.display = 'block';
+                
+                // Nếu có lỗi liên quan đến token, chuyển hướng đến trang đăng nhập
+                if (error.message.includes('401') || error.message.includes('403')) {
+                    console.log('Lỗi liên quan đến token, chuyển hướng về trang đăng nhập');
+                    localStorage.removeItem('token');
+                    window.location.href = 'login.html';
+                }
+            }
+        }
+    </script>
+</body>
+</html> 
