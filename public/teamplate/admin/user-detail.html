@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết người dùng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li><a href="users.html"><i class="fas fa-users"></i> Quản lý người dùng</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Quản lý sự kiện</a></li>
+                <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Quản lý vé</a></li>
+                <li><a href="payments.html"><i class="fas fa-credit-card"></i> Quản lý thanh toán</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Báo cáo thống kê</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-button" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h1>Chi tiết người dùng</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://via.placeholder.com/40" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- User Information -->
+                <div class="user-detail-card">
+                    <h2>Nguyễn Văn A</h2>
+                    <div class="user-info">
+                        <div class="info-item">
+                            <i class="fas fa-id-card"></i>
+                            <span>ID: USR001</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>nguyen.van.a@email.com</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-phone"></i>
+                            <span>0901234567</span>
+                        </div>
+                        <div class="info-item">
+                            <i class="fas fa-calendar-check"></i>
+                            <span>Tham gia: 01/01/2025</span>
+                        </div>
+                    </div>
+                    <button class="edit-btn" onclick="window.location.href='edit-user.html?id=USR001'">
+                        <i class="fas fa-edit"></i>
+                        Chỉnh sửa thông tin
+                    </button>
+                </div>
+
+                <!-- Order History -->
+                <div class="order-history-section">
+                    <h2>Danh sách đơn đặt vé</h2>
+                    <div class="table-container">
+                        <table class="order-table">
+                            <thead>
+                                <tr>
+                                    <th>Mã đơn</th>
+                                    <th>Sự kiện</th>
+                                    <th>Loại vé</th>
+                                    <th>Số lượng</th>
+                                    <th>Tổng tiền (VND)</th>
+                                    <th>Ngày đặt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>ORD001</td>
+                                    <td>Hòa nhạc mùa xuân 2025</td>
+                                    <td>Vé VIP</td>
+                                    <td>2</td>
+                                    <td>3,000,000</td>
+                                    <td>01/04/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>ORD002</td>
+                                    <td>Chạy marathon vì trẻ em</td>
+                                    <td>Vé Kinh tế</td>
+                                    <td>3</td>
+                                    <td>600,000</td>
+                                    <td>02/04/2025</td>
+                                </tr>
+                                <tr>
+                                    <td>ORD003</td>
+                                    <td>Giải bóng đá giao hữu</td>
+                                    <td>Vé Thường</td>
+                                    <td>1</td>
+                                    <td>500,000</td>
+                                    <td>03/04/2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Summary -->
+                    <div class="order-summary">
+                        <div class="summary-item">
+                            <span>Tổng số vé đã đặt:</span>
+                            <strong>6</strong>
+                        </div>
+                        <div class="summary-item">
+                            <span>Tổng tiền đã thanh toán:</span>
+                            <strong>4,100,000 VND</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id') || 'USR001';
+
+        // Format số tiền
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN').format(price);
+        }
+
+        // Cập nhật ID trong trang
+        document.querySelector('.info-item span').textContent = `ID: ${userId}`;
+    </script>
+</body>
+</html> 

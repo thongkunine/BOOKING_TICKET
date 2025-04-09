@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý sự kiện - Admin Panel</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li>
+                    <a href="users.html">
+                        <i class="fas fa-users"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Quản lý sự kiện</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Quản lý vé</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="payments.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Quản lý giao dịch</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Báo cáo thống kê</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-footer">
+                <p>© 2025 Admin Panel</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>Quản lý sự kiện</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Tìm kiếm sự kiện..." 
+                        >
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="/admin-avatar.png" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label>Phân loại:</label>
+                            <select name="category" class="filter-select">
+                                <option value="">Tất cả</option>
+                                <option value="Âm nhạc">Âm nhạc</option>
+                                <option value="Hội thảo">Hội thảo</option>
+                                <option value="Từ thiện">Từ thiện</option>
+                                <option value="Thể thao">Thể thao</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Trạng thái:</label>
+                            <select name="status" class="filter-select">
+                                <option value="">Tất cả</option>
+                                <option value="Công khai">Công khai</option>
+                                <option value="Nháp">Nháp</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Thời gian:</label>
+                            <select name="time" class="filter-select">
+                                <option value="">Tất cả</option>
+                                <option value="today">Hôm nay</option>
+                                <option value="week">Tuần này</option>
+                                <option value="month">Tháng này</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-group">
+                            <label>Nổi bật:</label>
+                            <select name="featured" class="filter-select">
+                                <option value="">Tất cả</option>
+                                <option value="true">Có</option>
+                                <option value="false">Không</option>
+                            </select>
+                        </div>
+                        
+                        <div class="filter-buttons">
+                            <button class="filter-button" onclick="applyFilters()">
+                                <i class="fas fa-filter"></i>
+                                Lọc
+                            </button>
+                            <button class="reset-button" onclick="resetFilters()">
+                                Đặt lại
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Event List Section -->
+                <div class="table-container">
+                    <div class="section-header">
+                        <h2>Danh sách sự kiện</h2>
+                        <button class="submit-btn" onclick="window.location.href='add-event.html'">
+                            <i class="fas fa-plus"></i>
+                            Thêm sự kiện mới
+                        </button>
+                    </div>
+                    
+                    <table class="event-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Tên sự kiện</th>
+                                <th>Phân loại</th>
+                                <th>Địa điểm</th>
+                                <th>Thời gian</th>
+                                <th>Trạng thái</th>
+                                <th>Vé còn lại</th>
+                                <th>Nổi bật</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="eventTableBody">
+                            <!-- Event rows will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    
+                    <div class="pagination">
+                        <a href="#first" onclick="goToPage('first')" title="Trang đầu">&laquo;</a>
+                        <a href="#prev" onclick="goToPage('prev')" title="Trang trước">&lsaquo;</a>
+                        <a href="#1" class="active">1</a>
+                        <a href="#2">2</a>
+                        <a href="#3">3</a>
+                        <span>...</span>
+                        <a href="#10">10</a>
+                        <a href="#next" onclick="goToPage('next')" title="Trang sau">&rsaquo;</a>
+                        <a href="#last" onclick="goToPage('last')" title="Trang cuối">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock event data
+        const events = [
+            {
+                id: 'EV001',
+                name: 'Hòa nhạc mùa xuân 2025',
+                category: 'Âm nhạc',
+                location: 'Nhà hát lớn Hà Nội',
+                startTime: '10/04/2025 19:30',
+                endTime: '10/04/2025 21:30',
+                status: 'Công khai',
+                featured: true,
+                totalTickets: 500,
+                remainingTickets: 450
+            },
+            {
+                id: 'EV002',
+                name: 'Hội thảo khởi nghiệp',
+                category: 'Hội thảo',
+                location: 'Trung tâm hội nghị quốc gia',
+                startTime: '15/04/2025 08:30',
+                endTime: '15/04/2025 12:30',
+                status: 'Nháp',
+                featured: false,
+                totalTickets: 300,
+                remainingTickets: 280
+            },
+            {
+                id: 'EV003',
+                name: 'Chạy marathon vì trẻ em',
+                category: 'Từ thiện',
+                location: 'Công viên Thống Nhất',
+                startTime: '18/04/2025 05:30',
+                endTime: '18/04/2025 11:30',
+                status: 'Công khai',
+                featured: true,
+                totalTickets: 1000,
+                remainingTickets: 850
+            },
+            {
+                id: 'EV004',
+                name: 'Giải bóng đá giao hữu',
+                category: 'Thể thao',
+                location: 'Sân vận động Mỹ Đình',
+                startTime: '22/04/2025 15:00',
+                endTime: '22/04/2025 17:00',
+                status: 'Công khai',
+                featured: false,
+                totalTickets: 800,
+                remainingTickets: 650
+            },
+            {
+                id: 'EV005',
+                name: 'Workshop nhiếp ảnh',
+                category: 'Hội thảo',
+                location: 'Trung tâm văn hóa quận 1',
+                startTime: '25/04/2025 13:30',
+                endTime: '25/04/2025 17:30',
+                status: 'Nháp',
+                featured: false,
+                totalTickets: 100,
+                remainingTickets: 100
+            }
+        ];
+
+        // Function to get category class
+        function getCategoryClass(category) {
+            switch (category.toLowerCase()) {
+                case 'âm nhạc':
+                    return 'category-music';
+                case 'hội thảo':
+                    return 'category-seminar';
+                case 'từ thiện':
+                    return 'category-charity';
+                case 'thể thao':
+                    return 'category-sports';
+                default:
+                    return '';
+            }
+        }
+
+        // Function to get status class
+        function getStatusClass(status) {
+            return status === 'Công khai' ? 'status-completed' : 'status-pending';
+        }
+
+        // Function to render events table
+        function renderEvents(eventList) {
+            const tbody = document.getElementById('eventTableBody');
+            tbody.innerHTML = '';
+            
+            eventList.forEach(event => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${event.id}</td>
+                    <td>${event.name}</td>
+                    <td>
+                        <span class="category-badge ${getCategoryClass(event.category)}">
+                            ${event.category}
+                        </span>
+                    </td>
+                    <td>${event.location}</td>
+                    <td>${event.startTime}</td>
+                    <td>
+                        <span class="status-badge ${getStatusClass(event.status)}">
+                            ${event.status}
+                        </span>
+                    </td>
+                    <td>${event.remainingTickets}/${event.totalTickets}</td>
+                    <td>
+                        ${event.featured ? `
+                            <span class="featured-badge">
+                                <i class="fas fa-star"></i>
+                                Nổi bật
+                            </span>
+                        ` : '-'}
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button 
+                                class="action-btn view-btn" 
+                                title="Xem chi tiết"
+                                onclick="handleView('${event.id}')"
+                            >
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button 
+                                class="action-btn edit-btn" 
+                                title="Chỉnh sửa"
+                                onclick="handleEdit('${event.id}')"
+                            >
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button 
+                                class="action-btn delete-btn" 
+                                title="Xóa"
+                                onclick="handleDelete('${event.id}')"
+                            >
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Function to handle search
+        function handleSearch() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const filteredEvents = events.filter(event => 
+                event.name.toLowerCase().includes(searchQuery) ||
+                event.id.toLowerCase().includes(searchQuery)
+            );
+            renderEvents(filteredEvents);
+        }
+
+        // Function to apply filters
+        function applyFilters() {
+            const category = document.querySelector('select[name="category"]').value;
+            const status = document.querySelector('select[name="status"]').value;
+            const time = document.querySelector('select[name="time"]').value;
+            const featured = document.querySelector('select[name="featured"]').value;
+
+            let filteredEvents = [...events];
+
+            if (category) {
+                filteredEvents = filteredEvents.filter(event => event.category === category);
+            }
+            if (status) {
+                filteredEvents = filteredEvents.filter(event => event.status === status);
+            }
+            if (featured) {
+                filteredEvents = filteredEvents.filter(event => 
+                    featured === 'true' ? event.featured : !event.featured
+                );
+            }
+            if (time) {
+                const now = new Date();
+                switch (time) {
+                    case 'today':
+                        filteredEvents = filteredEvents.filter(event => {
+                            const eventDate = new Date(event.startTime);
+                            return eventDate.toDateString() === now.toDateString();
+                        });
+                        break;
+                    case 'week':
+                        const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
+                        const weekEnd = new Date(now.setDate(now.getDate() - now.getDay() + 6));
+                        filteredEvents = filteredEvents.filter(event => {
+                            const eventDate = new Date(event.startTime);
+                            return eventDate >= weekStart && eventDate <= weekEnd;
+                        });
+                        break;
+                    case 'month':
+                        filteredEvents = filteredEvents.filter(event => {
+                            const eventDate = new Date(event.startTime);
+                            return eventDate.getMonth() === now.getMonth() &&
+                                   eventDate.getFullYear() === now.getFullYear();
+                        });
+                        break;
+                }
+            }
+
+            renderEvents(filteredEvents);
+        }
+
+        // Function to reset filters
+        function resetFilters() {
+            document.querySelector('select[name="category"]').value = '';
+            document.querySelector('select[name="status"]').value = '';
+            document.querySelector('select[name="time"]').value = '';
+            document.querySelector('select[name="featured"]').value = '';
+            document.getElementById('searchInput').value = '';
+            renderEvents(events);
+        }
+
+        // Event actions
+        function handleView(id) {
+            window.location.href = `event-detail.html?id=${id}`;
+        }
+
+        function handleEdit(id) {
+            window.location.href = `edit-event.html?id=${id}`;
+        }
+
+        function handleDelete(id) {
+            if (confirm('Bạn có chắc chắn muốn xóa sự kiện này?')) {
+                // In real application, this would be an API call
+                console.log('Deleting event:', id);
+                const updatedEvents = events.filter(event => event.id !== id);
+                renderEvents(updatedEvents);
+            }
+        }
+
+        // Pagination functions
+        function goToPage(page) {
+            // Implement pagination logic here
+            console.log('Going to page:', page);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderEvents(events);
+            
+            // Add search input event listener
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý giao dịch - Admin Panel</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li>
+                    <a href="users.html">
+                        <i class="fas fa-users"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Quản lý sự kiện</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Quản lý vé</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="payments.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Quản lý giao dịch</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Báo cáo thống kê</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-footer">
+                <p>© 2025 Admin Panel</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>Quản lý giao dịch</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Tìm kiếm theo mã giao dịch, tên khách hàng..." 
+                        >
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="/admin-avatar.png" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label>
+                                <i class="fas fa-flag"></i>
+                                Trạng thái
+                            </label>
+                            <select name="status" class="filter-select">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="success">Thành công</option>
+                                <option value="pending">Đang xử lý</option>
+                                <option value="failed">Thất bại</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>
+                                <i class="fas fa-credit-card"></i>
+                                Phương thức thanh toán
+                            </label>
+                            <select name="paymentMethod" class="filter-select">
+                                <option value="">Tất cả phương thức</option>
+                                <option value="credit">Thẻ tín dụng</option>
+                                <option value="transfer">Chuyển khoản</option>
+                                <option value="ewallet">Ví điện tử</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>
+                                <i class="fas fa-calendar"></i>
+                                Thời gian
+                            </label>
+                            <select name="dateRange" class="filter-select">
+                                <option value="">Tất cả thời gian</option>
+                                <option value="today">Hôm nay</option>
+                                <option value="week">Tuần này</option>
+                                <option value="month">Tháng này</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-buttons">
+                            <button class="filter-button" onclick="applyFilters()">
+                                <i class="fas fa-filter"></i>
+                                Lọc
+                            </button>
+                            <button class="reset-button" onclick="resetFilters()">
+                                <i class="fas fa-redo"></i>
+                                Đặt lại
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions List -->
+                <div class="transactions-list" id="transactionsList">
+                    <!-- Transactions will be populated by JavaScript -->
+                </div>
+
+                <div class="pagination">
+                    <a href="#first" onclick="goToPage('first')" title="Trang đầu">&laquo;</a>
+                    <a href="#prev" onclick="goToPage('prev')" title="Trang trước">&lsaquo;</a>
+                    <a href="#1" class="active">1</a>
+                    <a href="#2">2</a>
+                    <a href="#3">3</a>
+                    <span>...</span>
+                    <a href="#10">10</a>
+                    <a href="#next" onclick="goToPage('next')" title="Trang sau">&rsaquo;</a>
+                    <a href="#last" onclick="goToPage('last')" title="Trang cuối">&raquo;</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data cho danh sách giao dịch
+        const payments = [
+            {
+                id: 'P001',
+                transactionId: 'TXN123456789',
+                customerName: 'Nguyễn Văn A',
+                amount: '1500000',
+                paymentMethod: 'Thẻ tín dụng',
+                createdAt: '2025-03-01 15:30:25',
+                status: 'Thành công',
+                cardInfo: 'VISA **** 1234'
+            },
+            {
+                id: 'P002',
+                transactionId: 'TXN987654321',
+                customerName: 'Trần Thị B',
+                amount: '800000',
+                paymentMethod: 'Chuyển khoản',
+                createdAt: '2025-03-02 10:15:30',
+                status: 'Đang xử lý',
+                cardInfo: 'MB Bank **** 5678'
+            },
+            {
+                id: 'P003',
+                transactionId: 'TXN456789123',
+                customerName: 'Lê Văn C',
+                amount: '500000',
+                paymentMethod: 'Ví điện tử',
+                createdAt: '2025-03-03 09:45:15',
+                status: 'Thất bại',
+                cardInfo: 'Momo Wallet'
+            }
+        ];
+
+        // Function to format price
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+
+        // Function to format date time
+        function formatDateTime(dateTimeStr) {
+            const date = new Date(dateTimeStr);
+            return new Intl.DateTimeFormat('vi-VN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(date);
+        }
+
+        // Function to get status class
+        function getStatusClass(status) {
+            switch (status) {
+                case 'Thành công':
+                    return 'status-success';
+                case 'Đang xử lý':
+                    return 'status-pending';
+                case 'Thất bại':
+                    return 'status-failed';
+                default:
+                    return '';
+            }
+        }
+
+        // Function to get payment icon
+        function getPaymentIcon(method) {
+            switch (method) {
+                case 'Thẻ tín dụng':
+                    return 'credit-card';
+                case 'Chuyển khoản':
+                    return 'bank';
+                case 'Ví điện tử':
+                    return 'wallet';
+                default:
+                    return 'money';
+            }
+        }
+
+        // Function to render transactions
+        function renderTransactions(paymentList) {
+            const container = document.getElementById('transactionsList');
+            container.innerHTML = '';
+            
+            paymentList.forEach(payment => {
+                const div = document.createElement('div');
+                div.className = 'transaction-item';
+                div.onclick = () => handleView(payment.id);
+                
+                div.innerHTML = `
+                    <div class="transaction-icon">
+                        <div class="icon-wrapper ${getPaymentIcon(payment.paymentMethod)}">
+                            <i class="fas fa-${getPaymentIcon(payment.paymentMethod)}"></i>
+                        </div>
+                    </div>
+                    <div class="transaction-info">
+                        <div class="info-row">
+                            <div class="transaction-id">${payment.transactionId}</div>
+                            <div class="transaction-status ${getStatusClass(payment.status)}">
+                                <span class="status-dot"></span>
+                                ${payment.status}
+                            </div>
+                        </div>
+                        <div class="info-row">
+                            <div class="customer-info">
+                                <div class="customer-name">${payment.customerName}</div>
+                                <div class="payment-details">
+                                    <span class="method">${payment.paymentMethod}</span>
+                                    <span class="separator">•</span>
+                                    <span class="card-info">${payment.cardInfo}</span>
+                                </div>
+                            </div>
+                            <div class="amount-info">
+                                <div class="amount">${formatPrice(payment.amount)}</div>
+                                <div class="date">${formatDateTime(payment.createdAt)}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="transaction-actions">
+                        <button class="action-btn" onclick="handleView('${payment.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="action-btn" onclick="handlePrint('${payment.id}')">
+                            <i class="fas fa-print"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Function to handle search
+        function handleSearch() {
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const filteredPayments = payments.filter(payment => 
+                payment.transactionId.toLowerCase().includes(searchQuery) ||
+                payment.customerName.toLowerCase().includes(searchQuery)
+            );
+            renderTransactions(filteredPayments);
+        }
+
+        // Function to apply filters
+        function applyFilters() {
+            const status = document.querySelector('select[name="status"]').value;
+            const paymentMethod = document.querySelector('select[name="paymentMethod"]').value;
+            const dateRange = document.querySelector('select[name="dateRange"]').value;
+            const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+
+            let filteredPayments = [...payments];
+
+            if (status) {
+                let statusText = '';
+                switch (status) {
+                    case 'success':
+                        statusText = 'Thành công';
+                        break;
+                    case 'pending':
+                        statusText = 'Đang xử lý';
+                        break;
+                    case 'failed':
+                        statusText = 'Thất bại';
+                        break;
+                }
+                filteredPayments = filteredPayments.filter(payment => 
+                    payment.status === statusText
+                );
+            }
+            if (paymentMethod) {
+                let methodText = '';
+                switch (paymentMethod) {
+                    case 'credit':
+                        methodText = 'Thẻ tín dụng';
+                        break;
+                    case 'transfer':
+                        methodText = 'Chuyển khoản';
+                        break;
+                    case 'ewallet':
+                        methodText = 'Ví điện tử';
+                        break;
+                }
+                filteredPayments = filteredPayments.filter(payment => 
+                    payment.paymentMethod === methodText
+                );
+            }
+            if (dateRange) {
+                const now = new Date();
+                switch (dateRange) {
+                    case 'today':
+                        filteredPayments = filteredPayments.filter(payment => {
+                            const paymentDate = new Date(payment.createdAt);
+                            return paymentDate.toDateString() === now.toDateString();
+                        });
+                        break;
+                    case 'week':
+                        const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
+                        const weekEnd = new Date(now.setDate(now.getDate() - now.getDay() + 6));
+                        filteredPayments = filteredPayments.filter(payment => {
+                            const paymentDate = new Date(payment.createdAt);
+                            return paymentDate >= weekStart && paymentDate <= weekEnd;
+                        });
+                        break;
+                    case 'month':
+                        filteredPayments = filteredPayments.filter(payment => {
+                            const paymentDate = new Date(payment.createdAt);
+                            return paymentDate.getMonth() === now.getMonth() &&
+                                   paymentDate.getFullYear() === now.getFullYear();
+                        });
+                        break;
+                }
+            }
+            if (searchQuery) {
+                filteredPayments = filteredPayments.filter(payment => 
+                    payment.transactionId.toLowerCase().includes(searchQuery) ||
+                    payment.customerName.toLowerCase().includes(searchQuery)
+                );
+            }
+
+            renderTransactions(filteredPayments);
+        }
+
+        // Function to reset filters
+        function resetFilters() {
+            document.querySelector('select[name="status"]').value = '';
+            document.querySelector('select[name="paymentMethod"]').value = '';
+            document.querySelector('select[name="dateRange"]').value = '';
+            document.getElementById('searchInput').value = '';
+            renderTransactions(payments);
+        }
+
+        // Event actions
+        function handleView(id) {
+            window.location.href = `payment-detail.html?id=${id}`;
+        }
+
+        function handlePrint(id) {
+            window.print();
+        }
+
+        // Pagination functions
+        function goToPage(page) {
+            // Implement pagination logic here
+            console.log('Going to page:', page);
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTransactions(payments);
+            
+            // Add search input event listener
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+        });
+    </script>
+</body>
+</html> 

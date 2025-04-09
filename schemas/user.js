@@ -26,15 +26,23 @@ let userSchema = new mongoose.Schema({
     status: {
         type: Boolean,
         default: false
-    }, loginCount: {
+    },
+    loginCount: {
         type: Number,
         default: 0,
         min: 0
-    }, role: {
+    },
+    role: {
         type: mongoose.Types.ObjectId,
         ref: 'role',
         required: true
     },
+    resetPasswordToken: {
+        type: String
+    },
+    resetPasswordTokenExp: {
+        type: Date
+    }
 }, {
     timestamps: true
 })

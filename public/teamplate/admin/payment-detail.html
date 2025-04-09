@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết giao dịch</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li><a href="users.html"><i class="fas fa-users"></i> Quản lý người dùng</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Quản lý sự kiện</a></li>
+                <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Quản lý vé</a></li>
+                <li><a href="payments.html"><i class="fas fa-credit-card"></i> Quản lý thanh toán</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Báo cáo thống kê</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-button" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h1>Chi tiết giao dịch #<span id="transactionId">TXN123456789</span></h1>
+                        <p>Xem thông tin chi tiết về giao dịch</p>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://via.placeholder.com/40" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="payment-detail-grid">
+                    <!-- Transaction Summary Card -->
+                    <div class="detail-card transaction-summary">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-info-circle"></i>
+                                Thông tin giao dịch
+                            </h3>
+                            <span class="status-badge status-completed" id="paymentStatus">Thành công</span>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <div class="info-group">
+                                    <label>Số tiền</label>
+                                    <span class="amount" id="paymentAmount">1.500.000 ₫</span>
+                                </div>
+                                <div class="info-group">
+                                    <label>Thời gian</label>
+                                    <span id="paymentTime">01/03/2025 15:30</span>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-group">
+                                    <label>Phương thức</label>
+                                    <span id="paymentMethod">Thẻ tín dụng</span>
+                                </div>
+                                <div class="info-group">
+                                    <label>Thông tin thẻ</label>
+                                    <span id="cardInfo">Visa - **** **** **** 1234</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Information Card -->
+                    <div class="detail-card customer-info">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-user"></i>
+                                Thông tin khách hàng
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <div class="info-group">
+                                    <label>Họ tên</label>
+                                    <span id="customerName">Nguyễn Văn A</span>
+                                </div>
+                                <div class="info-group">
+                                    <label>Email</label>
+                                    <span id="customerEmail">nguyenvana@email.com</span>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-group">
+                                    <label>Số điện thoại</label>
+                                    <span id="customerPhone">0901234567</span>
+                                </div>
+                                <div class="info-group">
+                                    <label>Địa chỉ</label>
+                                    <span id="customerAddress">123 Đường ABC, Quận 1, TP. Hồ Chí Minh</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ticket Information Card -->
+                    <div class="detail-card ticket-info">
+                        <div class="card-header">
+                            <h3>
+                                <i class="fas fa-ticket-alt"></i>
+                                Thông tin vé
+                            </h3>
+                        </div>
+                        <div class="card-content">
+                            <div class="info-row">
+                                <div class="info-group">
+                                    <label>Sự kiện</label>
+                                    <span id="eventName">Hòa nhạc mùa xuân 2025</span>
+                                </div>
+                                <div class="info-group">
+                                    <label>Thời gian</label>
+                                    <span id="eventTime">10/04/2025 19:30</span>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-group">
+                                    <label>Địa điểm</label>
+                                    <span id="eventVenue">Nhà hát lớn Hà Nội</span>
+                                </div>
+                                <div class="info-group">
+                                    <label>Loại vé</label>
+                                    <span id="ticketType">VIP</span>
+                                </div>
+                            </div>
+                            <div class="info-row">
+                                <div class="info-group">
+                                    <label>Số lượng</label>
+                                    <span id="ticketQuantity">1</span>
+                                </div>
+                                <div class="info-group">
+                                    <label>Đơn giá</label>
+                                    <span id="ticketPrice">1.500.000 ₫</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const paymentId = urlParams.get('id') || 'P001';
+
+        // Giả lập dữ liệu giao dịch
+        const paymentData = {
+            id: 'P001',
+            transactionId: 'TXN123456789',
+            amount: '1500000',
+            paymentMethod: 'Thẻ tín dụng',
+            cardType: 'Visa',
+            cardNumber: '**** **** **** 1234',
+            status: 'Thành công',
+            createdAt: '2025-03-01 15:30:25',
+            customerInfo: {
+                name: 'Nguyễn Văn A',
+                email: 'nguyenvana@email.com',
+                phone: '0901234567'
+            },
+            ticketInfo: {
+                eventName: 'Hòa nhạc mùa xuân 2025',
+                ticketType: 'VIP',
+                quantity: 1,
+                unitPrice: '1500000',
+                eventDate: '2025-04-10 19:30',
+                venue: 'Nhà hát lớn Hà Nội'
+            },
+            billingAddress: {
+                address: '123 Đường ABC',
+                district: 'Quận 1',
+                city: 'TP. Hồ Chí Minh'
+            }
+        };
+
+        // Hàm định dạng giá tiền
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+
+        // Hàm định dạng ngày giờ
+        function formatDateTime(dateTimeStr) {
+            const date = new Date(dateTimeStr);
+            return new Intl.DateTimeFormat('vi-VN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            }).format(date);
+        }
+
+        // Hàm lấy class cho trạng thái
+        function getStatusClass(status) {
+            switch (status) {
+                case 'Thành công':
+                    return 'status-completed';
+                case 'Đang xử lý':
+                    return 'status-pending';
+                case 'Thất bại':
+                    return 'status-failed';
+                default:
+                    return '';
+            }
+        }
+
+        // Cập nhật dữ liệu lên giao diện
+        document.getElementById('transactionId').textContent = paymentData.transactionId;
+        document.getElementById('paymentStatus').textContent = paymentData.status;
+        document.getElementById('paymentStatus').className = `status-badge ${getStatusClass(paymentData.status)}`;
+        document.getElementById('paymentAmount').textContent = formatPrice(paymentData.amount);
+        document.getElementById('paymentTime').textContent = formatDateTime(paymentData.createdAt);
+        document.getElementById('paymentMethod').textContent = paymentData.paymentMethod;
+        document.getElementById('cardInfo').textContent = `${paymentData.cardType} - ${paymentData.cardNumber}`;
+        document.getElementById('customerName').textContent = paymentData.customerInfo.name;
+        document.getElementById('customerEmail').textContent = paymentData.customerInfo.email;
+        document.getElementById('customerPhone').textContent = paymentData.customerInfo.phone;
+        document.getElementById('customerAddress').textContent = 
+            `${paymentData.billingAddress.address}, ${paymentData.billingAddress.district}, ${paymentData.billingAddress.city}`;
+        document.getElementById('eventName').textContent = paymentData.ticketInfo.eventName;
+        document.getElementById('eventTime').textContent = formatDateTime(paymentData.ticketInfo.eventDate);
+        document.getElementById('eventVenue').textContent = paymentData.ticketInfo.venue;
+        document.getElementById('ticketType').textContent = paymentData.ticketInfo.ticketType;
+        document.getElementById('ticketQuantity').textContent = paymentData.ticketInfo.quantity;
+        document.getElementById('ticketPrice').textContent = formatPrice(paymentData.ticketInfo.unitPrice);
+    </script>
+</body>
+</html> 

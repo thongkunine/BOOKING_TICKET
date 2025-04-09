@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa vai trò người dùng</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li><a href="users.html"><i class="fas fa-users"></i> Quản lý người dùng</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Quản lý sự kiện</a></li>
+                <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Quản lý vé</a></li>
+                <li><a href="payments.html"><i class="fas fa-credit-card"></i> Quản lý thanh toán</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Báo cáo thống kê</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-button" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h1>Chỉnh sửa vai trò người dùng</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://via.placeholder.com/40" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="edit-user-container">
+                    <div class="edit-user-card">
+                        <div class="user-info-section">
+                            <h3>Thông tin người dùng</h3>
+                            <div class="user-info-grid">
+                                <div class="info-item">
+                                    <i class="fas fa-id-card"></i>
+                                    <div class="info-content">
+                                        <label>ID</label>
+                                        <span id="userId">USR001</span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-user"></i>
+                                    <div class="info-content">
+                                        <label>Họ tên</label>
+                                        <span id="userName">Kim Phượng</span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-envelope"></i>
+                                    <div class="info-content">
+                                        <label>Email</label>
+                                        <span id="userEmail">kimphuong@email.com</span>
+                                    </div>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <div class="info-content">
+                                        <label>Ngày tham gia</label>
+                                        <span id="userCreatedAt">20/03/2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="edit-role-section">
+                            <h3>Cập nhật vai trò và trạng thái</h3>
+                            <form id="editForm" class="edit-form">
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-user-tag"></i>
+                                        Vai trò
+                                    </label>
+                                    <select id="roleSelect" class="form-select">
+                                        <option value="User">User</option>
+                                        <option value="Admin">Admin</option>
+                                        <option value="Editor">Editor</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>
+                                        <i class="fas fa-toggle-on"></i>
+                                        Trạng thái
+                                    </label>
+                                    <select id="statusSelect" class="form-select">
+                                        <option value="Hoạt động">Hoạt động</option>
+                                        <option value="Vô hiệu hóa">Vô hiệu hóa</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-buttons">
+                                    <button type="submit" class="submit-btn">
+                                        <i class="fas fa-save"></i>
+                                        Lưu thay đổi
+                                    </button>
+                                    <button type="button" class="cancel-btn" onclick="window.location.href='users.html'">
+                                        <i class="fas fa-times"></i>
+                                        Hủy
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const userId = urlParams.get('id') || 'USR001';
+
+        // Giả lập dữ liệu người dùng
+        const userData = {
+            id: userId,
+            name: 'Kim Phượng',
+            email: 'kimphuong@email.com',
+            role: 'User',
+            status: 'Hoạt động',
+            createdAt: '20/03/2025'
+        };
+
+        // Cập nhật thông tin người dùng
+        document.getElementById('userId').textContent = userData.id;
+        document.getElementById('userName').textContent = userData.name;
+        document.getElementById('userEmail').textContent = userData.email;
+        document.getElementById('userCreatedAt').textContent = userData.createdAt;
+        document.getElementById('roleSelect').value = userData.role;
+        document.getElementById('statusSelect').value = userData.status;
+
+        // Xử lý form submit
+        document.getElementById('editForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const role = document.getElementById('roleSelect').value;
+            const status = document.getElementById('statusSelect').value;
+
+            // Giả lập API call
+            console.log('Cập nhật vai trò:', { id: userId, role, status });
+            
+            // Hiển thị thông báo thành công
+            alert('Cập nhật thành công!');
+            
+            // Chuyển về trang danh sách
+            window.location.href = 'users.html';
+        });
+    </script>
+</body>
+</html> 

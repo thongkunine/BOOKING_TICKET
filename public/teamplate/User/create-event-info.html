@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo sự kiện - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/create-event.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1 class="logo-text">EventBox</h1>
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <li><a href="lich.html">Khám phá</a></li>
+                    <li><a href="lich.html">Lịch</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="create-event-info.html" class="active">Tạo sự kiện</a></li>
+                </div>
+                <div class="nav-right">
+                    <div class="auth-buttons">
+                        <a href="login.html" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Đăng nhập
+                        </a>
+                        <a href="register.html" class="btn-register">
+                            <i class="fas fa-user-plus"></i>
+                            Đăng ký
+                        </a>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Create Event Form -->
+    <main class="create-event-page">
+        <div class="container">
+            <div class="create-event-progress">
+                <div class="progress-step active">
+                    <span class="step-number">1</span>
+                    <span class="step-text">Thông tin sự kiện</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-number">2</span>
+                    <span class="step-text">Thời gian & Loại vé</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-number">3</span>
+                    <span class="step-text">Cài đặt</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-number">4</span>
+                    <span class="step-text">Thông tin thanh toán</span>
+                </div>
+            </div>
+
+            <form class="create-event-form">
+                <div class="form-section">
+                    <div class="upload-section">
+                        <h3>Upload hình ảnh</h3>
+                        <div class="upload-grid">
+                            <div class="upload-box">
+                                <input type="file" id="eventLogo" hidden accept="image/*">
+                                <label for="eventLogo" class="upload-area">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Thêm logo sự kiện</span>
+                                    <span class="upload-size">(720x958)</span>
+                                </label>
+                            </div>
+                            <div class="upload-box large">
+                                <input type="file" id="eventBanner" hidden accept="image/*">
+                                <label for="eventBanner" class="upload-area">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Thêm ảnh nền sự kiện</span>
+                                    <span class="upload-size">(1280x720)</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventName">Tên sự kiện <span class="required">*</span></label>
+                        <input type="text" id="eventName" class="form-control" maxlength="100">
+                        <div class="char-count">0 / 100</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Địa chỉ sự kiện <span class="required">*</span></label>
+                        <div class="event-type">
+                            <label class="radio-button">
+                                <input type="radio" name="eventType" value="offline" checked>
+                                <span class="radio-label">Sự kiện Offline</span>
+                            </label>
+                            <label class="radio-button">
+                                <input type="radio" name="eventType" value="online">
+                                <span class="radio-label">Sự kiện Online</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="venueName">Tên địa điểm <span class="required">*</span></label>
+                        <input type="text" id="venueName" class="form-control" maxlength="80">
+                        <div class="char-count">0 / 80</div>
+                    </div>
+
+                    <div class="address-grid">
+                        <div class="form-group">
+                            <label for="province">Tỉnh/Thành <span class="required">*</span></label>
+                            <select id="province" class="form-control">
+                                <option value="">Chọn Tỉnh/Thành</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="district">Quận/Huyện</label>
+                            <select id="district" class="form-control">
+                                <option value="">Chọn Quận/Huyện</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ward">Phường/Xã</label>
+                            <select id="ward" class="form-control">
+                                <option value="">Chọn Phường/Xã</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="street">Số nhà, đường <span class="required">*</span></label>
+                            <input type="text" id="street" class="form-control" maxlength="80">
+                            <div class="char-count">0 / 80</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventCategory">Thể loại sự kiện <span class="required">*</span></label>
+                        <select id="eventCategory" class="form-control">
+                            <option value="">Chọn thể loại</option>
+                            <option value="music">Âm nhạc</option>
+                            <option value="tech">Công nghệ</option>
+                            <option value="business">Kinh doanh</option>
+                            <option value="education">Giáo dục</option>
+                            <option value="lifestyle">Lifestyle</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventDescription">Thông tin sự kiện <span class="required">*</span></label>
+                        <div class="rich-text-editor">
+                            <div class="editor-toolbar">
+                                <button type="button" class="toolbar-btn"><i class="fas fa-undo"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-redo"></i></button>
+                                <select class="toolbar-select">
+                                    <option>Paragraph</option>
+                                </select>
+                                <select class="toolbar-select">
+                                    <option>14px</option>
+                                </select>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-bold"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-italic"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-underline"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-strikethrough"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-align-left"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-align-center"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-align-right"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-align-justify"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-list-ul"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-list-ol"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-indent"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-outdent"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-image"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-video"></i></button>
+                                <button type="button" class="toolbar-btn"><i class="fas fa-code"></i></button>
+                            </div>
+                            <div class="editor-content" contenteditable="true">
+                                <p>Giới thiệu sự kiện:</p>
+                                <p>[Tóm tắt ngắn gọn về sự kiện: Nội dung chính của sự kiện, điểm đặc sắc nhất và lý do khiến người tham gia không nên bỏ lỡ]</p>
+                                <p>Chi tiết sự kiện:</p>
+                                <ul>
+                                    <li>Chương trình chính: [Liệt kê những hoạt động nổi bật trong sự kiện: các phần trình diễn, khách mời đặc biệt, lịch trình các tiết mục cụ thể nếu có.]</li>
+                                    <li>Khách mời: [Thông tin về các khách mời đặc biệt, nghệ sĩ, diễn giả sẽ tham gia sự kiện. Có thể bao gồm phần mô tả ngắn gọn về họ và những gì họ sẽ mang lại cho sự kiện.]</li>
+                                    <li>Trải nghiệm đặc biệt: [Nếu có các hoạt động đặc biệt khác như workshop, khu trải nghiệm, photo booth, khu vực check-in hay các phần quà/ưu đãi dành riêng cho người tham dự.]</li>
+                                </ul>
+                                <p>Điều khoản và điều kiện:</p>
+                                <p>[TnC] sự kiện</p>
+                                <p>Lưu ý về điều khoản trẻ em</p>
+                                <p>Lưu ý về điều khoản VAT</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="organizerLogo">Thông tin ban tổ chức</label>
+                        <div class="organizer-info">
+                            <div class="upload-box small">
+                                <input type="file" id="organizerLogo" hidden accept="image/*">
+                                <label for="organizerLogo" class="upload-area">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <span>Thêm logo ban tổ chức</span>
+                                    <span class="upload-size">(275x275)</span>
+                                </label>
+                            </div>
+                            <div class="organizer-details">
+                                <input type="text" class="form-control" placeholder="Tên ban tổ chức" maxlength="80">
+                                <div class="char-count">0 / 80</div>
+                                <textarea class="form-control" placeholder="Thông tin ban tổ chức" maxlength="500"></textarea>
+                                <div class="char-count">0 / 500</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary">Lưu</button>
+                    <button type="button" class="btn-primary">Tiếp tục</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về chúng tôi</h3>
+                    <a href="#" class="footer-link">Giới thiệu</a>
+                    <a href="#" class="footer-link">Điều khoản sử dụng</a>
+                    <a href="#" class="footer-link">Chính sách bảo mật</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hỗ trợ</h3>
+                    <a href="#" class="footer-link">Câu hỏi thường gặp</a>
+                    <a href="#" class="footer-link">Hướng dẫn đặt vé</a>
+                    <a href="#" class="footer-link">Liên hệ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kết nối</h3>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">Twitter</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Đăng ký nhận tin</h3>
+                    <p class="newsletter-text">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Nhập email của bạn" class="newsletter-input">
+                        <button class="newsletter-button">ĐĂNG KÝ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventBox. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Character counter
+        document.querySelectorAll('.form-control').forEach(input => {
+            const charCount = input.nextElementSibling;
+            if (charCount && charCount.classList.contains('char-count')) {
+                input.addEventListener('input', function() {
+                    charCount.textContent = `${this.value.length} / ${this.maxLength}`;
+                });
+            }
+        });
+
+        // File upload preview
+        document.querySelectorAll('input[type="file"]').forEach(input => {
+            input.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const reader = new FileReader();
+                    const uploadArea = this.nextElementSibling;
+                    
+                    reader.onload = function(e) {
+                        uploadArea.style.backgroundImage = `url(${e.target.result})`;
+                        uploadArea.classList.add('has-image');
+                    }
+                    
+                    reader.readAsDataURL(this.files[0]);
+                }
+            });
+        });
+
+        // Navigation buttons
+        document.querySelector('.btn-secondary').addEventListener('click', () => {
+            // Save form data
+            const formData = {
+                eventName: document.getElementById('eventName').value,
+                eventType: document.querySelector('input[name="eventType"]:checked').value,
+                venueName: document.getElementById('venueName').value,
+                province: document.getElementById('province').value,
+                district: document.getElementById('district').value,
+                ward: document.getElementById('ward').value,
+                street: document.getElementById('street').value,
+                eventCategory: document.getElementById('eventCategory').value,
+                eventDescription: document.querySelector('.editor-content').innerHTML,
+                organizerName: document.querySelector('input[placeholder="Tên ban tổ chức"]').value,
+                organizerInfo: document.querySelector('textarea[placeholder="Thông tin ban tổ chức"]').value
+            };
+
+            // Store form data in localStorage
+            localStorage.setItem('eventInfoData', JSON.stringify(formData));
+            alert('Đã lưu thông tin sự kiện');
+        });
+
+        document.querySelector('.btn-primary').addEventListener('click', () => {
+            // Validate form before proceeding
+            if (validateForm()) {
+                // Save form data
+                const formData = {
+                    eventName: document.getElementById('eventName').value,
+                    eventType: document.querySelector('input[name="eventType"]:checked').value,
+                    venueName: document.getElementById('venueName').value,
+                    province: document.getElementById('province').value,
+                    district: document.getElementById('district').value,
+                    ward: document.getElementById('ward').value,
+                    street: document.getElementById('street').value,
+                    eventCategory: document.getElementById('eventCategory').value,
+                    eventDescription: document.querySelector('.editor-content').innerHTML,
+                    organizerName: document.querySelector('input[placeholder="Tên ban tổ chức"]').value,
+                    organizerInfo: document.querySelector('textarea[placeholder="Thông tin ban tổ chức"]').value
+                };
+
+                // Store form data in localStorage
+                localStorage.setItem('eventInfoData', JSON.stringify(formData));
+
+                // Proceed to next step
+                window.location.href = 'create-event.html';
+            }
+        });
+
+        // Load saved data if exists
+        window.addEventListener('load', () => {
+            const savedData = localStorage.getItem('eventInfoData');
+            if (savedData) {
+                const formData = JSON.parse(savedData);
+                
+                document.getElementById('eventName').value = formData.eventName;
+                document.querySelector(`input[name="eventType"][value="${formData.eventType}"]`).checked = true;
+                document.getElementById('venueName').value = formData.venueName;
+                document.getElementById('province').value = formData.province;
+                document.getElementById('district').value = formData.district;
+                document.getElementById('ward').value = formData.ward;
+                document.getElementById('street').value = formData.street;
+                document.getElementById('eventCategory').value = formData.eventCategory;
+                document.querySelector('.editor-content').innerHTML = formData.eventDescription;
+                document.querySelector('input[placeholder="Tên ban tổ chức"]').value = formData.organizerName;
+                document.querySelector('textarea[placeholder="Thông tin ban tổ chức"]').value = formData.organizerInfo;
+
+                // Update character counts
+                document.querySelectorAll('.form-control').forEach(input => {
+                    const charCount = input.nextElementSibling;
+                    if (charCount && charCount.classList.contains('char-count')) {
+                        charCount.textContent = `${input.value.length} / ${input.maxLength}`;
+                    }
+                });
+            }
+        });
+
+        // Form validation
+        function validateForm() {
+            let isValid = true;
+            const requiredFields = [
+                { id: 'eventName', message: 'Vui lòng nhập tên sự kiện' },
+                { id: 'venueName', message: 'Vui lòng nhập tên địa điểm' },
+                { id: 'province', message: 'Vui lòng chọn Tỉnh/Thành' },
+                { id: 'street', message: 'Vui lòng nhập địa chỉ chi tiết' },
+                { id: 'eventCategory', message: 'Vui lòng chọn thể loại sự kiện' }
+            ];
+
+            for (const field of requiredFields) {
+                const element = document.getElementById(field.id);
+                if (!element.value) {
+                    alert(field.message);
+                    element.focus();
+                    isValid = false;
+                    return false;
+                }
+            }
+
+            const description = document.querySelector('.editor-content').textContent.trim();
+            if (description === '' || description === 'Giới thiệu sự kiện:') {
+                alert('Vui lòng nhập thông tin sự kiện');
+                document.querySelector('.editor-content').focus();
+                isValid = false;
+                return false;
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html> 

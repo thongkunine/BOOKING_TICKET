@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo sự kiện - Cài đặt - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/create-event.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1 class="logo-text">EventBox</h1>
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <li><a href="index.html">Khám phá</a></li>
+                    <li><a href="lich.html">Lịch</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="create-event-info.html" class="active">Tạo sự kiện</a></li>
+                </div>
+                <div class="nav-right">
+                    <div class="auth-buttons">
+                        <a href="login.html" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Đăng nhập
+                        </a>
+                        <a href="register.html" class="btn-register">
+                            <i class="fas fa-user-plus"></i>
+                            Đăng ký
+                        </a>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <style>
+        .header {
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo-text {
+            color: #ff4b5a;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff4b5a;
+        }
+
+        .nav-links a.active {
+            color: #ff4b5a;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-login,
+        .btn-register {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            color: #1a1a1a;
+            background: transparent;
+        }
+
+        .btn-login:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-register {
+            color: white;
+            background: #ff4b5a;
+        }
+
+        .btn-register:hover {
+            background: #ff3344;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #1a1a1a;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        .create-event-page {
+            margin-top: 70px;
+        }
+    </style>
+
+    <!-- Create Event Form -->
+    <main class="create-event-page">
+        <div class="container">
+            <div class="create-event-progress">
+                <div class="progress-step">
+                    <span class="step-number">1</span>
+                    <span class="step-text">Thông tin sự kiện</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-number">2</span>
+                    <span class="step-text">Thời gian & Loại vé</span>
+                </div>
+                <div class="progress-step active">
+                    <span class="step-number">3</span>
+                    <span class="step-text">Cài đặt</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-number">4</span>
+                    <span class="step-text">Thông tin thanh toán</span>
+                </div>
+            </div>
+
+            <form class="create-event-form">
+                <div class="form-section">
+                    <div class="settings-section">
+                        <h3>Cài đặt hiển thị</h3>
+                        <div class="form-group">
+                            <label>Trạng thái sự kiện</label>
+                            <div class="radio-group">
+                                <label class="radio-button">
+                                    <input type="radio" name="eventStatus" value="public" checked>
+                                    <span class="radio-label">Công khai</span>
+                                    <span class="radio-description">Mọi người có thể tìm thấy và đặt vé sự kiện</span>
+                                </label>
+                                <label class="radio-button">
+                                    <input type="radio" name="eventStatus" value="private">
+                                    <span class="radio-label">Riêng tư</span>
+                                    <span class="radio-description">Chỉ những người có link mới có thể xem và đặt vé</span>
+                                </label>
+                                <label class="radio-button">
+                                    <input type="radio" name="eventStatus" value="draft">
+                                    <span class="radio-label">Bản nháp</span>
+                                    <span class="radio-description">Lưu làm bản nháp để hoàn thiện sau</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hiển thị số lượng vé còn lại</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="showTicketQuantity" checked>
+                                <label for="showTicketQuantity"></label>
+                            </div>
+                            <span class="setting-description">Hiển thị số lượng vé còn lại cho mỗi loại vé</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Hiển thị danh sách người tham gia</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="showAttendees">
+                                <label for="showAttendees"></label>
+                            </div>
+                            <span class="setting-description">Cho phép người tham gia xem danh sách những người khác đã đăng ký</span>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Cài đặt đặt vé</h3>
+                        <div class="form-group">
+                            <label>Số lượng vé tối đa mỗi đơn</label>
+                            <input type="number" class="form-control" id="maxTicketsPerOrder" min="1" value="10">
+                            <span class="setting-description">Giới hạn số lượng vé tối đa trong một đơn hàng</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Thời gian giữ vé</label>
+                            <select class="form-control" id="ticketHoldTime">
+                                <option value="15">15 phút</option>
+                                <option value="30" selected>30 phút</option>
+                                <option value="45">45 phút</option>
+                                <option value="60">60 phút</option>
+                            </select>
+                            <span class="setting-description">Thời gian giữ vé trong giỏ hàng trước khi tự động hủy</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Yêu cầu thông tin người tham dự</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-button">
+                                    <input type="checkbox" name="attendeeInfo" value="name" checked>
+                                    <span class="checkbox-label">Họ tên</span>
+                                </label>
+                                <label class="checkbox-button">
+                                    <input type="checkbox" name="attendeeInfo" value="email" checked>
+                                    <span class="checkbox-label">Email</span>
+                                </label>
+                                <label class="checkbox-button">
+                                    <input type="checkbox" name="attendeeInfo" value="phone" checked>
+                                    <span class="checkbox-label">Số điện thoại</span>
+                                </label>
+                                <label class="checkbox-button">
+                                    <input type="checkbox" name="attendeeInfo" value="age">
+                                    <span class="checkbox-label">Tuổi</span>
+                                </label>
+                                <label class="checkbox-button">
+                                    <input type="checkbox" name="attendeeInfo" value="gender">
+                                    <span class="checkbox-label">Giới tính</span>
+                                </label>
+                                <label class="checkbox-button">
+                                    <input type="checkbox" name="attendeeInfo" value="address">
+                                    <span class="checkbox-label">Địa chỉ</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h3>Cài đặt nâng cao</h3>
+                        <div class="form-group">
+                            <label>Gửi email xác nhận</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="sendConfirmationEmail" checked>
+                                <label for="sendConfirmationEmail"></label>
+                            </div>
+                            <span class="setting-description">Tự động gửi email xác nhận khi đặt vé thành công</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gửi email nhắc nhở</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="sendReminderEmail" checked>
+                                <label for="sendReminderEmail"></label>
+                            </div>
+                            <div class="reminder-settings" id="reminderSettings">
+                                <select class="form-control" id="reminderTime">
+                                    <option value="1">1 ngày</option>
+                                    <option value="2">2 ngày</option>
+                                    <option value="3" selected>3 ngày</option>
+                                    <option value="7">7 ngày</option>
+                                </select>
+                                <span class="setting-description">trước khi sự kiện diễn ra</span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Cho phép hoàn vé</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="allowRefunds">
+                                <label for="allowRefunds"></label>
+                            </div>
+                            <div class="refund-settings" id="refundSettings">
+                                <div class="refund-time">
+                                    <select class="form-control" id="refundTime">
+                                        <option value="1">1 ngày</option>
+                                        <option value="3" selected>3 ngày</option>
+                                        <option value="7">7 ngày</option>
+                                        <option value="14">14 ngày</option>
+                                    </select>
+                                    <span class="setting-description">trước khi sự kiện diễn ra</span>
+                                </div>
+                                <div class="refund-fee">
+                                    <input type="number" class="form-control" id="refundFee" min="0" max="100" value="20">
+                                    <span class="setting-description">% phí hoàn vé</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tùy chỉnh thông báo</label>
+                            <div class="notification-settings">
+                                <div class="notification-item">
+                                    <span class="notification-label">Thông báo hết vé</span>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="soldOutNotification" checked>
+                                        <label for="soldOutNotification"></label>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <span class="notification-label">Thông báo sắp hết vé</span>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="lowTicketNotification" checked>
+                                        <label for="lowTicketNotification"></label>
+                                    </div>
+                                </div>
+                                <div class="notification-item">
+                                    <span class="notification-label">Thông báo đơn hàng mới</span>
+                                    <div class="toggle-switch">
+                                        <input type="checkbox" id="newOrderNotification" checked>
+                                        <label for="newOrderNotification"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary">Quay lại</button>
+                    <button type="button" class="btn-primary">Tiếp tục</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về chúng tôi</h3>
+                    <a href="#" class="footer-link">Giới thiệu</a>
+                    <a href="#" class="footer-link">Điều khoản sử dụng</a>
+                    <a href="#" class="footer-link">Chính sách bảo mật</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hỗ trợ</h3>
+                    <a href="#" class="footer-link">Câu hỏi thường gặp</a>
+                    <a href="#" class="footer-link">Hướng dẫn đặt vé</a>
+                    <a href="#" class="footer-link">Liên hệ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kết nối</h3>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">Twitter</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Đăng ký nhận tin</h3>
+                    <p class="newsletter-text">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Nhập email của bạn" class="newsletter-input">
+                        <button class="newsletter-button">ĐĂNG KÝ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventBox. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        // Check login status
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                localStorage.setItem('redirectUrl', window.location.href);
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update UI based on login status
+            const authButtons = document.querySelector('.auth-buttons');
+            const userInfo = document.createElement('div');
+            userInfo.className = 'user-menu';
+            userInfo.innerHTML = `
+                <button class="user-menu-btn">
+                    <img src="https://ui-avatars.com/api/?name=John+Doe&background=random" alt="User Avatar" class="user-avatar">
+                    <span class="user-name">John Doe</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="user-dropdown">
+                    <a href="my-events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        Sự kiện của tôi
+                    </a>
+                    <a href="my-tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        Vé của tôi
+                    </a>
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        Hồ sơ
+                    </a>
+                    <a href="account-settings.html">
+                        <i class="fas fa-cog"></i>
+                        Cài đặt tài khoản
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" id="logoutBtn" class="text-danger">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Đăng xuất
+                    </a>
+                </div>
+            `;
+            authButtons.replaceWith(userInfo);
+
+            // Add logout handler
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userData');
+                window.location.href = 'index.html';
+            });
+
+            // Toggle user dropdown
+            const userMenuBtn = document.querySelector('.user-menu-btn');
+            userMenuBtn.addEventListener('click', () => {
+                userMenuBtn.parentElement.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                const userMenu = document.querySelector('.user-menu');
+                if (userMenu && !userMenu.contains(e.target)) {
+                    userMenu.classList.remove('active');
+                }
+            });
+
+            // Load saved data if exists
+            const savedData = localStorage.getItem('eventSettingsData');
+            if (savedData) {
+                const settingsData = JSON.parse(savedData);
+                
+                // Restore display settings
+                document.querySelector(`input[name="eventStatus"][value="${settingsData.display.status}"]`).checked = true;
+                document.getElementById('showTicketQuantity').checked = settingsData.display.showTicketQuantity;
+                document.getElementById('showAttendees').checked = settingsData.display.showAttendees;
+
+                // Restore ticketing settings
+                document.getElementById('maxTicketsPerOrder').value = settingsData.ticketing.maxTicketsPerOrder;
+                document.getElementById('ticketHoldTime').value = settingsData.ticketing.ticketHoldTime;
+                settingsData.ticketing.requiredAttendeeInfo.forEach(info => {
+                    document.querySelector(`input[name="attendeeInfo"][value="${info}"]`).checked = true;
+                });
+
+                // Restore advanced settings
+                document.getElementById('sendConfirmationEmail').checked = settingsData.advanced.sendConfirmationEmail;
+                document.getElementById('sendReminderEmail').checked = settingsData.advanced.sendReminderEmail;
+                document.getElementById('reminderTime').value = settingsData.advanced.reminderTime;
+                document.getElementById('allowRefunds').checked = settingsData.advanced.allowRefunds;
+                document.getElementById('refundTime').value = settingsData.advanced.refundTime;
+                document.getElementById('refundFee').value = settingsData.advanced.refundFee;
+                document.getElementById('soldOutNotification').checked = settingsData.advanced.notifications.soldOut;
+                document.getElementById('lowTicketNotification').checked = settingsData.advanced.notifications.lowTicket;
+                document.getElementById('newOrderNotification').checked = settingsData.advanced.notifications.newOrder;
+
+                // Update dependent settings visibility
+                document.getElementById('reminderSettings').style.display = settingsData.advanced.sendReminderEmail ? 'block' : 'none';
+                document.getElementById('refundSettings').style.display = settingsData.advanced.allowRefunds ? 'block' : 'none';
+            }
+        });
+
+        // Toggle dependent settings
+        document.getElementById('sendReminderEmail').addEventListener('change', function() {
+            const reminderSettings = document.getElementById('reminderSettings');
+            reminderSettings.style.display = this.checked ? 'block' : 'none';
+        });
+
+        document.getElementById('allowRefunds').addEventListener('change', function() {
+            const refundSettings = document.getElementById('refundSettings');
+            refundSettings.style.display = this.checked ? 'block' : 'none';
+        });
+
+        // Navigation buttons
+        document.querySelector('.btn-secondary').addEventListener('click', () => {
+            window.location.href = 'create-event-time.html';
+        });
+
+        document.querySelector('.btn-primary').addEventListener('click', () => {
+            // Save settings data
+            const settingsData = {
+                display: {
+                    status: document.querySelector('input[name="eventStatus"]:checked').value,
+                    showTicketQuantity: document.getElementById('showTicketQuantity').checked,
+                    showAttendees: document.getElementById('showAttendees').checked
+                },
+                ticketing: {
+                    maxTicketsPerOrder: document.getElementById('maxTicketsPerOrder').value,
+                    ticketHoldTime: document.getElementById('ticketHoldTime').value,
+                    requiredAttendeeInfo: Array.from(document.querySelectorAll('input[name="attendeeInfo"]:checked')).map(cb => cb.value)
+                },
+                advanced: {
+                    sendConfirmationEmail: document.getElementById('sendConfirmationEmail').checked,
+                    sendReminderEmail: document.getElementById('sendReminderEmail').checked,
+                    reminderTime: document.getElementById('reminderTime').value,
+                    allowRefunds: document.getElementById('allowRefunds').checked,
+                    refundTime: document.getElementById('refundTime').value,
+                    refundFee: document.getElementById('refundFee').value,
+                    notifications: {
+                        soldOut: document.getElementById('soldOutNotification').checked,
+                        lowTicket: document.getElementById('lowTicketNotification').checked,
+                        newOrder: document.getElementById('newOrderNotification').checked
+                    }
+                }
+            };
+
+            // Store settings data in localStorage
+            localStorage.setItem('eventSettingsData', JSON.stringify(settingsData));
+
+            // Proceed to payment info page
+            window.location.href = 'create-event-payment.html';
+        });
+    </script>
+</body>
+</html> 

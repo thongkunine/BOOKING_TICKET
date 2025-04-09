@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chỉnh sửa sự kiện</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li><a href="users.html"><i class="fas fa-users"></i> Quản lý người dùng</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Quản lý sự kiện</a></li>
+                <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Quản lý vé</a></li>
+                <li><a href="payments.html"><i class="fas fa-credit-card"></i> Quản lý thanh toán</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Báo cáo thống kê</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-button" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h1>Chỉnh sửa sự kiện</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://via.placeholder.com/40" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="add-event-container">
+                    <div class="add-event-card">
+                        <form id="editEventForm" class="add-form">
+                            <!-- Image Upload Section -->
+                            <div class="form-section image-upload-section">
+                                <div class="image-upload-container">
+                                    <div class="image-preview">
+                                        <img id="imagePreview" src="https://via.placeholder.com/800x400" alt="Event Preview">
+                                    </div>
+                                    <input
+                                        type="file"
+                                        id="event-image"
+                                        accept="image/*"
+                                        class="image-input"
+                                    />
+                                    <div class="image-buttons">
+                                        <label for="event-image" class="image-upload-btn">
+                                            <i class="fas fa-upload"></i>
+                                            Thay đổi ảnh
+                                        </label>
+                                        <button type="button" class="image-remove-btn" id="removeImageBtn">
+                                            <i class="fas fa-trash"></i>
+                                            Xóa ảnh
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Basic Info Section -->
+                            <div class="form-section">
+                                <h3>Thông tin cơ bản</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-signature"></i>
+                                            Tên sự kiện
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="name"
+                                            id="eventName"
+                                            class="form-input"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-tag"></i>
+                                            Phân loại
+                                        </label>
+                                        <select name="category" id="eventCategory" class="form-select" required>
+                                            <option value="Âm nhạc">Âm nhạc</option>
+                                            <option value="Hội thảo">Hội thảo</option>
+                                            <option value="Thể thao">Thể thao</option>
+                                            <option value="Từ thiện">Từ thiện</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-map-marker-alt"></i>
+                                            Địa điểm
+                                        </label>
+                                        <input
+                                            type="text"
+                                            name="location"
+                                            id="eventLocation"
+                                            class="form-input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Time Section -->
+                            <div class="form-section">
+                                <h3>Thời gian</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-clock"></i>
+                                            Thời gian bắt đầu
+                                        </label>
+                                        <input
+                                            type="datetime-local"
+                                            name="startTime"
+                                            id="startTime"
+                                            class="form-input"
+                                            required
+                                        />
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-clock"></i>
+                                            Thời gian kết thúc
+                                        </label>
+                                        <input
+                                            type="datetime-local"
+                                            name="endTime"
+                                            id="endTime"
+                                            class="form-input"
+                                            required
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Settings Section -->
+                            <div class="form-section">
+                                <h3>Cài đặt</h3>
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>
+                                            <i class="fas fa-globe"></i>
+                                            Trạng thái
+                                        </label>
+                                        <select name="status" id="eventStatus" class="form-select">
+                                            <option value="Công khai">Công khai</option>
+                                            <option value="Nháp">Nháp</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group checkbox-group">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="featured" id="eventFeatured">
+                                            <i class="fas fa-star"></i>
+                                            Đánh dấu là sự kiện nổi bật
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Description Section -->
+                            <div class="form-section">
+                                <h3>Mô tả</h3>
+                                <div class="form-group">
+                                    <textarea
+                                        name="description"
+                                        id="eventDescription"
+                                        class="form-textarea"
+                                        rows="4"
+                                        required
+                                    ></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Ticket Section -->
+                            <div class="form-section">
+                                <div class="section-header">
+                                    <h3>Loại vé</h3>
+                                    <button type="button" class="add-ticket-btn" id="addTicketBtn">
+                                        <i class="fas fa-plus"></i>
+                                        Thêm loại vé
+                                    </button>
+                                </div>
+                                
+                                <div id="ticketTypesContainer">
+                                    <!-- Ticket types will be added here -->
+                                </div>
+                            </div>
+
+                            <!-- Form Buttons -->
+                            <div class="form-buttons">
+                                <button type="submit" class="submit-btn">
+                                    <i class="fas fa-save"></i>
+                                    Lưu thay đổi
+                                </button>
+                                <button type="button" class="cancel-btn" onclick="window.history.back()">
+                                    <i class="fas fa-times"></i>
+                                    Hủy
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id') || 'EVT001';
+
+        // Giả lập dữ liệu sự kiện
+        const eventData = {
+            name: 'Hòa nhạc mùa xuân 2025',
+            category: 'Âm nhạc',
+            location: 'Nhà hát lớn Hà Nội',
+            startTime: '2025-04-10T19:30',
+            endTime: '2025-04-10T21:30',
+            status: 'Công khai',
+            featured: true,
+            description: 'Đây là buổi hòa nhạc đặc biệt chào mừng mùa xuân 2025, với sự tham gia của nhiều nghệ sĩ nổi tiếng trong và ngoài nước. Chương trình bao gồm các tiết mục nhạc cổ điển, hiện đại và dân gian, hứa hẹn mang đến một đêm nhạc đáng nhớ cho khán giả.',
+            image: 'https://via.placeholder.com/800x400',
+            tickets: [
+                {
+                    name: 'Vé VIP',
+                    price: '1500000',
+                    quantity: '100',
+                    description: 'Ghế ngồi hàng đầu, bao gồm nước uống'
+                },
+                {
+                    name: 'Vé Thường',
+                    price: '800000',
+                    quantity: '300',
+                    description: 'Ghế ngồi khu vực giữa'
+                },
+                {
+                    name: 'Vé Kinh tế',
+                    price: '500000',
+                    quantity: '100',
+                    description: 'Ghế ngồi khu vực sau'
+                }
+            ]
+        };
+
+        // Cập nhật form với dữ liệu sự kiện
+        document.getElementById('eventName').value = eventData.name;
+        document.getElementById('eventCategory').value = eventData.category;
+        document.getElementById('eventLocation').value = eventData.location;
+        document.getElementById('startTime').value = eventData.startTime;
+        document.getElementById('endTime').value = eventData.endTime;
+        document.getElementById('eventStatus').value = eventData.status;
+        document.getElementById('eventFeatured').checked = eventData.featured;
+        document.getElementById('eventDescription').value = eventData.description;
+        document.getElementById('imagePreview').src = eventData.image;
+
+        // Thêm loại vé
+        function addTicketType() {
+            const container = document.getElementById('ticketTypesContainer');
+            const ticketIndex = container.children.length;
+            const ticketHtml = `
+                <div class="ticket-form" data-index="${ticketIndex}">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Tên loại vé</label>
+                            <input
+                                type="text"
+                                name="ticketName"
+                                class="form-input"
+                                placeholder="VIP, Thường,..."
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Giá vé (VND)</label>
+                            <input
+                                type="number"
+                                name="ticketPrice"
+                                class="form-input"
+                                placeholder="Nhập giá vé"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Số lượng</label>
+                            <input
+                                type="number"
+                                name="ticketQuantity"
+                                class="form-input"
+                                placeholder="Nhập số lượng"
+                                required
+                            />
+                        </div>
+                        <div class="form-group">
+                            <label>Mô tả</label>
+                            <input
+                                type="text"
+                                name="ticketDescription"
+                                class="form-input"
+                                placeholder="Mô tả loại vé"
+                                required
+                            />
+                        </div>
+                        ${ticketIndex > 0 ? `
+                            <button type="button" class="remove-ticket-btn" onclick="removeTicketType(${ticketIndex})">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', ticketHtml);
+        }
+
+        // Xóa loại vé
+        function removeTicketType(index) {
+            const container = document.getElementById('ticketTypesContainer');
+            const ticketForm = container.querySelector(`[data-index="${index}"]`);
+            if (ticketForm) {
+                ticketForm.remove();
+            }
+        }
+
+        // Thêm các loại vé từ dữ liệu
+        eventData.tickets.forEach(ticket => {
+            addTicketType();
+            const lastTicket = document.querySelector('.ticket-form:last-child');
+            lastTicket.querySelector('[name="ticketName"]').value = ticket.name;
+            lastTicket.querySelector('[name="ticketPrice"]').value = ticket.price;
+            lastTicket.querySelector('[name="ticketQuantity"]').value = ticket.quantity;
+            lastTicket.querySelector('[name="ticketDescription"]').value = ticket.description;
+        });
+
+        // Xử lý upload ảnh
+        document.getElementById('event-image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('imagePreview').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Xử lý xóa ảnh
+        document.getElementById('removeImageBtn').addEventListener('click', function() {
+            document.getElementById('imagePreview').src = 'https://via.placeholder.com/800x400';
+            document.getElementById('event-image').value = '';
+        });
+
+        // Xử lý form submit
+        document.getElementById('editEventForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Lấy dữ liệu từ form
+            const formData = {
+                name: document.getElementById('eventName').value,
+                category: document.getElementById('eventCategory').value,
+                location: document.getElementById('eventLocation').value,
+                startTime: document.getElementById('startTime').value,
+                endTime: document.getElementById('endTime').value,
+                status: document.getElementById('eventStatus').value,
+                featured: document.getElementById('eventFeatured').checked,
+                description: document.getElementById('eventDescription').value,
+                tickets: []
+            };
+
+            // Lấy dữ liệu các loại vé
+            document.querySelectorAll('.ticket-form').forEach(form => {
+                formData.tickets.push({
+                    name: form.querySelector('[name="ticketName"]').value,
+                    price: form.querySelector('[name="ticketPrice"]').value,
+                    quantity: form.querySelector('[name="ticketQuantity"]').value,
+                    description: form.querySelector('[name="ticketDescription"]').value
+                });
+            });
+
+            // Giả lập API call
+            console.log('Cập nhật sự kiện:', formData);
+            
+            // Hiển thị thông báo thành công
+            alert('Cập nhật sự kiện thành công!');
+            
+            // Chuyển về trang chi tiết
+            window.location.href = `event-detail.html?id=${eventId}`;
+        });
+
+        // Thêm sự kiện cho nút thêm loại vé
+        document.getElementById('addTicketBtn').addEventListener('click', addTicketType);
+    </script>
+</body>
+</html> 

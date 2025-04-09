@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý người dùng - Admin Panel</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="users.html">
+                        <i class="fas fa-users"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Quản lý sự kiện</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Quản lý vé</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="payments.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Quản lý giao dịch</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Báo cáo thống kê</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-footer">
+                <p>© 2025 Admin Panel</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <h1>Quản lý người dùng</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm..." id="searchInput">
+                        <button class="search-btn" title="Tìm kiếm" onclick="handleSearch()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="/admin-avatar.png" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="filter-section">
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label>Vai trò:</label>
+                            <select class="filter-select" id="roleFilter">
+                                <option value="all">Tất cả</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>Trạng thái:</label>
+                            <select class="filter-select" id="statusFilter">
+                                <option value="all">Tất cả</option>
+                                <option value="active">Hoạt động</option>
+                                <option value="inactive">Vô hiệu hóa</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>Sắp xếp theo:</label>
+                            <select class="filter-select" id="sortFilter">
+                                <option value="name">Tên</option>
+                                <option value="date">Ngày tạo</option>
+                                <option value="status">Trạng thái</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-buttons">
+                           <button class="filter-button" onclick="applyFilters()">
+                                <i class="fas fa-filter"></i>
+                                Lọc
+                            </button>
+                            <button class="reset-button" onclick="resetFilters()">Đặt lại</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-container">
+                    <div class="section-header">
+                        <h2>Danh sách người dùng</h2>
+                        <button class="submit-btn" onclick="window.location.href='add-user.html'">
+                            <i class="fas fa-plus"></i>
+                            Thêm người dùng
+                        </button>
+                    </div>
+
+                    <table class="user-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Họ tên</th>
+                                <th>Email</th>
+                                <th>Vai trò</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <!-- Table content will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+
+                    <div class="pagination">
+                        <a href="#" onclick="goToPage('first')" title="Trang đầu">&laquo;</a>
+                        <a href="#" onclick="goToPage('prev')" title="Trang trước">&lsaquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span>...</span>
+                        <a href="#">10</a>
+                        <a href="#" onclick="goToPage('next')" title="Trang sau">&rsaquo;</a>
+                        <a href="#" onclick="goToPage('last')" title="Trang cuối">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample user data (in a real application, this would come from an API)
+        const users = [
+            { 
+                id: '001', 
+                name: 'Kim Phượng', 
+                email: 'kimphuong@email.com', 
+                role: 'User', 
+                status: 'Hoạt động',
+                createdAt: '20/03/2025'
+            },
+            { 
+                id: '002', 
+                name: 'Như Ngọc', 
+                email: 'nhungoc@email.com', 
+                role: 'Admin', 
+                status: 'Hoạt động',
+                createdAt: '15/03/2025'
+            },
+            { 
+                id: '003', 
+                name: 'Như Quỳnh', 
+                email: 'nhuquynh@email.com', 
+                role: 'User', 
+                status: 'Vô hiệu hóa',
+                createdAt: '10/03/2025'
+            },
+            { 
+                id: '004', 
+                name: 'Minh Trí', 
+                email: 'minhtri@email.com', 
+                role: 'User', 
+                status: 'Hoạt động',
+                createdAt: '05/03/2025'
+            },
+            { 
+                id: '005', 
+                name: 'Minh Thông', 
+                email: 'minhthong@email.com', 
+                role: 'User', 
+                status: 'Hoạt động',
+                createdAt: '01/03/2025'
+            }
+        ];
+
+        // Function to render users table
+        function renderUsers(userList) {
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+            
+            userList.forEach(user => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.role}</td>
+                    <td>
+                        <span class="status-badge ${user.status === 'Hoạt động' ? 'status-completed' : 'status-failed'}">
+                            ${user.status}
+                        </span>
+                    </td>
+                    <td>${user.createdAt}</td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view-btn" title="Xem" onclick="viewUser('${user.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn edit-btn" title="Sửa" onclick="editUser('${user.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="action-btn delete-btn" title="Xóa" onclick="deleteUser('${user.id}')">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // User actions
+        function viewUser(userId) {
+            window.location.href = `user-detail.html?id=${userId}`;
+        }
+
+        function editUser(userId) {
+            window.location.href = `edit-user.html?id=${userId}`;
+        }
+
+        function deleteUser(userId) {
+            if (confirm('Bạn có chắc chắn muốn xóa người dùng này?')) {
+                // Implement delete logic here
+                console.log('Deleting user:', userId);
+                // Refresh the table
+                applyFilters();
+            }
+        }
+
+        // Search function
+        function handleSearch() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const filteredUsers = users.filter(user => 
+                user.name.toLowerCase().includes(searchTerm) ||
+                user.email.toLowerCase().includes(searchTerm) ||
+                user.id.toLowerCase().includes(searchTerm)
+            );
+            renderUsers(filteredUsers);
+        }
+
+        // Filter functions
+        function applyFilters() {
+            const roleFilter = document.getElementById('roleFilter').value;
+            const statusFilter = document.getElementById('statusFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            let filteredUsers = [...users];
+
+            // Apply search filter
+            if (searchTerm) {
+                filteredUsers = filteredUsers.filter(user => 
+                    user.name.toLowerCase().includes(searchTerm) ||
+                    user.email.toLowerCase().includes(searchTerm) ||
+                    user.id.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            // Apply role filter
+            if (roleFilter !== 'all') {
+                filteredUsers = filteredUsers.filter(user => 
+                    user.role.toLowerCase() === roleFilter
+                );
+            }
+
+            // Apply status filter
+            if (statusFilter !== 'all') {
+                const status = statusFilter === 'active' ? 'Hoạt động' : 'Vô hiệu hóa';
+                filteredUsers = filteredUsers.filter(user => 
+                    user.status === status
+                );
+            }
+
+            // Apply sorting
+            filteredUsers.sort((a, b) => {
+                switch (sortFilter) {
+                    case 'name':
+                        return a.name.localeCompare(b.name);
+                    case 'date':
+                        return new Date(b.createdAt.split('/').reverse().join('-')) - 
+                               new Date(a.createdAt.split('/').reverse().join('-'));
+                    case 'status':
+                        return a.status.localeCompare(b.status);
+                    default:
+                        return 0;
+                }
+            });
+
+            renderUsers(filteredUsers);
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('roleFilter').value = 'all';
+            document.getElementById('statusFilter').value = 'all';
+            document.getElementById('sortFilter').value = 'name';
+            renderUsers(users);
+        }
+
+        // Pagination functions
+        function goToPage(action) {
+            // Implement pagination logic here
+            console.log('Navigating to:', action);
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', () => {
+            renderUsers(users);
+
+            // Add search input event listener
+            document.getElementById('searchInput').addEventListener('keyup', function(event) {
+                if (event.key === 'Enter') {
+                    handleSearch();
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

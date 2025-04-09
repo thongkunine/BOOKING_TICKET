@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .payment-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9ff 0%, #eef2ff 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 40px 0;
+        }
+
+        .payment-page::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 75, 90, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 198, 255, 0.05) 0%, transparent 50%);
+            animation: gradient 15s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .payment-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .payment-header {
+            text-align: center;
+            margin-bottom: 40px;
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease forwards;
+        }
+
+        @keyframes slideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .payment-title {
+            font-size: 36px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 16px;
+            background: linear-gradient(45deg, #ff4b5a, #00c6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .payment-subtitle {
+            font-size: 18px;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .payment-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: slideUp 0.8s ease 0.2s forwards;
+        }
+
+        .payment-methods {
+            padding: 40px;
+        }
+
+        .method-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin-bottom: 24px;
+        }
+
+        .method-list {
+            display: grid;
+            gap: 16px;
+        }
+
+        .method-item {
+            background: rgba(248, 249, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            border-radius: 16px;
+            padding: 24px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .method-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ff4b5a, #00c6ff);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .method-item:hover::before {
+            opacity: 0.1;
+        }
+
+        .method-item.selected {
+            border-color: #ff4b5a;
+            background: rgba(255, 75, 90, 0.05);
+        }
+
+        .method-item.selected::before {
+            opacity: 0.1;
+        }
+
+        .method-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .method-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #ff4b5a;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .method-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+        }
+
+        .method-desc {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .qr-code {
+            text-align: center;
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .qr-code img {
+            max-width: 200px;
+            height: auto;
+            margin-bottom: 16px;
+        }
+
+        .qr-instruction {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .cash-payment {
+            padding: 24px;
+            background: white;
+            border-radius: 12px;
+            margin-top: 16px;
+        }
+
+        .cash-instruction {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .cash-address {
+            font-size: 16px;
+            font-weight: 500;
+            color: #1a1a1a;
+            margin-bottom: 8px;
+        }
+
+        .cash-time {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .payment-summary {
+            background: linear-gradient(135deg, #ff4b5a, #00c6ff);
+            padding: 40px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-summary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.1;
+            animation: float 20s linear infinite;
+        }
+
+        .summary-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 16px;
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .btn-pay {
+            width: 100%;
+            padding: 16px;
+            background: white;
+            color: #ff4b5a;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 32px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-pay:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-pay i {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-pay:hover i {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .payment-content {
+                grid-template-columns: 1fr;
+            }
+
+            .payment-methods {
+                padding: 24px;
+            }
+
+            .payment-summary {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-page">
+        <div class="payment-container">
+            <div class="payment-header">
+                <h1 class="payment-title">Thanh toán</h1>
+                <p class="payment-subtitle">Vui lòng chọn phương thức thanh toán phù hợp</p>
+            </div>
+
+            <div class="payment-content">
+                <div class="payment-methods">
+                    <h2 class="method-title">Phương thức thanh toán</h2>
+                    <div class="method-list">
+                        <div class="method-item selected">
+                            <div class="method-header">
+                                <div class="method-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
+                                <div class="method-name">Quét mã QR</div>
+                            </div>
+                            <div class="method-desc">Quét mã QR để thanh toán qua ví điện tử hoặc ngân hàng</div>
+                            <div class="qr-code">
+                                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=EVENTBOX-123456" alt="QR Code">
+                                <div class="qr-instruction">
+                                    Mở ứng dụng ngân hàng hoặc ví điện tử của bạn và quét mã QR để thanh toán
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="method-item">
+                            <div class="method-header">
+                                <div class="method-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="method-name">Thanh toán tiền mặt</div>
+                            </div>
+                            <div class="method-desc">Thanh toán trực tiếp tại văn phòng EventBox</div>
+                            <div class="cash-payment">
+                                <div class="cash-instruction">
+                                    Vui lòng đến văn phòng EventBox để thanh toán tiền mặt và nhận vé
+                                </div>
+                                <div class="cash-address">
+                                    Địa chỉ: 123 Đường ABC, Quận XYZ, TP.HCM
+                                </div>
+                                <div class="cash-time">
+                                    Thời gian làm việc: 8:00 - 17:00 từ Thứ 2 đến Thứ 6
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="payment-summary">
+                    <h3 class="summary-title">Tóm tắt đơn hàng</h3>
+                    <div class="summary-item">
+                        <span>Vé Standard</span>
+                        <span>500.000đ</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Số lượng</span>
+                        <span>1</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Phí dịch vụ</span>
+                        <span>50.000đ</span>
+                    </div>
+                    <div class="summary-total">
+                        <span>Tổng cộng</span>
+                        <span>550.000đ</span>
+                    </div>
+                    <button class="btn-pay">
+                        <i class="fas fa-check"></i>
+                        Xác nhận thanh toán
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Payment method selection
+        const methodItems = document.querySelectorAll('.method-item');
+        methodItems.forEach(item => {
+            item.addEventListener('click', () => {
+                methodItems.forEach(method => method.classList.remove('selected'));
+                item.classList.add('selected');
+            });
+        });
+    </script>
+</body>
+</html> 

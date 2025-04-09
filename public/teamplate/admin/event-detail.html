@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sự kiện</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li><a href="users.html"><i class="fas fa-users"></i> Quản lý người dùng</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Quản lý sự kiện</a></li>
+                <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Quản lý vé</a></li>
+                <li><a href="payments.html"><i class="fas fa-credit-card"></i> Quản lý thanh toán</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Báo cáo thống kê</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-button" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h1>Chi tiết sự kiện</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://via.placeholder.com/40" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="event-detail-container">
+                    <div class="event-detail-card">
+                        <!-- Event Header -->
+                        <div class="event-header">
+                            <div class="event-cover">
+                                <img src="https://via.placeholder.com/800x400" alt="Event Cover">
+                            </div>
+                            <div class="event-title">
+                                <h1 id="eventName">Hòa nhạc mùa xuân 2025</h1>
+                                <div class="event-meta">
+                                    <span class="event-time">
+                                        <i class="fas fa-calendar"></i>
+                                        <span id="eventTime">10/04/2025 19:30 - 10/04/2025 21:30</span>
+                                    </span>
+                                    <span class="event-location">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span id="eventLocation">Nhà hát lớn Hà Nội</span>
+                                    </span>
+                                    <span class="category-badge category-music">
+                                        <i class="fas fa-tag"></i>
+                                        <span id="eventCategory">Âm nhạc</span>
+                                    </span>
+                                    <span class="status-badge status-completed">
+                                        <i class="fas fa-globe"></i>
+                                        <span id="eventStatus">Công khai</span>
+                                    </span>
+                                    <span class="featured-badge">
+                                        <i class="fas fa-star"></i>
+                                        Nổi bật
+                                    </span>
+                                    <span class="event-tickets">
+                                        <i class="fas fa-ticket-alt"></i>
+                                        <span id="eventTickets">450/500 vé khả dụng</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <button class="edit-btn" onclick="window.location.href='edit-event.html?id=EVT001'">
+                                <i class="fas fa-edit"></i>
+                                Chỉnh sửa sự kiện
+                            </button>
+                        </div>
+
+                        <!-- Event Description -->
+                        <div class="event-section">
+                            <h3>Mô tả chi tiết</h3>
+                            <p id="eventDescription">Đây là buổi hòa nhạc đặc biệt chào mừng mùa xuân 2025, với sự tham gia của nhiều nghệ sĩ nổi tiếng trong và ngoài nước. Chương trình bao gồm các tiết mục nhạc cổ điển, hiện đại và dân gian, hứa hẹn mang đến một đêm nhạc đáng nhớ cho khán giả.</p>
+                        </div>
+
+                        <!-- Ticket Types -->
+                        <div class="event-section">
+                            <h3>Danh sách loại vé</h3>
+                            <div class="ticket-types-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Loại vé</th>
+                                            <th>Số lượng</th>
+                                            <th>Giá (VND)</th>
+                                            <th>Mô tả</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ticketTypesBody">
+                                        <tr>
+                                            <td>Vé VIP</td>
+                                            <td>100</td>
+                                            <td>1,500,000</td>
+                                            <td>Ghế ngồi hàng đầu, bao gồm nước uống</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vé Thường</td>
+                                            <td>300</td>
+                                            <td>800,000</td>
+                                            <td>Ghế ngồi khu vực giữa</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vé Kinh tế</td>
+                                            <td>100</td>
+                                            <td>500,000</td>
+                                            <td>Ghế ngồi khu vực sau</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tickets-summary">
+                                Số lượng vé còn lại: <span id="remainingTickets">450</span>/<span id="totalTickets">500</span>
+                            </div>
+                        </div>
+
+                        <!-- Order List -->
+                        <div class="event-section">
+                            <h3>Danh sách đơn đặt vé</h3>
+                            <div class="orders-table">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Mã đơn</th>
+                                            <th>Khách hàng</th>
+                                            <th>Loại vé</th>
+                                            <th>Số lượng</th>
+                                            <th>Tổng tiền (VND)</th>
+                                            <th>Ngày đặt</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="ordersBody">
+                                        <tr>
+                                            <td>ORD001</td>
+                                            <td>Nguyễn Văn A</td>
+                                            <td>Vé VIP</td>
+                                            <td>2</td>
+                                            <td>3,000,000</td>
+                                            <td>01/04/2025</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ORD002</td>
+                                            <td>Trần Thị B</td>
+                                            <td>Vé Thường</td>
+                                            <td>3</td>
+                                            <td>2,400,000</td>
+                                            <td>02/04/2025</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ORD003</td>
+                                            <td>Lê Văn C</td>
+                                            <td>Vé Kinh tế</td>
+                                            <td>5</td>
+                                            <td>2,500,000</td>
+                                            <td>03/04/2025</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const eventId = urlParams.get('id') || 'EVT001';
+
+        // Giả lập dữ liệu sự kiện
+        const eventDetail = {
+            id: eventId,
+            name: 'Hòa nhạc mùa xuân 2025',
+            category: 'Âm nhạc',
+            location: 'Nhà hát lớn Hà Nội',
+            startTime: '10/04/2025 19:30',
+            endTime: '10/04/2025 21:30',
+            status: 'Công khai',
+            featured: true,
+            description: 'Đây là buổi hòa nhạc đặc biệt chào mừng mùa xuân 2025, với sự tham gia của nhiều nghệ sĩ nổi tiếng trong và ngoài nước. Chương trình bao gồm các tiết mục nhạc cổ điển, hiện đại và dân gian, hứa hẹn mang đến một đêm nhạc đáng nhớ cho khán giả.',
+            totalTickets: 500,
+            remainingTickets: 450,
+            ticketTypes: [
+                {
+                    name: 'Vé VIP',
+                    price: 1500000,
+                    quantity: 100,
+                    description: 'Ghế ngồi hàng đầu, bao gồm nước uống'
+                },
+                {
+                    name: 'Vé Thường',
+                    price: 800000,
+                    quantity: 300,
+                    description: 'Ghế ngồi khu vực giữa'
+                },
+                {
+                    name: 'Vé Kinh tế',
+                    price: 500000,
+                    quantity: 100,
+                    description: 'Ghế ngồi khu vực sau'
+                }
+            ],
+            orders: [
+                {
+                    id: 'ORD001',
+                    customerName: 'Nguyễn Văn A',
+                    ticketType: 'Vé VIP',
+                    quantity: 2,
+                    total: 3000000,
+                    orderDate: '01/04/2025'
+                },
+                {
+                    id: 'ORD002',
+                    customerName: 'Trần Thị B',
+                    ticketType: 'Vé Thường',
+                    quantity: 3,
+                    total: 2400000,
+                    orderDate: '02/04/2025'
+                },
+                {
+                    id: 'ORD003',
+                    customerName: 'Lê Văn C',
+                    ticketType: 'Vé Kinh tế',
+                    quantity: 5,
+                    total: 2500000,
+                    orderDate: '03/04/2025'
+                }
+            ]
+        };
+
+        // Format số tiền
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN').format(price);
+        }
+
+        // Cập nhật thông tin sự kiện
+        document.getElementById('eventName').textContent = eventDetail.name;
+        document.getElementById('eventTime').textContent = `${eventDetail.startTime} - ${eventDetail.endTime}`;
+        document.getElementById('eventLocation').textContent = eventDetail.location;
+        document.getElementById('eventCategory').textContent = eventDetail.category;
+        document.getElementById('eventStatus').textContent = eventDetail.status;
+        document.getElementById('eventTickets').textContent = `${eventDetail.remainingTickets}/${eventDetail.totalTickets} vé khả dụng`;
+        document.getElementById('eventDescription').textContent = eventDetail.description;
+        document.getElementById('remainingTickets').textContent = eventDetail.remainingTickets;
+        document.getElementById('totalTickets').textContent = eventDetail.totalTickets;
+
+        // Cập nhật danh sách loại vé
+        const ticketTypesBody = document.getElementById('ticketTypesBody');
+        ticketTypesBody.innerHTML = eventDetail.ticketTypes.map(ticket => `
+            <tr>
+                <td>${ticket.name}</td>
+                <td>${ticket.quantity}</td>
+                <td>${formatPrice(ticket.price)}</td>
+                <td>${ticket.description}</td>
+            </tr>
+        `).join('');
+
+        // Cập nhật danh sách đơn hàng
+        const ordersBody = document.getElementById('ordersBody');
+        ordersBody.innerHTML = eventDetail.orders.map(order => `
+            <tr>
+                <td>${order.id}</td>
+                <td>${order.customerName}</td>
+                <td>${order.ticketType}</td>
+                <td>${order.quantity}</td>
+                <td>${formatPrice(order.total)}</td>
+                <td>${order.orderDate}</td>
+            </tr>
+        `).join('');
+    </script>
+</body>
+</html> 

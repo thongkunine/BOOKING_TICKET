@@ -1,0 +1,67 @@
+{
+    "events": [
+        {
+            "id": 1,
+            "title": "Lễ hội âm nhạc mùa hè 2024",
+            "cover": "event1.jpg",
+            "gallery": [
+                "event1-1.jpg",
+                "event1-2.jpg",
+                "event1-3.jpg"
+            ]
+        },
+        {
+            "id": 2,
+            "title": "Giải bóng đá V-League 2024",
+            "cover": "event2.jpg",
+            "gallery": [
+                "event2-1.jpg",
+                "event2-2.jpg",
+                "event2-3.jpg"
+            ]
+        }
+    ],
+    "categories": [
+        {
+            "id": "concert",
+            "icon": "music-icon.png",
+            "banner": "concert-banner.jpg"
+        },
+        {
+            "id": "sports",
+            "icon": "sports-icon.png",
+            "banner": "sports-banner.jpg"
+        },
+        {
+            "id": "conference",
+            "icon": "conference-icon.png",
+            "banner": "conference-banner.jpg"
+        },
+        {
+            "id": "art",
+            "icon": "art-icon.png",
+            "banner": "art-banner.jpg"
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "name": "Nguyễn Văn A",
+            "avatar": "avatar1.jpg"
+        },
+        {
+            "id": 2,
+            "name": "Trần Thị B",
+            "avatar": "avatar2.jpg"
+        }
+    ],
+    "logos": {
+        "main": "logo.png",
+        "footer": "logo-white.png"
+    },
+    "payment": {
+        "vnpay": "vnpay-logo.png",
+        "momo": "momo-logo.png",
+        "bank": "bank-logo.png"
+    }
+} 

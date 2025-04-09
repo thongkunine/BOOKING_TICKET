@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lịch sự kiện - EventBox</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/public/css/style.css">
+  <link rel="stylesheet" href="/public/css/calendar.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="index.html" class="logo">EventBox</a>
+        <div class="nav-links">
+          <a href="index.html" class="nav-link">Khám phá</a>
+          <a href="lich.html" class="nav-link active">Lịch</a>
+          <a href="blog.html" class="nav-link">Blog</a>
+          <a href="create-event.html" class="nav-link">Tạo sự kiện</a>
+        </div>
+        <div class="nav-right">
+          <div class="language-switcher">
+            <button class="btn-lang">
+              <i class="fas fa-globe"></i>
+              Tiếng Việt
+              <i class="fas fa-chevron-down"></i>
+            </button>
+            <div class="lang-dropdown">
+              <a href="#">English</a>
+              <a href="#">Tiếng Việt</a>
+            </div>
+          </div>
+          <div class="nav-buttons">
+            <div class="auth-buttons">
+              <a href="login.html" class="btn-login">
+                <i class="fas fa-sign-in-alt"></i>
+                Đăng nhập
+              </a>
+              <a href="register.html" class="btn-register">
+                <i class="fas fa-user-plus"></i>
+                Đăng ký
+              </a>
+            </div>
+          </div>
+        </div>
+        <button class="mobile-menu-btn">
+          <i class="fas fa-bars"></i>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Calendar Page -->
+  <section class="calendar-page">
+    <div class="container">
+      <div class="page-header">
+        <h1 class="page-title">Lịch sự kiện</h1>
+        <div class="calendar-filters">
+          <a href="lich.html" class="calendar-filter active" id="filter-all"><i class="fas fa-calendar-alt"></i> Tất cả</a>
+          <a href="lich.html?filter=today" class="calendar-filter" id="filter-today"><i class="fas fa-sun"></i> Hôm nay</a>
+          <a href="lich.html?filter=week" class="calendar-filter" id="filter-week"><i class="fas fa-calendar-week"></i> Tuần này</a>
+          <a href="lich.html?filter=month" class="calendar-filter" id="filter-month"><i class="fas fa-calendar"></i> Tháng này</a>
+        </div>
+      </div>
+
+      <div class="calendar-view">
+        <div class="calendar-sidebar">
+          <div class="calendar-month">
+            <h3>Tháng 6, 2024</h3>
+            <div class="calendar-days">
+              <div class="calendar-day">
+                <span class="day-number">1</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">2</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">3</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">4</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">5</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">6</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">7</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">8</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">9</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">10</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">11</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">12</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">13</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">14</span>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">15</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">19:00</span>
+                    <span class="event-title">Lễ hội âm nhạc quốc tế</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">16</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">17</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">18</span>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">19</span>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">20</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">09:00</span>
+                    <span class="event-title">Workshop Công nghệ AI</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">21</span>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">22</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">14:00</span>
+                    <span class="event-title">Triển lãm Nghệ thuật Đương đại</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">23</span>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">24</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">06:00</span>
+                    <span class="event-title">Yoga trong công viên</span>
+                  </div>
+                  <div class="day-event">
+                    <span class="event-time">14:00</span>
+                    <span class="event-title">Workshop Kỹ năng mềm</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">25</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">20:00</span>
+                    <span class="event-title">Acoustic Coffee Night</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day">
+                <span class="day-number">26</span>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">27</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">17:00</span>
+                    <span class="event-title">Lễ hội Ẩm thực Đường phố</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">28</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">18:30</span>
+                    <span class="event-title">Giao lưu Startup</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">29</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">08:00</span>
+                    <span class="event-title">Tư vấn Sức khỏe Cộng đồng</span>
+                  </div>
+                </div>
+              </div>
+              <div class="calendar-day has-event">
+                <span class="day-number">30</span>
+                <div class="day-events">
+                  <div class="day-event">
+                    <span class="event-time">10:00</span>
+                    <span class="event-title">Triển lãm Nghệ thuật Số</span>
+                  </div>
+                  <div class="day-event">
+                    <span class="event-time">15:00</span>
+                    <span class="event-title">Hướng dẫn Học tiếng Anh</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="calendar-events">
+          <div class="calendar-event">
+            <div class="event-date">
+              <span class="date">15</span>
+              <span class="month">Th6</span>
+              <div class="event-badge">Nổi bật</div>
+            </div>
+            <div class="event-info">
+              <h3>Lễ hội âm nhạc quốc tế</h3>
+              <div class="event-details">
+                <p><i class="fas fa-clock"></i> 19:00 - 23:00</p>
+                <p><i class="fas fa-map-marker-alt"></i> Sân vận động Mỹ Đình</p>
+                <p><i class="fas fa-users"></i> 500+ người tham gia</p>
+              </div>
+            </div>
+            <div class="event-action">
+              <span class="event-price">Từ 500.000đ</span>
+              <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+            </div>
+          </div>
+          <div class="calendar-event">
+            <div class="event-date">
+              <span class="date">20</span>
+              <span class="month">Th6</span>
+              <div class="event-badge">Mới</div>
+            </div>
+            <div class="event-info">
+              <h3>Workshop Công nghệ AI</h3>
+              <div class="event-details">
+                <p><i class="fas fa-clock"></i> 09:00 - 17:00</p>
+                <p><i class="fas fa-map-marker-alt"></i> Trung tâm Hội nghị Quốc gia</p>
+                <p><i class="fas fa-users"></i> 200+ người tham gia</p>
+              </div>
+            </div>
+            <div class="event-action">
+              <span class="event-price">Từ 200.000đ</span>
+              <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+            </div>
+          </div>
+          <div class="calendar-event">
+            <div class="event-date">
+              <span class="date">22</span>
+              <span class="month">Th6</span>
+            </div>
+            <div class="event-info">
+              <h3>Triển lãm Nghệ thuật Đương đại</h3>
+              <div class="event-details">
+                <p><i class="fas fa-clock"></i> 14:00 - 18:00</p>
+                <p><i class="fas fa-map-marker-alt"></i> Bảo tàng Mỹ thuật Việt Nam</p>
+                <p><i class="fas fa-users"></i> 300+ người tham gia</p>
+              </div>
+            </div>
+            <div class="event-action">
+              <span class="event-price">Từ 100.000đ</span>
+              <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+            </div>
+          </div>
+          <div class="calendar-event">
+            <div class="event-date">
+              <span class="date">24</span>
+              <span class="month">Th6</span>
+            </div>
+            <div class="event-info">
+              <h3>Yoga trong công viên</h3>
+              <div class="event-details">
+                <p><i class="fas fa-clock"></i> 06:00 - 07:30</p>
+                <p><i class="fas fa-map-marker-alt"></i> Công viên Tao Đàn</p>
+                <p><i class="fas fa-users"></i> 50+ người tham gia</p>
+              </div>
+            </div>
+            <div class="event-action">
+              <span class="event-price">Miễn phí</span>
+              <a href="payment.html" class="btn btn-primary">Đăng ký</a>
+            </div>
+          </div>
+          <div class="calendar-event">
+            <div class="event-date">
+              <span class="date">24</span>
+              <span class="month">Th6</span>
+            </div>
+            <div class="event-info">
+              <h3>Workshop Kỹ năng mềm</h3>
+              <div class="event-details">
+                <p><i class="fas fa-clock"></i> 14:00 - 17:00</p>
+                <p><i class="fas fa-map-marker-alt"></i> WeWork Office</p>
+                <p><i class="fas fa-users"></i> 100+ người tham gia</p>
+              </div>
+            </div>
+            <div class="event-action">
+              <span class="event-price">Từ 300.000đ</span>
+              <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+            </div>
+          </div>
+          <div class="calendar-event">
+            <div class="event-date">
+              <span class="date">25</span>
+              <span class="month">Th6</span>
+            </div>
+            <div class="event-info">
+              <h3>Acoustic Coffee Night</h3>
+              <div class="event-details">
+                <p><i class="fas fa-clock"></i> 20:00 - 22:30</p>
+                <p><i class="fas fa-map-marker-alt"></i> The Coffee House</p>
+                <p><i class="fas fa-users"></i> 80+ người tham gia</p>
+              </div>
+            </div>
+            <div class="event-action">
+              <span class="event-price">Từ 150.000đ</span>
+              <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Về chúng tôi</h3>
+          <a href="#" class="footer-link">Giới thiệu</a>
+          <a href="#" class="footer-link">Điều khoản sử dụng</a>
+          <a href="#" class="footer-link">Chính sách bảo mật</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Hỗ trợ</h3>
+          <a href="#" class="footer-link">Câu hỏi thường gặp</a>
+          <a href="#" class="footer-link">Hướng dẫn đặt vé</a>
+          <a href="#" class="footer-link">Liên hệ</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Kết nối</h3>
+          <a href="#" class="footer-link">Facebook</a>
+          <a href="#" class="footer-link">Instagram</a>
+          <a href="#" class="footer-link">Twitter</a>
+        </div>
+        
+        <div class="footer-section">
+          <h3>Đăng ký nhận tin</h3>
+          <p class="newsletter-text">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt</p>
+          <div class="newsletter-form">
+            <input type="email" placeholder="Nhập email của bạn" class="newsletter-input">
+            <button class="newsletter-button">ĐĂNG KÝ</button>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2024 EventBox. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script>
+    // Xử lý filter từ URL
+    document.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const filter = urlParams.get('filter');
+      
+      // Xóa active class từ tất cả các filter
+      document.querySelectorAll('.calendar-filter').forEach(filter => {
+        filter.classList.remove('active');
+      });
+      
+      // Thêm active class cho filter được chọn
+      if (filter) {
+        document.getElementById('filter-' + filter).classList.add('active');
+      } else {
+        document.getElementById('filter-all').classList.add('active');
+      }
+      
+      // Hiển thị các sự kiện tương ứng với filter
+      const events = document.querySelectorAll('.calendar-event');
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
+      
+      if (filter === 'today') {
+        // Chỉ hiển thị sự kiện hôm nay
+        events.forEach(event => {
+          const eventDate = event.querySelector('.event-date .date').textContent;
+          const eventMonth = event.querySelector('.event-date .month').textContent;
+          // Logic đơn giản để kiểm tra ngày hôm nay
+          if (eventDate === today.getDate().toString() && eventMonth.includes('Th' + (today.getMonth() + 1))) {
+            event.style.display = 'flex';
+          } else {
+            event.style.display = 'none';
+          }
+        });
+      } else if (filter === 'week') {
+        // Hiển thị sự kiện trong tuần này
+        // Logic đơn giản: hiển thị tất cả sự kiện
+        events.forEach(event => {
+          event.style.display = 'flex';
+        });
+      } else if (filter === 'month') {
+        // Hiển thị sự kiện trong tháng này
+        // Logic đơn giản: hiển thị tất cả sự kiện
+        events.forEach(event => {
+          event.style.display = 'flex';
+        });
+      } else {
+        // Hiển thị tất cả sự kiện
+        events.forEach(event => {
+          event.style.display = 'flex';
+        });
+      }
+    });
+  </script>
+</body>
+</html> 

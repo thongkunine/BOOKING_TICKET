@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết tài khoản - Admin Panel</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li class="active">
+                    <a href="users.html">
+                        <i class="fas fa-users"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Quản lý sự kiện</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Quản lý vé</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="payments.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Quản lý giao dịch</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Báo cáo thống kê</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-footer">
+                <p>© 2025 Admin Panel</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-btn" onclick="window.location.href='users.html'">
+                        <i class="fas fa-arrow-left"></i>
+                        Quay lại
+                    </button>
+                    <h1>Chi tiết tài khoản</h1>
+                </div>
+                <div class="header-right">
+                    <div class="admin-profile">
+                        <img src="/admin-avatar.png" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Account Status -->
+                <div class="section-box">
+                    <div class="section-header">
+                        <h2>Trạng thái tài khoản</h2>
+                        <div class="status-badge" id="accountStatus">Đang tải...</div>
+                    </div>
+                    <div class="section-content">
+                        <div class="action-buttons">
+                            <button id="blockBtn" class="action-btn danger" onclick="handleBlockAccount()" style="display: none;">
+                                <i class="fas fa-ban"></i>
+                                Khóa tài khoản
+                            </button>
+                            <button id="unblockBtn" class="action-btn success" onclick="handleUnblockAccount()" style="display: none;">
+                                <i class="fas fa-unlock"></i>
+                                Mở khóa
+                            </button>
+                            <button class="action-btn" onclick="handleEditRole()">
+                                <i class="fas fa-user-cog"></i>
+                                Phân quyền
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Basic Information -->
+                <div class="section-box">
+                    <div class="section-header">
+                        <h2>Thông tin cơ bản</h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="user-profile">
+                            <div class="profile-image">
+                                <img id="userAvatar" src="/default-avatar.png" alt="User Avatar">
+                            </div>
+                            <div class="profile-info">
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <label>Họ tên:</label>
+                                        <span id="userName">Đang tải...</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Email:</label>
+                                        <span id="userEmail">Đang tải...</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Số điện thoại:</label>
+                                        <span id="userPhone">Đang tải...</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Ngày tham gia:</label>
+                                        <span id="joinDate">Đang tải...</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Vai trò:</label>
+                                        <span id="userRole">Đang tải...</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <label>Trạng thái xác thực:</label>
+                                        <span id="verificationStatus">Đang tải...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Activity Statistics -->
+                <div class="section-box">
+                    <div class="section-header">
+                        <h2>Thống kê hoạt động</h2>
+                    </div>
+                    <div class="section-content">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-ticket-alt"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Vé đã mua</h3>
+                                    <p id="ticketsBought">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Tổng chi tiêu</h3>
+                                    <p id="totalSpent">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Sự kiện tham gia</h3>
+                                    <p id="eventsAttended">0</p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <h3>Đánh giá trung bình</h3>
+                                    <p id="averageRating">0</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activities -->
+                <div class="section-box">
+                    <div class="section-header">
+                        <h2>Hoạt động gần đây</h2>
+                        <div class="section-actions">
+                            <select id="activityFilter" onchange="filterActivities()">
+                                <option value="all">Tất cả hoạt động</option>
+                                <option value="purchase">Mua vé</option>
+                                <option value="attendance">Tham gia sự kiện</option>
+                                <option value="review">Đánh giá</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="activity-timeline" id="activityTimeline">
+                            <!-- Activities will be populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Purchase History -->
+                <div class="section-box">
+                    <div class="section-header">
+                        <h2>Lịch sử giao dịch</h2>
+                        <div class="export-buttons">
+                            <button class="export-btn" onclick="exportData('pdf')">
+                                <i class="fas fa-file-pdf"></i>
+                                Xuất PDF
+                            </button>
+                            <button class="export-btn" onclick="exportData('excel')">
+                                <i class="fas fa-file-excel"></i>
+                                Xuất Excel
+                            </button>
+                        </div>
+                    </div>
+                    <div class="section-content">
+                        <div class="table-container">
+                            <table class="data-table">
+                                <thead>
+                                    <tr>
+                                        <th>Mã GD</th>
+                                        <th>Sự kiện</th>
+                                        <th>Loại vé</th>
+                                        <th>Số lượng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Thời gian</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="purchaseHistoryBody">
+                                    <!-- Purchase history will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample user data (in a real application, this would come from an API)
+        const userData = {
+            id: 'U001',
+            name: 'Nguyễn Văn A',
+            email: 'nguyenvana@email.com',
+            phone: '0901234567',
+            joinDate: '2024-01-15T08:30:00',
+            role: 'user',
+            status: 'active',
+            verified: true,
+            avatar: '/user-avatars/user1.jpg',
+            stats: {
+                ticketsBought: 15,
+                totalSpent: 5000000,
+                eventsAttended: 8,
+                averageRating: 4.5
+            },
+            activities: [
+                {
+                    type: 'purchase',
+                    eventName: 'Concert Mùa Hè 2025',
+                    time: '2025-06-15T14:30:00',
+                    details: 'Đã mua 2 vé VIP'
+                },
+                {
+                    type: 'attendance',
+                    eventName: 'Giải bóng đá từ thiện 2025',
+                    time: '2025-06-10T09:00:00',
+                    details: 'Đã tham gia sự kiện'
+                },
+                {
+                    type: 'review',
+                    eventName: 'Triển lãm Nghệ thuật',
+                    time: '2025-06-05T16:45:00',
+                    details: 'Đánh giá 5 sao'
+                }
+            ],
+            purchases: [
+                {
+                    id: 'P001',
+                    eventName: 'Concert Mùa Hè 2025',
+                    ticketType: 'VIP',
+                    quantity: 2,
+                    total: 2000000,
+                    time: '2025-06-15T14:30:00',
+                    status: 'completed'
+                },
+                {
+                    id: 'P002',
+                    eventName: 'Giải bóng đá từ thiện 2025',
+                    ticketType: 'Standard',
+                    quantity: 1,
+                    total: 500000,
+                    time: '2025-06-10T09:00:00',
+                    status: 'completed'
+                }
+            ]
+        };
+
+        // Function to format currency
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(amount);
+        }
+
+        // Function to format date
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleString('vi-VN');
+        }
+
+        // Function to get status badge class
+        function getStatusBadgeClass(status) {
+            switch (status) {
+                case 'active':
+                    return 'status-success';
+                case 'blocked':
+                    return 'status-failed';
+                case 'pending':
+                    return 'status-pending';
+                default:
+                    return '';
+            }
+        }
+
+        // Function to get status text
+        function getStatusText(status) {
+            switch (status) {
+                case 'active':
+                    return 'Hoạt động';
+                case 'blocked':
+                    return 'Đã khóa';
+                case 'pending':
+                    return 'Chờ xác thực';
+                default:
+                    return status;
+            }
+        }
+
+        // Function to load user details
+        function loadUserDetails() {
+            // Get user ID from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const userId = urlParams.get('id');
+
+            if (!userId) {
+                alert('Không tìm thấy thông tin người dùng!');
+                window.location.href = 'users.html';
+                return;
+            }
+
+            // Update account status
+            const statusBadge = document.getElementById('accountStatus');
+            statusBadge.textContent = getStatusText(userData.status);
+            statusBadge.className = `status-badge ${getStatusBadgeClass(userData.status)}`;
+
+            // Show/hide block/unblock buttons based on status
+            document.getElementById('blockBtn').style.display = userData.status === 'active' ? 'block' : 'none';
+            document.getElementById('unblockBtn').style.display = userData.status === 'blocked' ? 'block' : 'none';
+
+            // Update basic information
+            document.getElementById('userAvatar').src = userData.avatar;
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userEmail').textContent = userData.email;
+            document.getElementById('userPhone').textContent = userData.phone;
+            document.getElementById('joinDate').textContent = formatDate(userData.joinDate);
+            document.getElementById('userRole').textContent = userData.role === 'user' ? 'Người dùng' : 'Quản trị viên';
+            document.getElementById('verificationStatus').textContent = userData.verified ? 'Đã xác thực' : 'Chưa xác thực';
+
+            // Update statistics
+            document.getElementById('ticketsBought').textContent = userData.stats.ticketsBought;
+            document.getElementById('totalSpent').textContent = formatCurrency(userData.stats.totalSpent);
+            document.getElementById('eventsAttended').textContent = userData.stats.eventsAttended;
+            document.getElementById('averageRating').textContent = userData.stats.averageRating;
+
+            // Render activities
+            renderActivities(userData.activities);
+
+            // Render purchase history
+            renderPurchaseHistory(userData.purchases);
+        }
+
+        // Function to render activities
+        function renderActivities(activities) {
+            const timeline = document.getElementById('activityTimeline');
+            timeline.innerHTML = '';
+
+            activities.forEach(activity => {
+                const activityItem = document.createElement('div');
+                activityItem.className = `activity-item ${activity.type}`;
+                activityItem.innerHTML = `
+                    <div class="activity-icon">
+                        <i class="fas ${getActivityIcon(activity.type)}"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-header">
+                            <span class="activity-type">${getActivityTypeText(activity.type)}</span>
+                            <span class="activity-time">${formatDate(activity.time)}</span>
+                        </div>
+                        <div class="activity-details">
+                            <strong>${activity.eventName}</strong>
+                            <p>${activity.details}</p>
+                        </div>
+                    </div>
+                `;
+                timeline.appendChild(activityItem);
+            });
+        }
+
+        // Function to get activity icon
+        function getActivityIcon(type) {
+            switch (type) {
+                case 'purchase':
+                    return 'fa-shopping-cart';
+                case 'attendance':
+                    return 'fa-calendar-check';
+                case 'review':
+                    return 'fa-star';
+                default:
+                    return 'fa-info-circle';
+            }
+        }
+
+        // Function to get activity type text
+        function getActivityTypeText(type) {
+            switch (type) {
+                case 'purchase':
+                    return 'Mua vé';
+                case 'attendance':
+                    return 'Tham gia sự kiện';
+                case 'review':
+                    return 'Đánh giá';
+                default:
+                    return type;
+            }
+        }
+
+        // Function to render purchase history
+        function renderPurchaseHistory(purchases) {
+            const tbody = document.getElementById('purchaseHistoryBody');
+            tbody.innerHTML = '';
+
+            purchases.forEach(purchase => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${purchase.id}</td>
+                    <td>${purchase.eventName}</td>
+                    <td>${purchase.ticketType}</td>
+                    <td>${purchase.quantity}</td>
+                    <td>${formatCurrency(purchase.total)}</td>
+                    <td>${formatDate(purchase.time)}</td>
+                    <td>
+                        <span class="status-badge ${getStatusBadgeClass(purchase.status)}">
+                            ${getStatusText(purchase.status)}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Function to filter activities
+        function filterActivities() {
+            const filterValue = document.getElementById('activityFilter').value;
+            const filteredActivities = filterValue === 'all' 
+                ? userData.activities 
+                : userData.activities.filter(activity => activity.type === filterValue);
+            renderActivities(filteredActivities);
+        }
+
+        // Account actions
+        function handleBlockAccount() {
+            if (confirm('Bạn có chắc chắn muốn khóa tài khoản này?')) {
+                // Implement block logic here
+                console.log('Blocking account:', userData.id);
+                alert('Đã khóa tài khoản!');
+            }
+        }
+
+        function handleUnblockAccount() {
+            if (confirm('Bạn có chắc chắn muốn mở khóa tài khoản này?')) {
+                // Implement unblock logic here
+                console.log('Unblocking account:', userData.id);
+                alert('Đã mở khóa tài khoản!');
+            }
+        }
+
+        function handleEditRole() {
+            // Redirect to role edit page
+            window.location.href = `edit-user-role.html?id=${userData.id}`;
+        }
+
+        // Export functions
+        function exportData(format) {
+            // Implement export logic here
+            console.log('Exporting data as:', format);
+            alert(`Đang xuất dữ liệu dưới dạng ${format.toUpperCase()}...`);
+        }
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', loadUserDetails);
+    </script>
+</body>
+</html> 

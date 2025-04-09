@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết sự kiện - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/event-detail.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1 class="logo-text">EventBox</h1>
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Khám phá</a>
+                    <a href="lich.html" class="nav-link">Lịch</a>
+                    <a href="blog.html" class="nav-link">Blog</a>
+                    <a href="#" class="nav-link">Tạo sự kiện</a>
+                </div>
+                <div class="nav-right">
+                    <!-- User Menu (Show when logged in) -->
+                    <div class="user-menu" style="display: none;">
+                        <button class="user-menu-btn">
+                            <img src="images/avatar.jpg" alt="User Avatar" class="user-avatar">
+                            <span class="user-name">Nguyễn Văn A</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="my-tickets.html" class="dropdown-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                Vé của tôi
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                Hồ sơ
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                Cài đặt
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Auth Buttons (Show when not logged in) -->
+                    <div class="auth-buttons">
+                        <a href="login.html" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Đăng nhập
+                        </a>
+                        <a href="register.html" class="btn-register">
+                            <i class="fas fa-user-plus"></i>
+                            Đăng ký
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Event Hero Section -->
+    <section class="event-hero">
+        <div class="event-hero-bg">
+            <img src="https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80" alt="Event Background">
+        </div>
+        <div class="container">
+            <div class="event-hero-content">
+                <div class="event-category">Âm nhạc</div>
+                <h1 class="event-title">Lễ hội âm nhạc quốc tế</h1>
+                <div class="event-highlights">
+                    <div class="highlight-item">
+                        <i class="fas fa-calendar"></i>
+                        <div class="highlight-info">
+                            <span class="highlight-label">Ngày</span>
+                            <span class="highlight-value">15/06/2024</span>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="highlight-info">
+                            <span class="highlight-label">Thời gian</span>
+                            <span class="highlight-value">19:00 - 23:00</span>
+                </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="highlight-info">
+                            <span class="highlight-label">Địa điểm</span>
+                            <span class="highlight-value">Sân vận động quốc gia</span>
+                        </div>
+                    </div>
+                    <div class="highlight-item">
+                        <i class="fas fa-users"></i>
+                        <div class="highlight-info">
+                            <span class="highlight-label">Số người tham gia</span>
+                            <span class="highlight-value">500+ người</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Event Detail Section -->
+    <section class="event-detail">
+        <div class="container">
+            <div class="event-content">
+                <!-- Event Description -->
+                <div class="event-description">
+                    <div class="description-card">
+                        <h2>Giới thiệu sự kiện</h2>
+                        <p>Lễ hội âm nhạc quốc tế là sự kiện âm nhạc lớn nhất trong năm, quy tụ các nghệ sĩ hàng đầu trong và ngoài nước. Khán giả sẽ được thưởng thức những màn trình diễn đặc sắc, sôi động và ấn tượng.</p>
+                        
+                        <div class="event-gallery">
+                            <div class="gallery-grid">
+                                <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Event Image 1">
+                                <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Event Image 2">
+                                <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Event Image 3">
+                            </div>
+                        </div>
+                </div>
+
+                    <div class="description-card">
+                        <h2>Chương trình</h2>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="time-block">
+                                    <span class="time">19:00</span>
+                                    <span class="duration">30 phút</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>Khai mạc</h3>
+                                    <p>Màn trình diễn đặc biệt mở đầu chương trình</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-block">
+                                    <span class="time">19:30</span>
+                                    <span class="duration">90 phút</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>Phần 1: Các nghệ sĩ trong nước</h3>
+                                    <p>Các tiết mục đặc sắc từ những nghệ sĩ hàng đầu Việt Nam</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-block">
+                                    <span class="time">21:00</span>
+                                    <span class="duration">30 phút</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>Giải lao</h3>
+                                    <p>Thời gian nghỉ ngơi và thưởng thức đồ uống</p>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="time-block">
+                                    <span class="time">21:30</span>
+                                    <span class="duration">90 phút</span>
+                                </div>
+                                <div class="timeline-content">
+                                    <h3>Phần 2: Các nghệ sĩ quốc tế</h3>
+                                    <p>Màn trình diễn từ các nghệ sĩ quốc tế nổi tiếng</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Update Venue Info Section -->
+                    <div class="description-card venue-section">
+                        <h2>Địa điểm tổ chức</h2>
+                        <div class="venue-info">
+                            <div class="venue-map">
+                                <iframe 
+                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.2611690849922!2d106.70123121531882!3d10.79115166179842!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317528b2747a81a3%3A0x33c1813055acb613!2sSaigon%20Exhibition%20and%20Convention%20Center%20-%20SECC!5e0!3m2!1sen!2s!4v1647856723456!5m2!1sen!2s"
+                                    width="100%" 
+                                    height="400" 
+                                    style="border:0;" 
+                                    allowfullscreen="" 
+                                    loading="lazy">
+                                </iframe>
+                            </div>
+                            <div class="venue-details">
+                                <h3>Trung tâm Hội chợ và Triển lãm Sài Gòn (SECC)</h3>
+                                <div class="venue-info-grid">
+                                    <div class="venue-info-item">
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <div class="venue-text">
+                                            <p>799 Nguyễn Văn Linh, Quận 7, TP.HCM</p>
+                                            <a href="https://goo.gl/maps/xxxxx" target="_blank" class="directions-link">
+                                                <i class="fas fa-directions"></i> Chỉ đường
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="venue-info-item">
+                                        <i class="fas fa-parking"></i>
+                                        <div class="venue-text">
+                                            <p>Bãi đậu xe rộng rãi</p>
+                                            <span class="venue-detail">Có chỗ để >500 xe</span>
+                                        </div>
+                                    </div>
+                                    <div class="venue-info-item">
+                                        <i class="fas fa-bus"></i>
+                                        <div class="venue-text">
+                                            <p>Phương tiện công cộng</p>
+                                            <span class="venue-detail">Bus: 128, 65, 75</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="venue-gallery">
+                                    <img src="images/venue/secc-1.jpg" alt="SECC Outside View">
+                                    <img src="images/venue/secc-2.jpg" alt="SECC Main Hall">
+                                    <img src="images/venue/secc-3.jpg" alt="SECC Interior">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Add Seat Map Section after venue info -->
+                    <div class="description-card">
+                        <h2>Sơ đồ chỗ ngồi</h2>
+                        <div class="seat-map">
+                            <div class="stage">Sân khấu</div>
+                            <div class="seats-container">
+                                <div class="seats-grid">
+                                    <!-- Row A - VIP -->
+                                    <div class="seat-row">
+                                        <div class="row-label">A</div>
+                                        <div class="seat vip" data-price="2000000">A1</div>
+                                        <div class="seat vip" data-price="2000000">A2</div>
+                                        <div class="seat vip occupied">A3</div>
+                                        <div class="seat vip" data-price="2000000">A4</div>
+                                        <div class="seat vip" data-price="2000000">A5</div>
+                                        <div class="seat vip occupied">A6</div>
+                                        <div class="seat vip" data-price="2000000">A7</div>
+                                        <div class="seat vip" data-price="2000000">A8</div>
+                                    </div>
+                                    <!-- Row B - VIP -->
+                                    <div class="seat-row">
+                                        <div class="row-label">B</div>
+                                        <div class="seat vip" data-price="1800000">B1</div>
+                                        <div class="seat vip" data-price="1800000">B2</div>
+                                        <div class="seat vip" data-price="1800000">B3</div>
+                                        <div class="seat vip occupied">B4</div>
+                                        <div class="seat vip" data-price="1800000">B5</div>
+                                        <div class="seat vip" data-price="1800000">B6</div>
+                                        <div class="seat vip" data-price="1800000">B7</div>
+                                        <div class="seat vip" data-price="1800000">B8</div>
+                                    </div>
+                                    <!-- Row C - Standard -->
+                                    <div class="seat-row">
+                                        <div class="row-label">C</div>
+                                        <div class="seat standard" data-price="1200000">C1</div>
+                                        <div class="seat standard" data-price="1200000">C2</div>
+                                        <div class="seat standard occupied">C3</div>
+                                        <div class="seat standard" data-price="1200000">C4</div>
+                                        <div class="seat standard" data-price="1200000">C5</div>
+                                        <div class="seat standard" data-price="1200000">C6</div>
+                                        <div class="seat standard occupied">C7</div>
+                                        <div class="seat standard" data-price="1200000">C8</div>
+                                    </div>
+                                    <!-- Row D - Standard -->
+                                    <div class="seat-row">
+                                        <div class="row-label">D</div>
+                                        <div class="seat standard" data-price="1000000">D1</div>
+                                        <div class="seat standard" data-price="1000000">D2</div>
+                                        <div class="seat standard" data-price="1000000">D3</div>
+                                        <div class="seat standard" data-price="1000000">D4</div>
+                                        <div class="seat standard occupied">D5</div>
+                                        <div class="seat standard" data-price="1000000">D6</div>
+                                        <div class="seat standard" data-price="1000000">D7</div>
+                                        <div class="seat standard" data-price="1000000">D8</div>
+                                    </div>
+                                    <!-- Row E - Economy -->
+                                    <div class="seat-row">
+                                        <div class="row-label">E</div>
+                                        <div class="seat economy" data-price="800000">E1</div>
+                                        <div class="seat economy" data-price="800000">E2</div>
+                                        <div class="seat economy" data-price="800000">E3</div>
+                                        <div class="seat economy occupied">E4</div>
+                                        <div class="seat economy" data-price="800000">E5</div>
+                                        <div class="seat economy" data-price="800000">E6</div>
+                                        <div class="seat economy" data-price="800000">E7</div>
+                                        <div class="seat economy" data-price="800000">E8</div>
+                                    </div>
+                                    <!-- Row F - Economy -->
+                                    <div class="seat-row">
+                                        <div class="row-label">F</div>
+                                        <div class="seat economy" data-price="600000">F1</div>
+                                        <div class="seat economy occupied">F2</div>
+                                        <div class="seat economy" data-price="600000">F3</div>
+                                        <div class="seat economy" data-price="600000">F4</div>
+                                        <div class="seat economy" data-price="600000">F5</div>
+                                        <div class="seat economy" data-price="600000">F6</div>
+                                        <div class="seat economy occupied">F7</div>
+                                        <div class="seat economy" data-price="600000">F8</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="seat-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color legend-vip"></div>
+                                    <span>VIP (1.8M - 2M)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-standard"></div>
+                                    <span>Thường (1M - 1.2M)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-economy"></div>
+                                    <span>Phổ thông (600K - 800K)</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color legend-occupied"></div>
+                                    <span>Đã đặt</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <table class="price-table">
+                            <thead>
+                                <tr>
+                                    <th>Khu vực</th>
+                                    <th>Hàng ghế</th>
+                                    <th>Giá vé</th>
+                                    <th>Tiện ích</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>VIP Premium</td>
+                                    <td>Hàng A</td>
+                                    <td class="price-value">2.000.000đ</td>
+                                    <td>Đồ uống free, quà tặng độc quyền, view trực diện sân khấu</td>
+                                </tr>
+                                <tr>
+                                    <td>VIP</td>
+                                    <td>Hàng B</td>
+                                    <td class="price-value">1.800.000đ</td>
+                                    <td>Đồ uống free, quà tặng độc quyền</td>
+                                </tr>
+                                <tr>
+                                    <td>Thường Premium</td>
+                                    <td>Hàng C</td>
+                                    <td class="price-value">1.200.000đ</td>
+                                    <td>View đẹp, gần sân khấu</td>
+                                </tr>
+                                <tr>
+                                    <td>Thường</td>
+                                    <td>Hàng D</td>
+                                    <td class="price-value">1.000.000đ</td>
+                                    <td>Tầm nhìn tốt</td>
+                                </tr>
+                                <tr>
+                                    <td>Phổ thông cao cấp</td>
+                                    <td>Hàng E</td>
+                                    <td class="price-value">800.000đ</td>
+                                    <td>Giá hợp lý, view ổn</td>
+                                </tr>
+                                <tr>
+                                    <td>Phổ thông</td>
+                                    <td>Hàng F</td>
+                                    <td class="price-value">600.000đ</td>
+                                    <td>Giá tiết kiệm</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+
+                <!-- Ticket Selection -->
+                <div class="ticket-selection">
+                    <div class="ticket-card">
+                        <h2>Chọn vé</h2>
+                        <div class="ticket-types">
+                            <div class="ticket-type">
+                                <div class="ticket-type-header">
+                                    <h3>VIP Premium</h3>
+                                    <span class="price">2.000.000đ</span>
+                                </div>
+                                <ul class="ticket-features">
+                                    <li><i class="fas fa-star"></i> View trực diện sân khấu</li>
+                                    <li><i class="fas fa-glass-cheers"></i> Đồ uống miễn phí</li>
+                                    <li><i class="fas fa-gift"></i> Quà tặng độc quyền</li>
+                                    <li><i class="fas fa-couch"></i> Ghế cao cấp</li>
+                                </ul>
+                                <div class="ticket-quantity">
+                                    <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                                    <input type="number" value="0" min="0" max="10">
+                                    <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="ticket-type">
+                                <div class="ticket-type-header">
+                                    <h3>Thường Premium</h3>
+                                    <span class="price">1.200.000đ</span>
+                                </div>
+                                <ul class="ticket-features">
+                                    <li><i class="fas fa-eye"></i> View đẹp, gần sân khấu</li>
+                                    <li><i class="fas fa-couch"></i> Ghế êm ái</li>
+                                    <li><i class="fas fa-map-marker-alt"></i> Vị trí thuận lợi</li>
+                                </ul>
+                                <div class="ticket-quantity">
+                                    <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                                    <input type="number" value="0" min="0" max="10">
+                                    <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+
+                            <div class="ticket-type">
+                                <div class="ticket-type-header">
+                                    <h3>Phổ thông</h3>
+                                    <span class="price">600.000đ</span>
+                                </div>
+                                <ul class="ticket-features">
+                                    <li><i class="fas fa-ticket-alt"></i> Giá tiết kiệm</li>
+                                    <li><i class="fas fa-users"></i> Phù hợp nhóm đông</li>
+                                    <li><i class="fas fa-volume-up"></i> Âm thanh tốt</li>
+                                </ul>
+                                <div class="ticket-quantity">
+                                    <button class="qty-btn minus"><i class="fas fa-minus"></i></button>
+                                    <input type="number" value="0" min="0" max="10">
+                                    <button class="qty-btn plus"><i class="fas fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ticket-summary">
+                            <div class="summary-row">
+                                <span>Tổng vé:</span>
+                                <span id="total-tickets">0 vé</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tổng tiền:</span>
+                                <span id="total-price">0đ</span>
+                            </div>
+                        </div>
+
+                        <!-- Update Ticket Actions -->
+                        <div class="ticket-actions">
+                            <button class="btn-add-cart" onclick="addToCart()">
+                                <i class="fas fa-shopping-cart"></i>
+                                Thêm vào giỏ
+                            </button>
+                            <button class="btn-buy-now" onclick="proceedToCheckout()">
+                                <i class="fas fa-ticket-alt"></i>
+                                Mua ngay
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="organizer-card">
+                        <h2>Nhà tổ chức</h2>
+                        <div class="organizer-info">
+                            <img src="https://via.placeholder.com/100" alt="Organizer Logo" class="organizer-logo">
+                            <div class="organizer-details">
+                                <h3>Vietnam Entertainment Group</h3>
+                                <p><i class="fas fa-check-circle"></i> Đã xác thực</p>
+                                <p><i class="fas fa-star"></i> 4.8/5 (200+ đánh giá)</p>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-contact-organizer">
+                            <i class="fas fa-envelope"></i>
+                            Liên hệ nhà tổ chức
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Add Ticket Management Section -->
+                <div class="ticket-management">
+                    <a href="cart.html" class="ticket-management-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        Giỏ hàng của tôi
+                        <span class="cart-count" id="cartCount">0</span>
+                    </a>
+                    <a href="my-tickets.html" class="ticket-management-link">
+                        <i class="fas fa-ticket-alt"></i>
+                        Vé đã mua
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về chúng tôi</h3>
+                    <a href="#" class="footer-link">Giới thiệu</a>
+                    <a href="#" class="footer-link">Điều khoản sử dụng</a>
+                    <a href="#" class="footer-link">Chính sách bảo mật</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hỗ trợ</h3>
+                    <a href="#" class="footer-link">Câu hỏi thường gặp</a>
+                    <a href="#" class="footer-link">Hướng dẫn đặt vé</a>
+                    <a href="#" class="footer-link">Liên hệ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kết nối</h3>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">Twitter</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Đăng ký nhận tin</h3>
+                    <p class="newsletter-text">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Nhập email của bạn" class="newsletter-input">
+                        <button class="newsletter-button">ĐĂNG KÝ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventBox. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Add Navigation Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html">Trang chủ</a>
+        <i class="fas fa-chevron-right"></i>
+        <a href="events.html">Sự kiện</a>
+        <i class="fas fa-chevron-right"></i>
+        <span>Chi tiết sự kiện</span>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/event-detail.js"></script>
+</body>
+</html> 

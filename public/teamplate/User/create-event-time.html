@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tạo sự kiện - Thời gian & Loại vé - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/create-event.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <a href="index.html">
+                        <h1 class="logo-text">EventBox</h1>
+                    </a>
+                </div>
+                <div class="nav-links">
+                    <li><a href="index.html">Khám phá</a></li>
+                    <li><a href="lich.html">Lịch</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="create-event-info.html" class="active">Tạo sự kiện</a></li>
+                </div>
+                <div class="nav-right">
+                    <div class="auth-buttons">
+                        <a href="login.html" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Đăng nhập
+                        </a>
+                        <a href="register.html" class="btn-register">
+                            <i class="fas fa-user-plus"></i>
+                            Đăng ký
+                        </a>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <style>
+        .header {
+            background: white;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo-text {
+            color: #ff4b5a;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #1a1a1a;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff4b5a;
+        }
+
+        .nav-links a.active {
+            color: #ff4b5a;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn-login,
+        .btn-register {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-login {
+            color: #1a1a1a;
+            background: transparent;
+        }
+
+        .btn-login:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .btn-register {
+            color: white;
+            background: #ff4b5a;
+        }
+
+        .btn-register:hover {
+            background: #ff3344;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #1a1a1a;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .auth-buttons {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        .create-event-page {
+            margin-top: 70px;
+        }
+
+        /* User Menu Styles */
+        .user-menu {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: #f9fafb;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-left: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .user-menu:hover {
+            background: #f3f4f6;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-menu-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 0;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            background: #E4E6EB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #65676B;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #374151;
+            font-size: 14px;
+        }
+
+        .user-menu i {
+            color: #9ca3af;
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        .user-menu:hover i {
+            transform: rotate(180deg);
+            color: #6366f1;
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: calc(100% + 4px);
+            right: 0;
+            width: 240px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 8px 0;
+            display: none;
+            z-index: 1000;
+        }
+
+        .user-menu.active .user-dropdown {
+            display: block;
+        }
+
+        .user-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 16px;
+            color: #1a1a1a;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .user-dropdown a:hover {
+            background: #F8F9FA;
+        }
+
+        .user-dropdown i {
+            width: 16px;
+            text-align: center;
+            color: #65676B;
+            font-size: 14px;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: #E8E8E8;
+            margin: 8px 0;
+        }
+
+        .text-danger {
+            color: #ff4b5a;
+        }
+    </style>
+
+    <!-- Create Event Form -->
+    <main class="create-event-page">
+        <div class="container">
+            <div class="create-event-progress">
+                <div class="progress-step completed">
+                    <span class="step-number">1</span>
+                    <span class="step-text">Thông tin sự kiện</span>
+                </div>
+                <div class="progress-step active">
+                    <span class="step-number">2</span>
+                    <span class="step-text">Thời gian & Loại vé</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-number">3</span>
+                    <span class="step-text">Cài đặt</span>
+                </div>
+                <div class="progress-step">
+                    <span class="step-number">4</span>
+                    <span class="step-text">Thông tin thanh toán</span>
+                </div>
+            </div>
+
+            <form class="create-event-form">
+                <div class="form-section">
+                    <div class="time-section">
+                        <h3>Thời gian sự kiện</h3>
+                        <div class="time-grid">
+                            <div class="form-group">
+                                <label for="startDate">Ngày bắt đầu <span class="required">*</span></label>
+                                <input type="date" id="startDate" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="startTime">Giờ bắt đầu <span class="required">*</span></label>
+                                <input type="time" id="startTime" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="endDate">Ngày kết thúc <span class="required">*</span></label>
+                                <input type="date" id="endDate" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="endTime">Giờ kết thúc <span class="required">*</span></label>
+                                <input type="time" id="endTime" class="form-control" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="ticket-section">
+                        <div class="section-header">
+                            <h3>Loại vé</h3>
+                            <button type="button" class="btn-add-ticket">
+                                <i class="fas fa-plus"></i>
+                                Thêm loại vé
+                            </button>
+                        </div>
+                        
+                        <div class="ticket-list">
+                            <div class="ticket-card">
+                                <div class="ticket-header">
+                                    <h4>Loại vé 1</h4>
+                                    <button type="button" class="btn-remove-ticket">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="ticket-body">
+                                    <div class="form-group">
+                                        <label>Tên loại vé <span class="required">*</span></label>
+                                        <input type="text" class="form-control" placeholder="VD: Vé Standard" maxlength="50">
+                                        <div class="char-count">0 / 50</div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Số lượng vé <span class="required">*</span></label>
+                                            <input type="number" class="form-control" min="1" value="1">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Giá vé (VNĐ) <span class="required">*</span></label>
+                                            <input type="number" class="form-control" min="0" step="1000" placeholder="0">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mô tả</label>
+                                        <textarea class="form-control" rows="3" maxlength="200" placeholder="Mô tả quyền lợi của loại vé này"></textarea>
+                                        <div class="char-count">0 / 200</div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Thời gian mở bán</label>
+                                            <input type="datetime-local" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Thời gian đóng bán</label>
+                                            <input type="datetime-local" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="promo-section">
+                        <div class="section-header">
+                            <h3>Mã giảm giá</h3>
+                            <button type="button" class="btn-add-promo">
+                                <i class="fas fa-plus"></i>
+                                Thêm mã giảm giá
+                            </button>
+                        </div>
+                        
+                        <div class="promo-list">
+                            <div class="promo-card">
+                                <div class="promo-header">
+                                    <h4>Mã giảm giá 1</h4>
+                                    <button type="button" class="btn-remove-promo">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                                <div class="promo-body">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Mã giảm giá <span class="required">*</span></label>
+                                            <input type="text" class="form-control" placeholder="VD: SUMMER2024" maxlength="20">
+                                            <div class="char-count">0 / 20</div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Số lượng <span class="required">*</span></label>
+                                            <input type="number" class="form-control" min="1" value="1">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Giảm giá (%) <span class="required">*</span></label>
+                                            <input type="number" class="form-control" min="0" max="100" value="10">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Áp dụng cho loại vé</label>
+                                            <select class="form-control">
+                                                <option value="all">Tất cả các loại vé</option>
+                                                <option value="standard">Vé Standard</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Thời gian bắt đầu</label>
+                                            <input type="datetime-local" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Thời gian kết thúc</label>
+                                            <input type="datetime-local" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary">Quay lại</button>
+                    <button type="button" class="btn-primary">Tiếp tục</button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về chúng tôi</h3>
+                    <a href="#" class="footer-link">Giới thiệu</a>
+                    <a href="#" class="footer-link">Điều khoản sử dụng</a>
+                    <a href="#" class="footer-link">Chính sách bảo mật</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hỗ trợ</h3>
+                    <a href="#" class="footer-link">Câu hỏi thường gặp</a>
+                    <a href="#" class="footer-link">Hướng dẫn đặt vé</a>
+                    <a href="#" class="footer-link">Liên hệ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kết nối</h3>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">Twitter</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Đăng ký nhận tin</h3>
+                    <p class="newsletter-text">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Nhập email của bạn" class="newsletter-input">
+                        <button class="newsletter-button">ĐĂNG KÝ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventBox. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Check login status
+        window.addEventListener('load', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            if (!isLoggedIn) {
+                localStorage.setItem('redirectUrl', window.location.href);
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Update UI based on login status
+            const authButtons = document.querySelector('.auth-buttons');
+            const userInfo = document.createElement('div');
+            userInfo.className = 'user-menu';
+            userInfo.innerHTML = `
+                <button class="user-menu-btn">
+                    <div class="user-avatar">JD</div>
+                    <span class="user-name">John Doe</span>
+                </button>
+                <div class="user-dropdown">
+                    <a href="profile.html">
+                        <i class="fas fa-user"></i>
+                        Tài khoản của tôi
+                    </a>
+                    <a href="my-events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        Sự kiện của tôi
+                    </a>
+                    <a href="my-tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        Vé đã mua
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" id="logoutBtn" class="text-danger">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Đăng xuất
+                    </a>
+                </div>
+            `;
+            authButtons.replaceWith(userInfo);
+
+            // Add logout handler
+            document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('userData');
+                window.location.href = 'index.html';
+            });
+
+            // Toggle user dropdown
+            const userMenuBtn = document.querySelector('.user-menu-btn');
+            userMenuBtn.addEventListener('click', () => {
+                userMenuBtn.parentElement.classList.toggle('active');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (e) => {
+                const userMenu = document.querySelector('.user-menu');
+                if (userMenu && !userMenu.contains(e.target)) {
+                    userMenu.classList.remove('active');
+                }
+            });
+
+            // Load saved form data if exists
+            const savedData = localStorage.getItem('eventTimeData');
+            if (savedData) {
+                const data = JSON.parse(savedData);
+                // Populate form fields with saved data
+                document.getElementById('startDate').value = data.eventTime.startDate;
+                document.getElementById('startTime').value = data.eventTime.startTime;
+                document.getElementById('endDate').value = data.eventTime.endDate;
+                document.getElementById('endTime').value = data.eventTime.endTime;
+                // ... populate other fields
+            }
+        });
+
+        // Character counter
+        document.querySelectorAll('.form-control').forEach(input => {
+            const charCount = input.nextElementSibling;
+            if (charCount && charCount.classList.contains('char-count')) {
+                input.addEventListener('input', function() {
+                    charCount.textContent = `${this.value.length} / ${this.maxLength}`;
+                });
+            }
+        });
+
+        // Ticket Management
+        const ticketList = document.querySelector('.ticket-list');
+        const addTicketButton = document.querySelector('.btn-add-ticket');
+        let ticketCount = document.querySelectorAll('.ticket-card').length || 0;
+
+        addTicketButton.addEventListener('click', () => {
+            ticketCount++;
+            const newTicket = document.createElement('div');
+            newTicket.className = 'ticket-card';
+            newTicket.innerHTML = `
+                <div class="ticket-header">
+                    <h4>Loại vé ${ticketCount}</h4>
+                    <button type="button" class="btn-remove-ticket">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="ticket-body">
+                    <div class="form-group">
+                        <label>Tên loại vé <span class="required">*</span></label>
+                        <input type="text" class="form-control" placeholder="VD: Vé Standard" maxlength="50">
+                        <div class="char-count">0 / 50</div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Số lượng vé <span class="required">*</span></label>
+                            <input type="number" class="form-control" min="1" value="1">
+                        </div>
+                        <div class="form-group">
+                            <label>Giá vé (VNĐ) <span class="required">*</span></label>
+                            <input type="number" class="form-control" min="0" step="1000" placeholder="0">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea class="form-control" rows="3" maxlength="200" placeholder="Mô tả quyền lợi của loại vé này"></textarea>
+                        <div class="char-count">0 / 200</div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Thời gian mở bán</label>
+                            <input type="datetime-local" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Thời gian đóng bán</label>
+                            <input type="datetime-local" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            `;
+            ticketList.appendChild(newTicket);
+            initCharCounter(newTicket);
+            updateTicketOptions();
+        });
+
+        // Remove ticket
+        ticketList.addEventListener('click', (e) => {
+            if (e.target.closest('.btn-remove-ticket')) {
+                const ticketCard = e.target.closest('.ticket-card');
+                ticketCard.remove();
+                updateTicketNumbers();
+            }
+        });
+
+        // Update ticket numbers
+        function updateTicketNumbers() {
+            document.querySelectorAll('.ticket-card').forEach((card, index) => {
+                card.querySelector('h4').textContent = `Loại vé ${index + 1}`;
+            });
+            ticketCount = document.querySelectorAll('.ticket-card').length;
+        }
+
+        // Promo Code Management
+        const promoList = document.querySelector('.promo-list');
+        const addPromoBtn = document.querySelector('.btn-add-promo');
+        let promoCount = 1;
+
+        addPromoBtn.addEventListener('click', () => {
+            promoCount++;
+            const newPromo = document.createElement('div');
+            newPromo.className = 'promo-card';
+            newPromo.innerHTML = `
+                <div class="promo-header">
+                    <h4>Mã giảm giá ${promoCount}</h4>
+                    <button type="button" class="btn-remove-promo">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="promo-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Mã giảm giá <span class="required">*</span></label>
+                            <input type="text" class="form-control" placeholder="VD: SUMMER2024" maxlength="20">
+                            <div class="char-count">0 / 20</div>
+                        </div>
+                        <div class="form-group">
+                            <label>Số lượng <span class="required">*</span></label>
+                            <input type="number" class="form-control" min="1" value="1">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Giảm giá (%) <span class="required">*</span></label>
+                            <input type="number" class="form-control" min="0" max="100" value="10">
+                        </div>
+                        <div class="form-group">
+                            <label>Áp dụng cho loại vé</label>
+                            <select class="form-control">
+                                <option value="all">Tất cả các loại vé</option>
+                                <option value="standard">Vé Standard</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Thời gian bắt đầu</label>
+                            <input type="datetime-local" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Thời gian kết thúc</label>
+                            <input type="datetime-local" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            `;
+            promoList.appendChild(newPromo);
+            initCharCounter(newPromo);
+        });
+
+        // Remove promo code
+        promoList.addEventListener('click', (e) => {
+            if (e.target.closest('.btn-remove-promo')) {
+                const promoCard = e.target.closest('.promo-card');
+                promoCard.remove();
+                updatePromoNumbers();
+            }
+        });
+
+        // Update promo numbers
+        function updatePromoNumbers() {
+            document.querySelectorAll('.promo-card').forEach((card, index) => {
+                card.querySelector('h4').textContent = `Mã giảm giá ${index + 1}`;
+            });
+            promoCount = document.querySelectorAll('.promo-card').length;
+        }
+
+        // Initialize character counter for new elements
+        function initCharCounter(element) {
+            element.querySelectorAll('.form-control').forEach(input => {
+                const charCount = input.nextElementSibling;
+                if (charCount && charCount.classList.contains('char-count')) {
+                    input.addEventListener('input', function() {
+                        charCount.textContent = `${this.value.length} / ${this.maxLength}`;
+                    });
+                }
+            });
+        }
+
+        // Update ticket options in promo code selects
+        function updateTicketOptions() {
+            const ticketNames = Array.from(document.querySelectorAll('.ticket-card')).map(card => {
+                const nameInput = card.querySelector('input[placeholder="VD: Vé Standard"]');
+                return nameInput.value || 'Vé Standard';
+            });
+
+            document.querySelectorAll('.promo-card select').forEach(select => {
+                const currentValue = select.value;
+                select.innerHTML = `
+                    <option value="all">Tất cả các loại vé</option>
+                    ${ticketNames.map((name, index) => `
+                        <option value="ticket_${index + 1}">${name}</option>
+                    `).join('')}
+                `;
+                select.value = currentValue;
+            });
+        }
+
+        // Navigation buttons
+        document.querySelector('.btn-secondary').addEventListener('click', () => {
+            window.location.href = 'create-event-info.html';
+        });
+
+        document.querySelector('.btn-primary').addEventListener('click', () => {
+            // Save form data and proceed to next step
+            const formData = {
+                eventTime: {
+                    startDate: document.getElementById('startDate').value,
+                    startTime: document.getElementById('startTime').value,
+                    endDate: document.getElementById('endDate').value,
+                    endTime: document.getElementById('endTime').value
+                },
+                tickets: Array.from(document.querySelectorAll('.ticket-card')).map(card => ({
+                    name: card.querySelector('input[placeholder="VD: Vé Standard"]').value,
+                    quantity: card.querySelector('input[type="number"][min="1"]').value,
+                    price: card.querySelector('input[type="number"][step="1000"]').value,
+                    description: card.querySelector('textarea').value,
+                    saleStart: card.querySelector('input[type="datetime-local"]:first-of-type').value,
+                    saleEnd: card.querySelector('input[type="datetime-local"]:last-of-type').value
+                })),
+                promoCodes: Array.from(document.querySelectorAll('.promo-card')).map(card => ({
+                    code: card.querySelector('input[placeholder="VD: SUMMER2024"]').value,
+                    quantity: card.querySelector('input[type="number"][min="1"]').value,
+                    discount: card.querySelector('input[type="number"][max="100"]').value,
+                    applyTo: card.querySelector('select').value,
+                    startTime: card.querySelector('input[type="datetime-local"]:first-of-type').value,
+                    endTime: card.querySelector('input[type="datetime-local"]:last-of-type').value
+                }))
+            };
+
+            localStorage.setItem('eventTimeData', JSON.stringify(formData));
+            window.location.href = 'create-event-settings.html';
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo cáo thống kê - Admin Panel</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li>
+                    <a href="users.html">
+                        <i class="fas fa-users"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Quản lý sự kiện</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Quản lý vé</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="payments.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Quản lý giao dịch</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Báo cáo thống kê</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-footer">
+                <p>© 2025 Admin Panel</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    
+                    <h1>Báo cáo thống kê</h1>
+                </div>
+                <div class="header-right">
+                    <div class="admin-profile">
+                        <img src="/admin-avatar.png" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <div class="filter-container">
+                        <div class="filter-group">
+                            <label>
+                                <i class="fas fa-calendar"></i>
+                                Chọn sự kiện
+                            </label>
+                            <select name="event" class="filter-select">
+                                <option value="">Chọn một sự kiện</option>
+                                <option value="event1">Hòa nhạc mùa xuân 2025</option>
+                                <option value="event2">Chạy marathon vì trẻ em</option>
+                                <option value="event3">Giải bóng đá giao hữu</option>
+                                <option value="event4">Hội thảo khởi nghiệp</option>
+                                <option value="event5">Workshop nhiếp ảnh</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>
+                                <i class="fas fa-flag"></i>
+                                Trạng thái
+                            </label>
+                            <select name="status" class="filter-select">
+                                <option value="">Tất cả trạng thái</option>
+                                <option value="completed">Đã hoàn thành</option>
+                                <option value="pending">Sắp diễn ra</option>
+                                <option value="processing">Đang bán vé</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-group">
+                            <label>
+                                <i class="fas fa-clock"></i>
+                                Thời gian
+                            </label>
+                            <select name="date" class="filter-select">
+                                <option value="">Tất cả thời gian</option>
+                                <option value="today">Hôm nay</option>
+                                <option value="week">Tuần này</option>
+                                <option value="month">Tháng này</option>
+                                <option value="year">Năm nay</option>
+                            </select>
+                        </div>
+
+                        <div class="filter-buttons">
+                            <button class="filter-button" onclick="applyFilters()">
+                                <i class="fas fa-filter"></i>
+                                Lọc
+                            </button>
+                            <button class="reset-button" onclick="resetFilters()">
+                                <i class="fas fa-undo"></i>
+                                Đặt lại
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thống kê tổng quan -->
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Tổng số sự kiện</h3>
+                            <p class="stat-number">25</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Tổng số người dùng</h3>
+                            <p class="stat-number">1.234</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Tổng số đơn đặt vé</h3>
+                            <p class="stat-number">567</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Tổng doanh thu</h3>
+                            <p class="stat-number">1.250 triệu VND</p>
+                        </div>
+                    </div>
+                </div>
+
+                
+
+                <!-- Bảng top sự kiện bán chạy -->
+                <div class="table-container">
+                    <div class="section-header">
+                        <h2>Top sự kiện bán chạy</h2>
+                        <div class="header-actions">
+                           
+                        </div>
+                    </div>
+                    <table class="report-table">
+                        <thead>
+                            <tr>
+                                <th>Xếp hạng</th>
+                                <th>Tên sự kiện</th>
+                                <th>Số vé bán ra</th>
+                                <th>Doanh thu (triệu VND)</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="topEventsTable">
+                            <!-- Top events will be populated by JavaScript -->
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <a href="#" onclick="goToPage('first')" title="Trang đầu">&laquo;</a>
+                        <a href="#" onclick="goToPage('prev')" title="Trang trước">&lsaquo;</a>
+                        <a href="#" class="active">1</a>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <span>...</span>
+                        <a href="#">10</a>
+                        <a href="#" onclick="goToPage('next')" title="Trang sau">&rsaquo;</a>
+                        <a href="#" onclick="goToPage('last')" title="Trang cuối">&raquo;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data cho top sự kiện
+        const topEvents = [
+            {
+                id: 'R001',
+                rank: 1,
+                name: 'Hòa nhạc mùa xuân 2025',
+                ticketsSold: 450,
+                revenue: 450,
+                startDate: '2025-04-10',
+                endDate: '2025-04-10',
+                location: 'Nhà hát lớn Hà Nội',
+                status: 'Đã hoàn thành'
+            },
+            {
+                id: 'R002',
+                rank: 2,
+                name: 'Chạy marathon vì trẻ em',
+                ticketsSold: 300,
+                revenue: 60,
+                startDate: '2025-05-01',
+                endDate: '2025-05-01',
+                location: 'Công viên Thống Nhất',
+                status: 'Sắp diễn ra'
+            },
+            {
+                id: 'R003',
+                rank: 3,
+                name: 'Giải bóng đá giao hữu',
+                ticketsSold: 200,
+                revenue: 150,
+                startDate: '2025-06-15',
+                endDate: '2025-06-15',
+                location: 'Sân vận động Mỹ Đình',
+                status: 'Đang bán vé'
+            },
+            {
+                id: 'R004',
+                rank: 4,
+                name: 'Hội thảo khởi nghiệp',
+                ticketsSold: 150,
+                revenue: 225,
+                startDate: '2025-07-20',
+                endDate: '2025-07-20',
+                location: 'Trung tâm Hội nghị Quốc gia',
+                status: 'Đang bán vé'
+            },
+            {
+                id: 'R005',
+                rank: 5,
+                name: 'Workshop nhiếp ảnh',
+                ticketsSold: 100,
+                revenue: 50,
+                startDate: '2025-08-30',
+                endDate: '2025-08-30',
+                location: 'Học viện Nghệ thuật',
+                status: 'Sắp diễn ra'
+            }
+        ];
+
+        // Function to format revenue
+        function formatRevenue(revenue) {
+            return revenue.toLocaleString('vi-VN');
+        }
+
+        // Function to get status class
+        function getStatusClass(status) {
+            switch (status) {
+                case 'Đã hoàn thành':
+                    return 'completed';
+                case 'Sắp diễn ra':
+                    return 'pending';
+                case 'Đang bán vé':
+                    return 'processing';
+                default:
+                    return '';
+            }
+        }
+
+        // Function to render top events
+        function renderTopEvents(events = topEvents) {
+            const tbody = document.getElementById('topEventsTable');
+            tbody.innerHTML = '';
+            
+            events.forEach(event => {
+                const tr = document.createElement('tr');
+                tr.onclick = () => handleView(event.id);
+                
+                tr.innerHTML = `
+                    <td>${event.rank}</td>
+                    <td>${event.name}</td>
+                    <td>${event.ticketsSold.toLocaleString('vi-VN')}</td>
+                    <td>${formatRevenue(event.revenue)}</td>
+                    <td>
+                        <span class="status-badge status-${getStatusClass(event.status)}">
+                            ${event.status}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn view-btn" onclick="handleView('${event.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn" onclick="handlePrint('${event.id}')">
+                                <i class="fas fa-print"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Function to handle view event
+        function handleView(id) {
+            window.location.href = `report-detail.html?id=${id}`;
+        }
+
+        // Function to handle print
+        function handlePrint(id) {
+            window.print();
+        }
+
+        // Function to export report
+        function exportReport() {
+            // Implement export logic here
+            console.log('Exporting report...');
+        }
+
+        // Hàm xử lý lọc
+        function applyFilters() {
+            const eventSelect = document.querySelector('select[name="event"]');
+            const statusSelect = document.querySelector('select[name="status"]');
+            const dateSelect = document.querySelector('select[name="date"]');
+            
+            let filteredEvents = [...topEvents];
+            
+            // Lọc theo sự kiện
+            if (eventSelect.value) {
+                filteredEvents = filteredEvents.filter(event => 
+                    event.name === eventSelect.options[eventSelect.selectedIndex].text
+                );
+            }
+            
+            // Lọc theo trạng thái
+            if (statusSelect.value) {
+                filteredEvents = filteredEvents.filter(event => 
+                    event.status === statusSelect.options[statusSelect.selectedIndex].text
+                );
+            }
+            
+            // Lọc theo thời gian
+            if (dateSelect.value) {
+                const today = new Date();
+                const eventDate = new Date(event.startDate);
+                
+                switch (dateSelect.value) {
+                    case 'today':
+                        filteredEvents = filteredEvents.filter(event => 
+                            new Date(event.startDate).toDateString() === today.toDateString()
+                        );
+                        break;
+                    case 'week':
+                        const weekStart = new Date(today.setDate(today.getDate() - today.getDay()));
+                        const weekEnd = new Date(today.setDate(today.getDate() - today.getDay() + 6));
+                        filteredEvents = filteredEvents.filter(event => {
+                            const eventDate = new Date(event.startDate);
+                            return eventDate >= weekStart && eventDate <= weekEnd;
+                        });
+                        break;
+                    case 'month':
+                        const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                        const monthEnd = new Date(today.getFullYear(), today.getMonth() + 1, 0);
+                        filteredEvents = filteredEvents.filter(event => {
+                            const eventDate = new Date(event.startDate);
+                            return eventDate >= monthStart && eventDate <= monthEnd;
+                        });
+                        break;
+                    case 'year':
+                        const yearStart = new Date(today.getFullYear(), 0, 1);
+                        const yearEnd = new Date(today.getFullYear(), 11, 31);
+                        filteredEvents = filteredEvents.filter(event => {
+                            const eventDate = new Date(event.startDate);
+                            return eventDate >= yearStart && eventDate <= yearEnd;
+                        });
+                        break;
+                }
+            }
+            
+            renderTopEvents(filteredEvents);
+        }
+
+        // Function to reset filters
+        function resetFilters() {
+            document.querySelector('select[name="event"]').value = '';
+            document.querySelector('select[name="status"]').value = '';
+            document.querySelector('select[name="date"]').value = '';
+            renderTopEvents();
+        }
+
+        // Initialize Chart.js
+        function initChart() {
+            const ctx = document.getElementById('revenueChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+                    datasets: [{
+                        label: 'Doanh thu (VND)',
+                        data: [200, 250, 300, 350, 400, 450],
+                        fill: true,
+                        borderColor: '#d980a2',
+                        backgroundColor: 'rgba(245, 169, 208, 0.1)',
+                        tension: 0.4,
+                        pointBackgroundColor: '#d980a2',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#d980a2',
+                        pointRadius: 4,
+                        pointHoverRadius: 6,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                            titleColor: '#333',
+                            bodyColor: '#666',
+                            borderColor: '#f0f0f0',
+                            borderWidth: 1,
+                            padding: 12,
+                            bodyFont: {
+                                size: 13
+                            },
+                            titleFont: {
+                                size: 13,
+                                weight: '600'
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    let value = context.parsed.y;
+                                    return 'Doanh thu: ' + value + ' triệu VND';
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            grid: {
+                                color: '#f5f5f5'
+                            },
+                            border: {
+                                dash: [4, 4]
+                            },
+                            ticks: {
+                                callback: (value) => {
+                                    return value + 'M';
+                                },
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                font: {
+                                    size: 12
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderTopEvents();
+            initChart();
+        });
+    </script>
+</body>
+</html> 

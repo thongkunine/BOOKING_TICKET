@@ -31,7 +31,6 @@ module.exports = {
             if (!eventExists) {
                 throw new Error("Event ID không tồn tại!");
             }
-    
             let newSeat = new seatSchema({
                 event_id: event_id,
                 seat_number: seat_number,

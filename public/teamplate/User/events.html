@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sự kiện - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <style>
+        .events-hero {
+            background: linear-gradient(45deg, #ff4757, #00c6ff);
+            padding: 60px 0;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .events-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: #2d3436;
+        }
+
+        /* Featured Events Carousel */
+        .featured-events {
+            margin-bottom: 60px;
+        }
+
+        .swiper {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .swiper-slide {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 40px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+        }
+
+        .slide-category {
+            display: inline-block;
+            padding: 6px 12px;
+            background: #ff4757;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .slide-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        .slide-info {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .slide-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 12px 24px;
+            background: white;
+            color: #ff4757;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .slide-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255,255,255,0.2);
+        }
+
+        /* Events Grid */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 20px;
+        }
+
+        .event-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #f1f2f6;
+            color: #ff4757;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #2d3436;
+        }
+
+        .event-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            color: #636e72;
+        }
+
+        .event-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .event-price {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ff4757;
+            margin-bottom: 1rem;
+        }
+
+        .event-button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: #ff4757;
+            color: white;
+            text-align: center;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .event-button:hover {
+            background: #ff6b81;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            margin-bottom: 40px;
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .filter-button {
+            padding: 8px 16px;
+            border: 2px solid #ff4757;
+            border-radius: 20px;
+            color: #ff4757;
+            background: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-button.active {
+            background: #ff4757;
+            color: white;
+        }
+
+        .filter-button:hover:not(.active) {
+            background: #fff2f2;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .slide-title {
+                font-size: 1.8rem;
+            }
+
+            .swiper {
+                height: 400px;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="events-hero">
+        <div class="events-container">
+            <h1 class="hero-title">Khám phá sự kiện</h1>
+            <p class="hero-subtitle">Tìm kiếm và đặt vé cho các sự kiện hấp dẫn nhất</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="events-container">
+        <!-- Featured Events -->
+        <section class="featured-events">
+            <h2 class="section-title">Sự kiện nổi bật</h2>
+            <div class="swiper">
+                <div class="swiper-wrapper">
+                    <!-- Slides will be added by JavaScript -->
+                </div>
+                <div class="swiper-pagination"></div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <button class="filter-button active">Tất cả</button>
+            <button class="filter-button">Âm nhạc</button>
+            <button class="filter-button">Công nghệ</button>
+            <button class="filter-button">Ẩm thực</button>
+            <button class="filter-button">Thời trang</button>
+        </section>
+
+        <!-- Events Grid -->
+        <section class="events-list">
+            <div class="events-grid">
+                <!-- Event cards will be added by JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+    <script src="js/events.js"></script>
+</body>
+</html> 

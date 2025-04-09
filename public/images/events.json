@@ -1,0 +1,93 @@
+{
+    "banner_events": [
+        {
+            "id": 1,
+            "title": "Lễ hội âm nhạc mùa hè 2024",
+            "subtitle": "Trải nghiệm âm nhạc đỉnh cao với các nghệ sĩ hàng đầu",
+            "image": "banner1.jpg",
+            "date": "15/06/2024",
+            "location": "Sân vận động Quốc gia Mỹ Đình",
+            "category": "concert"
+        },
+        {
+            "id": 2,
+            "title": "Giải bóng đá V-League 2024",
+            "subtitle": "Chung kết giải bóng đá vô địch quốc gia",
+            "image": "banner2.jpg",
+            "date": "20/06/2024",
+            "location": "Sân vận động Hàng Đẫy",
+            "category": "sports"
+        },
+        {
+            "id": 3,
+            "title": "Hội chợ triển lãm công nghệ",
+            "subtitle": "Khám phá những công nghệ mới nhất",
+            "image": "banner3.jpg",
+            "date": "25/06/2024",
+            "location": "Trung tâm Hội chợ Triển lãm Việt Nam",
+            "category": "conference"
+        }
+    ],
+    "featured_events": [
+        {
+            "id": 4,
+            "title": "Buổi hòa nhạc cổ điển",
+            "date": "10/06/2024",
+            "location": "Nhà hát lớn Hà Nội",
+            "price": "500.000 VNĐ",
+            "image": "event1.jpg",
+            "category": "concert",
+            "description": "Buổi hòa nhạc cổ điển với dàn nhạc giao hưởng quốc gia"
+        },
+        {
+            "id": 5,
+            "title": "Triển lãm nghệ thuật đương đại",
+            "date": "12/06/2024",
+            "location": "Bảo tàng Mỹ thuật Việt Nam",
+            "price": "200.000 VNĐ",
+            "image": "event2.jpg",
+            "category": "art",
+            "description": "Triển lãm các tác phẩm nghệ thuật đương đại của các nghệ sĩ trẻ"
+        },
+        {
+            "id": 6,
+            "title": "Hội thảo khởi nghiệp",
+            "date": "15/06/2024",
+            "location": "Trung tâm Hội nghị Quốc gia",
+            "price": "1.000.000 VNĐ",
+            "image": "event3.jpg",
+            "category": "conference",
+            "description": "Hội thảo chia sẻ kinh nghiệm khởi nghiệp từ các doanh nhân thành đạt"
+        },
+        {
+            "id": 7,
+            "title": "Giải đấu bóng rổ",
+            "date": "18/06/2024",
+            "location": "Nhà thi đấu Quân khu 7",
+            "price": "300.000 VNĐ",
+            "image": "event4.jpg",
+            "category": "sports",
+            "description": "Giải đấu bóng rổ chuyên nghiệp với sự tham gia của các đội tuyển hàng đầu"
+        },
+        {
+            "id": 8,
+            "title": "Lễ hội ẩm thực đường phố",
+            "date": "22/06/2024",
+            "location": "Phố đi bộ Hồ Gươm",
+            "price": "Miễn phí",
+            "image": "event5.jpg",
+            "category": "food",
+            "description": "Khám phá ẩm thực đường phố với hơn 100 gian hàng"
+        },
+        {
+            "id": 9,
+            "title": "Workshop nhiếp ảnh",
+            "date": "25/06/2024",
+            "location": "Trung tâm Văn hóa Hà Nội",
+            "price": "800.000 VNĐ",
+            "image": "event6.jpg",
+            "category": "workshop",
+            "description": "Workshop nhiếp ảnh chuyên nghiệp với các nhiếp ảnh gia nổi tiếng"
+        }
+    ]
+} 

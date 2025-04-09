@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết vé</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li><a href="users.html"><i class="fas fa-users"></i> Quản lý người dùng</a></li>
+                <li><a href="events.html"><i class="fas fa-calendar-alt"></i> Quản lý sự kiện</a></li>
+                <li><a href="tickets.html"><i class="fas fa-ticket-alt"></i> Quản lý vé</a></li>
+                <li><a href="payments.html"><i class="fas fa-credit-card"></i> Quản lý thanh toán</a></li>
+                <li><a href="reports.html"><i class="fas fa-chart-bar"></i> Báo cáo thống kê</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-button" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h1>Chi tiết vé</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Tìm kiếm...">
+                        <button class="search-btn">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="admin-profile">
+                        <img src="https://via.placeholder.com/40" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <div class="ticket-detail-container">
+                    <div class="ticket-detail-card">
+                        <!-- Ticket Header -->
+                        <div class="ticket-header">
+                            <div class="ticket-main-info">
+                                <h3 id="eventName">Hòa nhạc mùa xuân 2025</h3>
+                                <div class="ticket-meta">
+                                    <span>
+                                        <i class="fas fa-calendar"></i>
+                                        <span id="eventDate">2025-04-10</span>
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-clock"></i>
+                                        <span id="eventTime">19:30</span>
+                                    </span>
+                                    <span>
+                                        <i class="fas fa-map-marker-alt"></i>
+                                        <span id="eventLocation">Nhà hát lớn Hà Nội</span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="ticket-status">
+                                <span class="status-badge status-completed" id="ticketStatus">Đã sử dụng</span>
+                            </div>
+                        </div>
+
+                        <!-- Ticket Details Grid -->
+                        <div class="ticket-details-grid">
+                            <div class="detail-group">
+                                <label>Mã vé</label>
+                                <span id="ticketId">T001</span>
+                            </div>
+                            <div class="detail-group">
+                                <label>Loại vé</label>
+                                <span id="ticketType">VIP</span>
+                            </div>
+                            <div class="detail-group">
+                                <label>Giá vé</label>
+                                <span id="ticketPrice">1.500.000 ₫</span>
+                            </div>
+                            <div class="detail-group">
+                                <label>Vị trí ghế</label>
+                                <span id="seatInfo">Hàng A, Ghế 15</span>
+                            </div>
+                        </div>
+
+                        <!-- Customer Information -->
+                        <div class="ticket-section">
+                            <h4>
+                                <i class="fas fa-user"></i>
+                                Thông tin khách hàng
+                            </h4>
+                            <div class="customer-info-grid">
+                                <div class="detail-group">
+                                    <label>Họ tên</label>
+                                    <span id="customerName">Nguyễn Văn A</span>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Email</label>
+                                    <span id="customerEmail">nguyenvana@email.com</span>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Số điện thoại</label>
+                                    <span id="customerPhone">0901234567</span>
+                                </div>
+                                <div class="detail-group">
+                                    <label>Ngày mua</label>
+                                    <span id="purchaseDate">2025-03-01</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Additional Information -->
+                        <div class="ticket-section">
+                            <h4>
+                                <i class="fas fa-info-circle"></i>
+                                Thông tin thêm
+                            </h4>
+                            <p id="additionalInfo">Bao gồm nước uống miễn phí</p>
+                        </div>
+
+                        <!-- QR Code Section -->
+                        <div class="ticket-section qr-section">
+                            <h4>
+                                <i class="fas fa-qrcode"></i>
+                                Mã QR
+                            </h4>
+                            <div class="qr-code">
+                                <img id="qrCode" src="https://via.placeholder.com/200" alt="QR Code">
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="ticket-actions">
+                            <button class="print-btn" onclick="window.print()">
+                                <i class="fas fa-print"></i>
+                                In vé
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Lấy ID từ URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const ticketId = urlParams.get('id') || 'T001';
+
+        // Giả lập dữ liệu vé
+        const ticketData = {
+            id: 'T001',
+            eventName: 'Hòa nhạc mùa xuân 2025',
+            eventDate: '2025-04-10',
+            eventTime: '19:30',
+            eventLocation: 'Nhà hát lớn Hà Nội',
+            ticketType: 'VIP',
+            price: '1500000',
+            customerName: 'Nguyễn Văn A',
+            customerEmail: 'nguyenvana@email.com',
+            customerPhone: '0901234567',
+            purchaseDate: '2025-03-01',
+            status: 'Đã sử dụng',
+            qrCode: 'https://via.placeholder.com/200',
+            seatInfo: 'Hàng A, Ghế 15',
+            additionalInfo: 'Bao gồm nước uống miễn phí'
+        };
+
+        // Hàm định dạng giá tiền
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+
+        // Hàm lấy class cho trạng thái
+        function getStatusClass(status) {
+            switch (status) {
+                case 'Đã sử dụng':
+                    return 'status-completed';
+                case 'Chưa sử dụng':
+                    return 'status-pending';
+                case 'Đã hủy':
+                    return 'status-failed';
+                default:
+                    return '';
+            }
+        }
+
+        // Cập nhật dữ liệu lên giao diện
+        document.getElementById('eventName').textContent = ticketData.eventName;
+        document.getElementById('eventDate').textContent = ticketData.eventDate;
+        document.getElementById('eventTime').textContent = ticketData.eventTime;
+        document.getElementById('eventLocation').textContent = ticketData.eventLocation;
+        document.getElementById('ticketStatus').textContent = ticketData.status;
+        document.getElementById('ticketStatus').className = `status-badge ${getStatusClass(ticketData.status)}`;
+        document.getElementById('ticketId').textContent = ticketData.id;
+        document.getElementById('ticketType').textContent = ticketData.ticketType;
+        document.getElementById('ticketPrice').textContent = formatPrice(ticketData.price);
+        document.getElementById('seatInfo').textContent = ticketData.seatInfo;
+        document.getElementById('customerName').textContent = ticketData.customerName;
+        document.getElementById('customerEmail').textContent = ticketData.customerEmail;
+        document.getElementById('customerPhone').textContent = ticketData.customerPhone;
+        document.getElementById('purchaseDate').textContent = ticketData.purchaseDate;
+        document.getElementById('additionalInfo').textContent = ticketData.additionalInfo;
+        document.getElementById('qrCode').src = ticketData.qrCode;
+    </script>
+</body>
+</html> 

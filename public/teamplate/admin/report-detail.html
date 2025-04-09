@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi tiết báo cáo - Admin Panel</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>Admin Panel</h2>
+            </div>
+            <div class="sidebar-divider"></div>
+            <ul class="menu">
+                <li>
+                    <a href="users.html">
+                        <i class="fas fa-users"></i>
+                        <span>Quản lý người dùng</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="events.html">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Quản lý sự kiện</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tickets.html">
+                        <i class="fas fa-ticket-alt"></i>
+                        <span>Quản lý vé</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="payments.html">
+                        <i class="fas fa-money-bill-wave"></i>
+                        <span>Quản lý giao dịch</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="reports.html">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Báo cáo thống kê</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="sidebar-divider"></div>
+            <div class="sidebar-footer">
+                <p>© 2025 Admin Panel</p>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="header-left">
+                    <button class="back-button" onclick="window.history.back()">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h1>Báo cáo chi tiết sự kiện</h1>
+                </div>
+                <div class="header-right">
+                    <button class="print-button" onclick="window.print()">
+                        <i class="fas fa-print"></i>
+                        In báo cáo
+                    </button>
+                    <div class="admin-profile">
+                        <img src="/admin-avatar.png" alt="Admin">
+                        <span>Admin</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Area -->
+            <div class="content-area">
+                <!-- Event Overview -->
+                <div class="detail-card">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-info-circle"></i>
+                            Thông tin chung
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="info-row">
+                            <div class="info-group">
+                                <label>Tên sự kiện</label>
+                                <span id="eventName"></span>
+                            </div>
+                            <div class="info-group">
+                                <label>Thời gian</label>
+                                <span id="eventDate"></span>
+                            </div>
+                            <div class="info-group">
+                                <label>Địa điểm</label>
+                                <span id="eventLocation"></span>
+                            </div>
+                            <div class="info-group">
+                                <label>Trạng thái</label>
+                                <span id="eventStatus"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sales Summary -->
+                <div class="detail-card">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-chart-line"></i>
+                            Tổng quan doanh số
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-ticket-alt"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Tổng số vé</h3>
+                                    <p class="stat-number" id="totalTickets"></p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Vé đã bán</h3>
+                                    <p class="stat-number" id="ticketsSold"></p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-percentage"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Tỷ lệ bán</h3>
+                                    <p class="stat-number" id="salesRate"></p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Doanh thu</h3>
+                                    <p class="stat-number" id="totalRevenue"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ticket Types Report -->
+                <div class="detail-card">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-tags"></i>
+                            Báo cáo theo loại vé
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <table class="report-table">
+                            <thead>
+                                <tr>
+                                    <th>Loại vé</th>
+                                    <th>Giá vé</th>
+                                    <th>Số lượng</th>
+                                    <th>Đã bán</th>
+                                    <th>Còn lại</th>
+                                    <th>Doanh thu</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ticketTypesTable">
+                                <!-- Will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Customer Statistics -->
+                <div class="detail-card">
+                    <div class="card-header">
+                        <h3>
+                            <i class="fas fa-users"></i>
+                            Thống kê khách hàng
+                        </h3>
+                    </div>
+                    <div class="card-content">
+                        <div class="stats-container">
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Tổng số khách hàng</h3>
+                                    <p class="stat-number" id="totalCustomers"></p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-plus"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Khách hàng mới</h3>
+                                    <p class="stat-number" id="newCustomers"></p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user-check"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Khách hàng quay lại</h3>
+                                    <p class="stat-number" id="returningCustomers"></p>
+                                </div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-pie"></i>
+                                </div>
+                                <div class="stat-info">
+                                    <h3>Trung bình vé/khách</h3>
+                                    <p class="stat-number" id="avgTicketsPerCustomer"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mock data cho báo cáo chi tiết
+        const reportDetail = {
+            id: 'R001',
+            name: 'Hòa nhạc mùa xuân 2025',
+            startDate: '2025-04-10',
+            endDate: '2025-04-10',
+            location: 'Nhà hát lớn Hà Nội',
+            status: 'Đã hoàn thành',
+            totalTickets: 500,
+            ticketsSold: 450,
+            revenue: 450000000,
+            ticketTypes: [
+                {
+                    name: 'Vé VIP',
+                    price: 1500000,
+                    quantity: 100,
+                    sold: 95,
+                    revenue: 142500000
+                },
+                {
+                    name: 'Vé Thường',
+                    price: 800000,
+                    quantity: 300,
+                    sold: 275,
+                    revenue: 220000000
+                },
+                {
+                    name: 'Vé Sinh viên',
+                    price: 500000,
+                    quantity: 100,
+                    sold: 80,
+                    revenue: 40000000
+                }
+            ],
+            salesByTime: [
+                { date: '2025-03-01', quantity: 50, revenue: 45000000 },
+                { date: '2025-03-15', quantity: 150, revenue: 120000000 },
+                { date: '2025-03-30', quantity: 200, revenue: 185000000 },
+                { date: '2025-04-09', quantity: 50, revenue: 100000000 }
+            ],
+            customerStats: {
+                totalCustomers: 420,
+                newCustomers: 150,
+                returningCustomers: 270,
+                averageTicketsPerCustomer: 1.07
+            }
+        };
+
+        // Hàm định dạng giá tiền
+        function formatPrice(price) {
+            return new Intl.NumberFormat('vi-VN', {
+                style: 'currency',
+                currency: 'VND'
+            }).format(price);
+        }
+
+        // Hàm định dạng ngày
+        function formatDate(dateString) {
+            return new Date(dateString).toLocaleDateString('vi-VN', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit'
+            });
+        }
+
+        // Hàm lấy class cho trạng thái
+        function getStatusClass(status) {
+            return status === 'Đã hoàn thành' ? 'completed' : 'pending';
+        }
+
+        // Hàm render thông tin chung
+        function renderEventInfo() {
+            document.getElementById('eventName').textContent = reportDetail.name;
+            document.getElementById('eventDate').textContent = formatDate(reportDetail.startDate);
+            document.getElementById('eventLocation').textContent = reportDetail.location;
+            document.getElementById('eventStatus').innerHTML = `
+                <span class="status-badge status-${getStatusClass(reportDetail.status)}">
+                    ${reportDetail.status}
+                </span>
+            `;
+        }
+
+        // Hàm render tổng quan doanh số
+        function renderSalesSummary() {
+            document.getElementById('totalTickets').textContent = reportDetail.totalTickets;
+            document.getElementById('ticketsSold').textContent = reportDetail.ticketsSold;
+            document.getElementById('salesRate').textContent = 
+                Math.round((reportDetail.ticketsSold / reportDetail.totalTickets) * 100) + '%';
+            document.getElementById('totalRevenue').textContent = formatPrice(reportDetail.revenue);
+        }
+
+        // Hàm render bảng loại vé
+        function renderTicketTypes() {
+            const tbody = document.getElementById('ticketTypesTable');
+            tbody.innerHTML = '';
+
+            reportDetail.ticketTypes.forEach(type => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${type.name}</td>
+                    <td>${formatPrice(type.price)}</td>
+                    <td>${type.quantity}</td>
+                    <td>${type.sold}</td>
+                    <td>${type.quantity - type.sold}</td>
+                    <td>${formatPrice(type.revenue)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Hàm render thống kê khách hàng
+        function renderCustomerStats() {
+            document.getElementById('totalCustomers').textContent = reportDetail.customerStats.totalCustomers;
+            document.getElementById('newCustomers').textContent = reportDetail.customerStats.newCustomers;
+            document.getElementById('returningCustomers').textContent = reportDetail.customerStats.returningCustomers;
+            document.getElementById('avgTicketsPerCustomer').textContent = 
+                reportDetail.customerStats.averageTicketsPerCustomer.toFixed(2);
+        }
+
+        // Khởi tạo trang
+        document.addEventListener('DOMContentLoaded', function() {
+            renderEventInfo();
+            renderSalesSummary();
+            renderTicketTypes();
+            renderCustomerStats();
+        });
+    </script>
+</body>
+</html> 

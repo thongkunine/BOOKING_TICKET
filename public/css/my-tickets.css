@@ -1,0 +1,337 @@
+/* Modern Interface - My Tickets Page */
+:root {
+    /* Brand Colors */
+    --primary: #6366F1 !important;
+    --primary-dark: #4F46E5 !important;
+    --primary-light: #C7D2FE !important;
+    --secondary: #EC4899 !important;
+    
+    /* Background Colors */
+    --bg-white: #FFFFFF !important;
+    --bg-light: #F9FAFB !important;
+    --bg-lighter: #F3F4F6 !important;
+    --bg-dark: #111827 !important;
+    
+    /* Text Colors */
+    --text-primary: #111827 !important;
+    --text-secondary: #4B5563 !important;
+    --text-light: #9CA3AF !important;
+    --text-white: #FFFFFF !important;
+    
+    /* Status Colors */
+    --success: #10B981 !important;
+    --warning: #F59E0B !important;
+    --error: #EF4444 !important;
+    --info: #3B82F6 !important;
+    
+    /* Border Colors */
+    --border-light: #E5E7EB !important;
+    --border-dark: #D1D5DB !important;
+    
+    /* Shadow */
+    --shadow-sm: 0px 1px 2px rgba(0, 0, 0, 0.05) !important;
+    --shadow-md: 0px 4px 6px -1px rgba(0, 0, 0, 0.1) !important;
+    --shadow-lg: 0px 10px 15px -3px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Reset & Base */
+.my-tickets-page * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.my-tickets-page {
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
+    background: var(--bg-light) !important;
+    color: var(--text-primary) !important;
+    line-height: 1.6 !important;
+    min-height: 100vh;
+}
+
+.my-tickets-page .container {
+    max-width: 1200px !important;
+    margin: 0 auto !important;
+    padding: 0 2rem !important;
+    width: 100% !important;
+}
+
+/* Header */
+.my-tickets-page .header {
+    background: var(--bg-white) !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 50 !important;
+    width: 100% !important;
+}
+
+.my-tickets-page .header-content {
+    height: 72px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+}
+
+.my-tickets-page .logo {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    text-decoration: none !important;
+}
+
+.my-tickets-page .nav-menu {
+    display: flex !important;
+    align-items: center !important;
+    gap: 2.5rem !important;
+}
+
+.my-tickets-page .nav-link {
+    color: var(--text-secondary) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    font-size: 0.938rem !important;
+    padding: 0.5rem 1rem !important;
+    border-radius: 0.5rem !important;
+    transition: all 0.3s ease !important;
+}
+
+.my-tickets-page .nav-link:hover {
+    color: var(--primary) !important;
+    background: var(--bg-lighter) !important;
+}
+
+.my-tickets-page .nav-link.active {
+    color: var(--primary) !important;
+    background: var(--bg-lighter) !important;
+}
+
+/* Page Header */
+.my-tickets-page .page-header {
+    padding: 3rem 0 !important;
+    background: var(--bg-white) !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    margin-bottom: 2rem !important;
+    width: 100% !important;
+}
+
+.my-tickets-page .page-title {
+    font-size: 2.25rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 1rem !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.02em !important;
+}
+
+.my-tickets-page .page-subtitle {
+    font-size: 1.125rem !important;
+    color: var(--text-secondary) !important;
+    max-width: 600px !important;
+}
+
+/* Stats Grid */
+.my-tickets-page .stats-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 1.5rem !important;
+    margin-bottom: 3rem !important;
+    width: 100% !important;
+}
+
+.my-tickets-page .stat-card {
+    background: var(--bg-white) !important;
+    padding: 2rem !important;
+    border-radius: 1rem !important;
+    border: 1px solid var(--border-light) !important;
+    transition: all 0.3s ease !important;
+}
+
+.my-tickets-page .stat-card:hover {
+    transform: translateY(-4px) !important;
+    box-shadow: var(--shadow-md) !important;
+    border-color: var(--primary-light) !important;
+}
+
+.my-tickets-page .stat-icon {
+    width: 48px !important;
+    height: 48px !important;
+    background: var(--primary-light) !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-bottom: 1.5rem !important;
+}
+
+.my-tickets-page .stat-icon i {
+    font-size: 1.5rem !important;
+    color: var(--primary) !important;
+}
+
+.my-tickets-page .stat-value {
+    font-size: 2.5rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 0.5rem !important;
+    letter-spacing: -0.02em !important;
+}
+
+.my-tickets-page .stat-label {
+    font-size: 1rem !important;
+    color: var(--text-secondary) !important;
+    font-weight: 500 !important;
+}
+
+/* Empty State */
+.my-tickets-page .empty-state {
+    text-align: center !important;
+    padding: 4rem 2rem !important;
+    background: var(--bg-white) !important;
+    border-radius: 1rem !important;
+    border: 1px solid var(--border-light) !important;
+    max-width: 480px !important;
+    margin: 2rem auto !important;
+}
+
+.my-tickets-page .empty-icon {
+    width: 80px !important;
+    height: 80px !important;
+    background: var(--primary-light) !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 auto 2rem !important;
+}
+
+.my-tickets-page .empty-icon i {
+    font-size: 2rem !important;
+    color: var(--primary) !important;
+}
+
+.my-tickets-page .empty-title {
+    font-size: 1.5rem !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    margin-bottom: 1rem !important;
+}
+
+.my-tickets-page .empty-text {
+    color: var(--text-secondary) !important;
+    margin-bottom: 2rem !important;
+    font-size: 1.125rem !important;
+    line-height: 1.6 !important;
+}
+
+/* Buttons */
+.my-tickets-page .btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 0.875rem 1.75rem !important;
+    font-size: 1rem !important;
+    font-weight: 600 !important;
+    border-radius: 0.75rem !important;
+    transition: all 0.3s ease !important;
+    cursor: pointer !important;
+    gap: 0.5rem !important;
+}
+
+.my-tickets-page .btn i {
+    font-size: 1.25rem !important;
+}
+
+.my-tickets-page .btn-primary {
+    background: var(--primary) !important;
+    color: var(--text-white) !important;
+    border: none !important;
+}
+
+.my-tickets-page .btn-primary:hover {
+    background: var(--primary-dark) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: var(--shadow-md) !important;
+}
+
+.my-tickets-page .btn-secondary {
+    background: var(--bg-lighter) !important;
+    color: var(--text-primary) !important;
+    border: 1px solid var(--border-light) !important;
+}
+
+.my-tickets-page .btn-secondary:hover {
+    background: var(--bg-white) !important;
+    border-color: var(--primary) !important;
+    color: var(--primary) !important;
+    transform: translateY(-2px) !important;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .my-tickets-page .container {
+        padding: 0 1.5rem !important;
+    }
+    
+    .my-tickets-page .stats-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .my-tickets-page .page-header {
+        padding: 2rem 0 !important;
+    }
+    
+    .my-tickets-page .page-title {
+        font-size: 1.875rem !important;
+    }
+    
+    .my-tickets-page .stats-grid {
+        grid-template-columns: 1fr !important;
+    }
+    
+    .my-tickets-page .nav-menu {
+        display: none !important;
+    }
+    
+    .my-tickets-page .stat-value {
+        font-size: 2rem !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .my-tickets-page .container {
+        padding: 0 1rem !important;
+    }
+    
+    .my-tickets-page .page-title {
+        font-size: 1.5rem !important;
+    }
+    
+    .my-tickets-page .empty-state {
+        padding: 2rem 1rem !important;
+    }
+    
+    .my-tickets-page .btn {
+        width: 100% !important;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.my-tickets-page .stat-card {
+    animation: fadeIn 0.3s ease-out;
+} 

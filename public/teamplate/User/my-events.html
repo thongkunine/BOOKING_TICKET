@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sự kiện của tôi - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <style>
+        .header {
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            text-decoration: none;
+        }
+
+        .logo-text {
+            color: #ff4b5a;
+            font-size: 24px;
+            font-weight: 700;
+            text-decoration: none;
+            margin: 0;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links a {
+            color: #4a4a4a;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #ff4b5a;
+        }
+
+        .nav-links a.active {
+            color: #ff4b5a;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .my-events-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            color: #1a1a1a;
+            margin: 0;
+        }
+
+        .create-event-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: linear-gradient(45deg, #ff4b5a, #00c6ff);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: opacity 0.2s;
+        }
+
+        .create-event-btn:hover {
+            opacity: 0.9;
+        }
+
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 24px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .event-image {
+            position: relative;
+            padding-top: 56.25%;
+            background: #f8f9ff;
+        }
+
+        .event-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .event-status {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .status-draft {
+            background: #6c757d;
+        }
+
+        .status-published {
+            background: #28a745;
+        }
+
+        .event-content {
+            padding: 20px;
+        }
+
+        .event-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1a1a1a;
+            margin: 0 0 12px;
+        }
+
+        .event-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .event-meta p {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+
+        .btn-edit {
+            background: #f8f9ff;
+            color: #00c6ff;
+            border: 1px solid #00c6ff;
+        }
+
+        .btn-edit:hover {
+            background: #e6f7ff;
+        }
+
+        .btn-delete {
+            background: #fff2f2;
+            color: #ff4b5a;
+            border: 1px solid #ff4b5a;
+        }
+
+        .btn-delete:hover {
+            background: #ffe6e6;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 48px 20px;
+            background: #f8f9ff;
+            border-radius: 12px;
+        }
+
+        .empty-state i {
+            font-size: 48px;
+            color: #00c6ff;
+            margin-bottom: 16px;
+        }
+
+        .empty-state h3 {
+            font-size: 20px;
+            color: #1a1a1a;
+            margin: 0 0 8px;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin: 0 0 24px;
+        }
+    </style>
+</head>
+<body>
+    <div class="my-events-page">
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <nav class="nav">
+                    <a href="/" class="logo">EventBox</a>
+                    <ul class="nav-links">
+                        <li><a href="/explore.html">Khám phá</a></li>
+                        <li><a href="/calendar.html">Lịch</a></li>
+                        <li><a href="/blog.html">Blog</a></li>
+                        <li><a href="/create-event.html" class="create-event">
+                            <i class="fas fa-plus"></i>
+                            Tạo sự kiện
+                        </a></li>
+                    </ul>
+                    <div class="user-menu">
+                        <button class="user-menu-btn">
+                            <img src="https://ui-avatars.com/api/?name=John+Doe&background=ff4b5a&color=fff" alt="User Avatar" class="user-avatar">
+                            <span class="user-name">John Doe</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="my-tickets.html" class="dropdown-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                Vé của tôi
+                            </a>
+                            <a href="my-events.html" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                Hồ sơ
+                            </a>
+                            <a href="profile.html" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                Cài đặt
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="events-hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Sự kiện của tôi</h1>
+                    <div class="hero-actions">
+                        <a href="/create-event.html" class="btn-create-event">
+                            <i class="fas fa-plus"></i>
+                            Tạo sự kiện mới
+                        </a>
+                        <button class="btn-filter">
+                            <i class="fas fa-filter"></i>
+                            Lọc sự kiện
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Sự kiện đã tạo</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">1,234</div>
+                            <div class="stat-label">Vé đã bán</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <div class="stat-value">5,678</div>
+                            <div class="stat-label">Người tham dự</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section class="events-section">
+            <div class="container">
+                <div class="events-header">
+                    <div class="events-tabs">
+                        <button class="tab active">Tất cả sự kiện</button>
+                        <button class="tab">Đang diễn ra</button>
+                        <button class="tab">Sắp diễn ra</button>
+                        <button class="tab">Đã kết thúc</button>
+                    </div>
+                    <div class="events-actions">
+                        <div class="search-box">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Tìm kiếm sự kiện...">
+                        </div>
+                        <div class="view-options">
+                            <button class="view-btn active" title="Grid View">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="view-btn" title="List View">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="events-grid">
+                    <!-- Event Card -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="images/event-1.jpg" alt="Event">
+                            <div class="event-overlay">
+                                <div class="event-actions">
+                                    <button class="action-btn" title="Chỉnh sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <span class="event-status active">Đang diễn ra</span>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">KPOP Music Festival 2024</h3>
+                            <div class="event-info">
+                                <div class="info-item">
+                                    <i class="far fa-calendar"></i>
+                                    <span>15/03/2024</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>19:00</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Sân vận động Mỹ Đình</span>
+                                </div>
+                            </div>
+                            <div class="event-stats">
+                                <div class="stat">
+                                    <i class="fas fa-ticket-alt"></i>
+                                    <span>234 vé đã bán</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>500 chỗ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Event Card 2 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="images/event-2.jpg" alt="Event">
+                            <div class="event-overlay">
+                                <div class="event-actions">
+                                    <button class="action-btn" title="Chỉnh sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <span class="event-status upcoming">Sắp diễn ra</span>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Tech Conference 2024</h3>
+                            <div class="event-info">
+                                <div class="info-item">
+                                    <i class="far fa-calendar"></i>
+                                    <span>25/04/2024</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>08:30</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>Trung tâm Hội nghị Quốc gia</span>
+                                </div>
+                            </div>
+                            <div class="event-stats">
+                                <div class="stat">
+                                    <i class="fas fa-ticket-alt"></i>
+                                    <span>156 vé đã bán</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>300 chỗ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Event Card 3 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="images/event-3.jpg" alt="Event">
+                            <div class="event-overlay">
+                                <div class="event-actions">
+                                    <button class="action-btn" title="Chỉnh sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="action-btn" title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                    <button class="action-btn" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <span class="event-status ended">Đã kết thúc</span>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Workshop Design Thinking</h3>
+                            <div class="event-info">
+                                <div class="info-item">
+                                    <i class="far fa-calendar"></i>
+                                    <span>10/01/2024</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>14:00</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <span>UP Coworking Space</span>
+                                </div>
+                            </div>
+                            <div class="event-stats">
+                                <div class="stat">
+                                    <i class="fas fa-ticket-alt"></i>
+                                    <span>50 vé đã bán</span>
+                                </div>
+                                <div class="stat">
+                                    <i class="fas fa-users"></i>
+                                    <span>50 chỗ</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State -->
+                <div class="empty-state" style="display: none;">
+                    <div class="empty-illustration">
+                        <i class="fas fa-calendar-plus"></i>
+                    </div>
+                    <h3>Chưa có sự kiện nào</h3>
+                    <p>Hãy bắt đầu bằng việc tạo sự kiện đầu tiên của bạn</p>
+                    <a href="/create-event.html" class="btn-create">
+                        <i class="fas fa-plus"></i>
+                        Tạo sự kiện ngay
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/main.js"></script>
+</body>
+</html> 

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Booking Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/calendar.css">
+    <link rel="stylesheet" href="/public/css/auth.css">
+</head>
+<body>
+  <!-- Header -->
+    <header class="header">
+    <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">EventBox</a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Khám phá</a>
+                    <a href="lich.html" class="nav-link">Lịch</a>
+                    <a href="blog.html" class="nav-link">Blog</a>
+                    <a href="create-event.html" class="nav-link">Tạo sự kiện</a>
+                </div>
+                <div class="nav-right">
+                    <!-- User Menu (Show when logged in) -->
+                    <div class="user-menu" style="display: none;">
+                        <button class="user-menu-btn">
+                            <img src="https://via.placeholder.com/36x36" alt="User Avatar" class="user-avatar">
+                            <span class="user-name">Nguyễn Văn A</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a href="my-tickets.html" class="dropdown-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                Vé của tôi
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                Hồ sơ
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                <i class="fas fa-cog"></i>
+                                Cài đặt
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item text-danger">
+                                <i class="fas fa-sign-out-alt"></i>
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </div>
+                    <!-- Auth Buttons (Show when not logged in) -->
+                    <div class="auth-buttons">
+                        <a href="login.html" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Đăng nhập
+                        </a>
+                        <a href="register.html" class="btn-register">
+                            <i class="fas fa-user-plus"></i>
+                            Đăng ký
+                        </a>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn">
+            <i class="fas fa-bars"></i>
+          </button>
+      </nav>
+    </div>
+  </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-slide active" style="background-image: url('https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')">
+            <div class="overlay"></div>
+            <div class="container">
+            <div class="hero-content">
+                    <div class="hero-text">
+                        <span class="event-tag">
+                            <i class="fas fa-star"></i>
+                            Sự kiện nổi bật
+                        </span>
+                        <h1 class="hero-title">Khám phá những sự kiện tuyệt vời</h1>
+                        <p class="hero-subtitle">Tìm kiếm và đặt vé cho các sự kiện hấp dẫn nhất tại Việt Nam</p>
+                        <div class="hero-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                Sự kiện mỗi ngày
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                Đặt vé dễ dàng
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-shield-alt"></i>
+                                Thanh toán an toàn
+                            </span>
+              </div>
+                        <div class="hero-actions">
+                            <a href="index.html" class="btn btn-primary">Khám phá ngay</a>
+                            <a href="#" class="btn btn-outline">Tạo sự kiện</a>
+            </div>
+              </div>
+            </div>
+              </div>
+            </div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')">
+            <div class="overlay"></div>
+            <div class="container">
+            <div class="hero-content">
+                    <div class="hero-text">
+                        <span class="event-tag">
+                            <i class="fas fa-music"></i>
+                            Âm nhạc
+                        </span>
+                        <h1 class="hero-title">Lễ hội âm nhạc quốc tế</h1>
+                        <p class="hero-subtitle">Trải nghiệm âm nhạc đỉnh cao với các nghệ sĩ nổi tiếng thế giới</p>
+                        <div class="hero-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                15/07/2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Sân vận động Mỹ Đình
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                Từ 500.000đ
+                            </span>
+              </div>
+                        <div class="hero-actions">
+                            <a href="#" class="btn btn-primary">Đặt vé ngay</a>
+                            <a href="#" class="btn btn-outline">Xem chi tiết</a>
+            </div>
+              </div>
+            </div>
+              </div>
+            </div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')">
+            <div class="overlay"></div>
+                <div class="container">
+            <div class="hero-content">
+                    <div class="hero-text">
+                        <span class="event-tag">
+                            <i class="fas fa-running"></i>
+                            Thể thao
+                        </span>
+                        <h1 class="hero-title">Giải bóng đá V-League 2024</h1>
+                        <p class="hero-subtitle">Cùng cổ vũ cho đội bóng yêu thích của bạn</p>
+                        <div class="hero-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                20/06/2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                19:00
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Sân vận động Hàng Đẫy
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                Từ 200.000đ
+                            </span>
+          </div>
+                        <div class="hero-actions">
+                            <a href="#" class="btn btn-primary">Đặt vé ngay</a>
+                            <a href="#" class="btn btn-outline">Xem chi tiết</a>
+            </div>
+          </div>
+        </div>
+            </div>
+                      </div>
+        <div class="hero-slide" style="background-image: url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80')">
+            <div class="overlay"></div>
+            <div class="container">
+            <div class="hero-content">
+                    <div class="hero-text">
+                        <span class="event-tag">
+                            <i class="fas fa-laptop-code"></i>
+                            Công nghệ
+                        </span>
+                        <h1 class="hero-title">Hội chợ triển lãm công nghệ 2024</h1>
+                        <p class="hero-subtitle">Khám phá những công nghệ mới nhất</p>
+                        <div class="hero-meta">
+                            <span class="meta-item">
+                                <i class="fas fa-calendar"></i>
+                                25/06/2024
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-clock"></i>
+                                08:00
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Trung tâm Hội chợ Triển lãm Việt Nam
+                            </span>
+                            <span class="meta-item">
+                                <i class="fas fa-ticket-alt"></i>
+                                Từ 100.000đ
+                            </span>
+                        </div>
+                        <div class="hero-actions">
+                            <a href="#" class="btn btn-primary">Đặt vé ngay</a>
+                            <a href="#" class="btn btn-outline">Xem chi tiết</a>
+                        </div>
+                        </div>
+                      </div>
+                    </div>
+              </div>
+        <div class="slider-controls">
+            <button class="slider-btn prev"><i class="fas fa-chevron-left"></i></button>
+            <button class="slider-btn next"><i class="fas fa-chevron-right"></i></button>
+        </div>
+      </section>
+          
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Tìm kiếm sự kiện...">
+                      </div>
+                    <div class="filter-group">
+                        <select class="filter-select">
+                            <option value="">Tất cả danh mục</option>
+                            <option value="music">Âm nhạc</option>
+                            <option value="sports">Thể thao</option>
+                            <option value="art">Nghệ thuật</option>
+                            <option value="tech">Công nghệ</option>
+                            <option value="food">Ẩm thực</option>
+                            <option value="education">Giáo dục</option>
+                            <option value="business">Kinh doanh</option>
+                            <option value="film">Điện ảnh</option>  
+                        </select>
+                        </div>
+                    <div class="filter-group">
+                        <select class="filter-select">
+                            <option value="">Tất cả địa điểm</option>
+                            <option value="hanoi">Hà Nội</option>
+                            <option value="hcm">TP. Hồ Chí Minh</option>
+                            <option value="danang">Đà Nẵng</option>
+                        </select>
+                        </div>
+                <button class="btn btn-primary search-btn">Tìm kiếm</button>
+                    </div>
+              </div>
+    </section>
+          
+          <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2 class="section-title">Khám phá theo danh mục</h2>
+            <div class="grid grid-cols-4">
+                <div class="category-card">
+                    <i class="fas fa-music category-icon"></i>
+                    <h3>Âm nhạc</h3>
+                    <p>Hòa nhạc, Liveshow, Festival</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-running category-icon"></i>
+                    <h3>Thể thao</h3>
+                    <p>Bóng đá, Bóng rổ, Tennis</p>
+                  </div>
+                <div class="category-card">
+                    <i class="fas fa-palette category-icon"></i>
+                    <h3>Nghệ thuật</h3>
+                    <p>Triển lãm, Biểu diễn, Sân khấu</p>
+                  </div>
+                <div class="category-card">
+                    <i class="fas fa-laptop-code category-icon"></i>
+                    <h3>Công nghệ</h3>
+                    <p>Hội thảo, Workshop, Hackathon</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-utensils category-icon"></i>
+                    <h3>Ẩm thực</h3>
+                    <p>Lễ hội ẩm thực, Food tour</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-graduation-cap category-icon"></i>
+                    <h3>Giáo dục</h3>
+                    <p>Hội thảo, Tọa đàm, Đào tạo</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-briefcase category-icon"></i>
+                    <h3>Kinh doanh</h3>
+                    <p>Hội nghị, Networking, Startup</p>
+                </div>
+                <div class="category-card">
+                    <i class="fas fa-film category-icon"></i>
+                    <h3>Điện ảnh</h3>
+                    <p>Phim chiếu rạp, Liên hoan phim</p>
+                </div>
+            </div>
+        </div>
+    </section>
+          
+    <!-- Featured Events -->
+    <section class="featured-events">
+        <div class="container">
+            <h2 class="section-title">Sự kiện nổi bật</h2>
+            <div class="events-carousel">
+                <div class="events-slider">
+                    <!-- Cards will be generated by JavaScript -->
+                </div>
+                <div class="location-dots">
+                    <!-- Dots will be generated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Events -->
+    <section class="music-events">
+        <div class="container">
+            <h2 class="section-title">Sự kiện âm nhạc</h2>
+            <div class="events-carousel">
+                <div class="events-slider">
+                    <!-- Event Card 1 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Music Event 1">
+                            <div class="event-date">10/08</div>
+                            <div class="event-category">Âm nhạc</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Summer Music Festival</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 16:00 - 23:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Sân vận động Mỹ Đình</p>
+                                <p><i class="fas fa-ticket-alt"></i> 500.000đ - 2.000.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 2 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Music Event 2">
+                            <div class="event-date">15/08</div>
+                            <div class="event-category">Âm nhạc</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Jazz Night</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 20:00 - 23:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Nhà hát lớn Hà Nội</p>
+                                <p><i class="fas fa-ticket-alt"></i> 800.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 3 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1459749411175-04bf5292ceea?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Music Event 3">
+                            <div class="event-date">20/08</div>
+                            <div class="event-category">Âm nhạc</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Electronic Dance Festival</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 21:00 - 04:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Phú Quốc United Center</p>
+                                <p><i class="fas fa-ticket-alt"></i> 1.500.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 4 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1429962714451-bb934ecdc4ec?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Music Event 4">
+                            <div class="event-date">25/08</div>
+                            <div class="event-category">Âm nhạc</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Rock Symphony Night</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 19:30 - 22:30</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Cung Văn hóa Hữu nghị</p>
+                                <p><i class="fas fa-ticket-alt"></i> 1.200.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 5 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1506157786151-b8491531f063?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Music Event 5">
+                            <div class="event-date">30/08</div>
+                            <div class="event-category">Âm nhạc</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Indie Music Festival</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 15:00 - 23:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Công viên Yên Sở</p>
+                                <p><i class="fas fa-ticket-alt"></i> 350.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 6 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Music Event 6">
+                            <div class="event-date">05/09</div>
+                            <div class="event-category">Âm nhạc</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">K-Pop Super Concert</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 18:00 - 22:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Sân vận động Quốc gia Mỹ Đình</p>
+                                <p><i class="fas fa-ticket-alt"></i> 1.500.000đ - 3.000.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 7 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Music Event 7">
+                            <div class="event-date">10/09</div>
+                            <div class="event-category">Âm nhạc</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Classical Music Night</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 19:30 - 21:30</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Nhà hát Lớn Hà Nội</p>
+                                <p><i class="fas fa-ticket-alt"></i> 700.000đ - 1.500.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sports Events -->
+    <section class="sports-events">
+        <div class="container">
+            <h2 class="section-title">Sự kiện thể thao</h2>
+            <div class="events-carousel">
+                <div class="events-slider">
+                    <!-- Event Card 1 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1461896836934-ffe607ba8211?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sport Event 1">
+                            <div class="event-date">05/08</div>
+                            <div class="event-category">Thể thao</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Giải Marathon Quốc tế</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 05:00 - 12:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Hồ Hoàn Kiếm</p>
+                                <p><i class="fas fa-ticket-alt"></i> 300.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 2 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1434648957308-5e6a859697e8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sport Event 2">
+                            <div class="event-date">12/08</div>
+                            <div class="event-category">Thể thao</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Giải Bóng đá Cộng đồng</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 15:00 - 21:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Sân vận động Hàng Đẫy</p>
+                                <p><i class="fas fa-ticket-alt"></i> 150.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 3 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1560089000-7433a4ebbd64?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sport Event 3">
+                            <div class="event-date">18/08</div>
+                            <div class="event-category">Thể thao</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Giải Tennis Mở rộng</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 08:00 - 18:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Trung tâm Tennis Mỹ Đình</p>
+                                <p><i class="fas fa-ticket-alt"></i> 400.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 4 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sport Event 4">
+                            <div class="event-date">25/08</div>
+                            <div class="event-category">Thể thao</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Giải Bóng rổ Chuyên nghiệp VBA</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 19:00 - 22:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Nhà thi đấu Bách Khoa</p>
+                                <p><i class="fas fa-ticket-alt"></i> 200.000đ - 500.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 5 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1599474924187-334a4ae5bd3c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sport Event 5">
+                            <div class="event-date">01/09</div>
+                            <div class="event-category">Thể thao</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Giải Võ thuật Quốc tế</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 08:00 - 20:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Cung Thể thao Quần Ngựa</p>
+                                <p><i class="fas fa-ticket-alt"></i> 300.000đ - 800.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 6 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1551958219-acbc608c6377?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sport Event 6">
+                            <div class="event-date">10/09</div>
+                            <div class="event-category">Thể thao</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Giải Bơi lội Quốc gia</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 07:00 - 17:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Cung thể thao dưới nước Mỹ Đình</p>
+                                <p><i class="fas fa-ticket-alt"></i> 150.000đ - 400.000đ</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Event Card 7 -->
+                    <div class="event-card">
+                        <div class="event-image">
+                            <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sport Event 7">
+                            <div class="event-date">15/09</div>
+                            <div class="event-category">Thể thao</div>
+                        </div>
+                        <div class="event-content">
+                            <h3 class="event-title">Giải Đua xe Đạp Xuyên Việt</h3>
+                            <div class="event-meta">
+                                <p><i class="fas fa-clock"></i> 06:00 - 16:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Quảng trường Ba Đình</p>
+                                <p><i class="fas fa-ticket-alt"></i> Miễn phí</p>
+                            </div>
+                            <div class="event-actions">
+                                <a href="event-detail.html" class="btn btn-primary">Xem chi tiết</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-dots">
+                    <span class="dot active"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                    <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Venues Section -->
+    <section class="popular-locations">
+        <div class="container">
+            <h2 class="section-title">Địa điểm phổ biến</h2>
+            <div class="location-grid">
+                <div class="location-card">
+                    <div class="location-image">
+                        <img src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Nhà hát lớn Hà Nội">
+                    </div>
+                    <div class="location-content">
+                        <h3 class="location-title">Nhà hát lớn Hà Nội</h3>
+                        <div class="location-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Hoàn Kiếm, Hà Nội</span>
+                            <span><i class="fas fa-calendar-check"></i> 12 sự kiện</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-card">
+                    <div class="location-image">
+                        <img src="https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sân vận động Mỹ Đình">
+                    </div>
+                    <div class="location-content">
+                        <h3 class="location-title">Sân vận động Mỹ Đình</h3>
+                        <div class="location-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Nam Từ Liêm, Hà Nội</span>
+                            <span><i class="fas fa-calendar-check"></i> 8 sự kiện</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-card">
+                    <div class="location-image">
+                        <img src="https://images.unsplash.com/photo-1576435728678-68d0fbf94e91?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Trung tâm Hội nghị Quốc gia">
+                    </div>
+                    <div class="location-content">
+                        <h3 class="location-title">Trung tâm Hội nghị Quốc gia</h3>
+                        <div class="location-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Nam Từ Liêm, Hà Nội</span>
+                            <span><i class="fas fa-calendar-check"></i> 15 sự kiện</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="location-card">
+                    <div class="location-image">
+                        <img src="https://images.unsplash.com/photo-1577223625816-7546f13df25d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Cung Văn hóa Hữu nghị Việt Xô">
+                    </div>
+                    <div class="location-content">
+                        <h3 class="location-title">Cung Văn hóa Hữu nghị Việt Xô</h3>
+                        <div class="location-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> Ba Đình, Hà Nội</span>
+                            <span><i class="fas fa-calendar-check"></i> 10 sự kiện</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="location-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+            </div>
+            <div class="view-all-venues" style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn btn-outline">Hiển thị tất cả</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Upcoming Events Calendar -->
+    <section class="events-calendar">
+        <div class="container">
+            <h2 class="section-title">Lịch sự kiện sắp diễn ra</h2>
+            <div class="calendar-wrapper">
+                <div class="calendar-filters">
+                    <a href="lich.html" class="calendar-filter active"><i class="fas fa-calendar-alt"></i> Tất cả</a>
+                    <a href="lich.html?filter=today" class="calendar-filter"><i class="fas fa-sun"></i> Hôm nay</a>
+                    <a href="lich.html?filter=week" class="calendar-filter"><i class="fas fa-calendar-week"></i> Tuần này</a>
+                    <a href="lich.html?filter=month" class="calendar-filter"><i class="fas fa-calendar"></i> Tháng này</a>
+                </div>
+                <div class="calendar-grid">
+                    <div class="calendar-event">
+                        <div class="event-date">
+                            <span class="date">15</span>
+                            <span class="month">Th6</span>
+                            <div class="event-badge">Nổi bật</div>
+                        </div>
+                        <div class="event-info">
+                            <h3>Lễ hội âm nhạc quốc tế</h3>
+                            <div class="event-details">
+                                <p><i class="fas fa-clock"></i> 19:00 - 23:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Sân vận động Mỹ Đình</p>
+                                <p><i class="fas fa-users"></i> 500+ người tham gia</p>
+                            </div>
+                        </div>
+                        <div class="event-action">
+                            <span class="event-price">Từ 500.000đ</span>
+                            <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+                        </div>
+                    </div>
+                    <div class="calendar-event">
+                        <div class="event-date">
+                            <span class="date">20</span>
+                            <span class="month">Th6</span>
+                            <div class="event-badge">Mới</div>
+                        </div>
+                        <div class="event-info">
+                            <h3>Workshop Công nghệ AI</h3>
+                            <div class="event-details">
+                                <p><i class="fas fa-clock"></i> 09:00 - 17:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Trung tâm Hội nghị Quốc gia</p>
+                                <p><i class="fas fa-users"></i> 200+ người tham gia</p>
+                            </div>
+                        </div>
+                        <div class="event-action">
+                            <span class="event-price">Từ 200.000đ</span>
+                            <a href="#" class="btn btn-primary">Đặt vé</a>
+                        </div>
+                    </div>
+                    <div class="calendar-event">
+                        <div class="event-date">
+                            <span class="date">22</span>
+                            <span class="month">Th6</span>
+                        </div>
+                        <div class="event-info">
+                            <h3>Triển lãm Nghệ thuật Đương đại</h3>
+                            <div class="event-details">
+                                <p><i class="fas fa-clock"></i> 10:00 - 18:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Bảo tàng Mỹ thuật Việt Nam</p>
+                                <p><i class="fas fa-users"></i> 300+ người tham gia</p>
+                            </div>
+                        </div>
+                        <div class="event-action">
+                            <span class="event-price">Từ 100.000đ</span>
+                            <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+                        </div>
+                    </div>
+                    <div class="calendar-event">
+                        <div class="event-date">
+                            <span class="date">25</span>
+                            <span class="month">Th6</span>
+                            <div class="event-badge">Sắp hết vé</div>
+                        </div>
+                        <div class="event-info">
+                            <h3>Hội thảo Khởi nghiệp 2024</h3>
+                            <div class="event-details">
+                                <p><i class="fas fa-clock"></i> 08:30 - 17:00</p>
+                                <p><i class="fas fa-map-marker-alt"></i> Trung tâm Hội nghị Quốc gia</p>
+                                <p><i class="fas fa-users"></i> 1000+ người tham gia</p>
+                            </div>
+                        </div>
+                        <div class="event-action">
+                            <span class="event-price">Từ 300.000đ</span>
+                            <a href="payment.html" class="btn btn-primary">Đặt vé</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="view-all-calendar">
+                    <a href="lich.html" class="btn btn-outline">Hiển thị tất cả <i class="fas fa-arrow-right"></i></a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section" style="padding-top: 0; margin-top: -40px; margin-bottom: 40px;">
+        <div class="container">
+            <h2 class="section-title">Tin tức & Blog</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1531058020387-3be344556be6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Blog 1">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> 10/06/2024</span>
+                            <span><i class="fas fa-user"></i> Admin</span>
+                        </div>
+                        <h3>Top 10 sự kiện âm nhạc không thể bỏ lỡ trong mùa hè này</h3>
+                        <p>Khám phá những sự kiện âm nhạc hấp dẫn nhất sẽ diễn ra trong mùa hè 2024...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Blog 2">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> 08/06/2024</span>
+                            <span><i class="fas fa-user"></i> Admin</span>
+                        </div>
+                        <h3>Hướng dẫn tổ chức sự kiện thành công</h3>
+                        <p>Những bí quyết và kinh nghiệm quan trọng khi tổ chức một sự kiện...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Blog 3">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> 05/06/2024</span>
+                            <span><i class="fas fa-user"></i> Admin</span>
+                        </div>
+                        <h3>Cách chọn địa điểm phù hợp cho sự kiện của bạn</h3>
+                        <p>Những yếu tố quan trọng cần cân nhắc khi lựa chọn địa điểm tổ chức sự kiện...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+                <article class="blog-card">
+                    <div class="blog-image">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Blog 4">
+                    </div>
+                    <div class="blog-content">
+                        <div class="blog-meta">
+                            <span><i class="fas fa-calendar"></i> 01/06/2024</span>
+                            <span><i class="fas fa-user"></i> Admin</span>
+                        </div>
+                        <h3>Xu hướng tổ chức sự kiện nổi bật trong năm 2024</h3>
+                        <p>Khám phá những xu hướng mới nhất trong lĩnh vực tổ chức sự kiện năm 2024...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+            <div class="carousel-dots" style="text-align: center; margin: 20px 0;">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+               
+            </div>
+            <div class="view-all-articles" style="text-align: center; margin-top: 30px;">
+                <a href="#" class="btn btn-outline">Xem tất cả bài viết</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- App Download Section -->
+    <section class="app-download" style="margin-top: 60px;">
+        <div class="container">
+            <div class="app-content">
+                <h2 class="section-title">Tải ứng dụng EventBox</h2>
+                <p class="section-subtitle">Đặt vé dễ dàng, theo dõi sự kiện yêu thích và nhận thông báo ưu đãi hấp dẫn ngay trên điện thoại của bạn.</p>
+                <div class="app-buttons">
+                    <a href="#" class="app-btn">
+                        <i class="fab fa-apple"></i>
+                        <div class="btn-text">
+                            <span class="btn-label">Tải về trên</span>
+                            <span class="btn-name">App Store</span>
+                        </div>
+                    </a>
+                    <a href="#" class="app-btn">
+                        <i class="fab fa-google-play"></i>
+                        <div class="btn-text">
+                            <span class="btn-label">Tải về trên</span>
+                            <span class="btn-name">Google Play</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="app-image">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Mobile App">
+              </div>
+            </div>
+          </section>
+          
+          <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về chúng tôi</h3>
+                    <a href="#" class="footer-link">Giới thiệu</a>
+                    <a href="#" class="footer-link">Điều khoản sử dụng</a>
+                    <a href="#" class="footer-link">Chính sách bảo mật</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hỗ trợ</h3>
+                    <a href="#" class="footer-link">Câu hỏi thường gặp</a>
+                    <a href="#" class="footer-link">Hướng dẫn đặt vé</a>
+                    <a href="#" class="footer-link">Liên hệ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kết nối</h3>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">Twitter</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Đăng ký nhận tin</h3>
+                    <p class="newsletter-text">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Nhập email của bạn" class="newsletter-input">
+                        <button class="newsletter-button">ĐĂNG KÝ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventBox. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal" id="event-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Đặt vé sự kiện</h2>
+            <form id="booking-form">
+                <div class="form-group">
+                    <label>Số lượng vé</label>
+                    <input type="number" min="1" value="1" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Họ và tên</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" required>
+              </div>
+                <div class="form-group">
+                    <label>Số điện thoại</label>
+                    <input type="tel" class="form-control" required>
+            </div>
+                <button type="submit" class="btn btn-primary">Đặt vé</button>
+            </form>
+            </div>
+          </div>
+          
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const errorAlert = document.getElementById('errorAlert');
+            const successAlert = document.getElementById('successAlert');
+            const loading = document.getElementById('loading');
+            
+            // Kiểm tra xem người dùng đã đăng nhập chưa
+            const token = localStorage.getItem('token');
+            console.log('Token từ localStorage:', token ? 'Có' : 'Không');
+            
+            if (token) {
+                console.log('Đã tìm thấy token, kiểm tra tính hợp lệ...');
+                
+                // Hiển thị loading
+                loading.style.display = 'block';
+                
+                // Kiểm tra tính hợp lệ của token
+                fetch('http://localhost:4000/auth/me', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => {
+                    console.log('Phản hồi kiểm tra token:', response);
+                    
+                    if (response.ok) {
+                        console.log('Token hợp lệ, chuyển hướng đến trang profile');
+                        window.location.href = 'profile.html';
+                    } else {
+                        console.log('Token không hợp lệ, xóa token và yêu cầu đăng nhập lại');
+                        localStorage.removeItem('token');
+                        loading.style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error('Lỗi khi kiểm tra token:', error);
+                    localStorage.removeItem('token');
+                    loading.style.display = 'none';
+                });
+            }
+            
+            // Xử lý đăng nhập
+            loginForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Ẩn thông báo cũ
+                errorAlert.style.display = 'none';
+                successAlert.style.display = 'none';
+                
+                // Hiển thị loading
+                loading.style.display = 'block';
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const rememberMe = document.getElementById('rememberMe').checked;
+                
+                try {
+                    const response = await fetch('http://localhost:4000/auth/login', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            username: username,
+                            password: password
+                        }),
+                        credentials: 'include' // Quan trọng để nhận cookie từ server
+                    });
+                    
+                    console.log('Phản hồi đăng nhập:', response);
+                    
+                    if (response.ok) {
+                        const data = await response.json();
+                        console.log('Dữ liệu đăng nhập:', data);
+                        
+                        // Kiểm tra cấu trúc dữ liệu phản hồi
+                        if (data && data.data) {
+                            // Xử lý token nếu cần
+                            let token = data.data;
+                            
+                            // Kiểm tra và xử lý token nếu có tiền tố "token="
+                            if (token.startsWith('token=')) {
+                                token = token.substring(6);
+                                console.log('Đã xử lý token, loại bỏ tiền tố "token="');
+                            }
+                            
+                            // Giải mã URL nếu cần
+                            try {
+                                if (token.includes('%')) {
+                                    token = decodeURIComponent(token);
+                                    console.log('Đã giải mã URL cho token');
+                                }
+                            } catch (e) {
+                                console.error('Lỗi khi giải mã URL token:', e);
+                            }
+                            
+                            // Lưu token vào localStorage
+                            localStorage.setItem('token', token);
+                            console.log('Đã lưu token:', token);
+                            
+                            // Hiển thị thông báo thành công
+                            successAlert.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
+                            successAlert.style.display = 'block';
+                            
+                            // Chuyển hướng đến trang profile sau 1 giây
+                            setTimeout(() => {
+                                window.location.href = 'profile.html';
+                            }, 1000);
+                        } else {
+                            console.error('Cấu trúc dữ liệu không hợp lệ:', data);
+                            throw new Error('Dữ liệu đăng nhập không hợp lệ: Không tìm thấy token');
+                        }
+                    } else {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Đăng nhập thất bại');
+                    }
+                } catch (error) {
+                    console.error('Lỗi đăng nhập:', error);
+                    
+                    // Ẩn loading
+                    loading.style.display = 'none';
+                    
+                    // Hiển thị thông báo lỗi
+                    errorAlert.textContent = 'Lỗi: ' + error.message;
+                    errorAlert.style.display = 'block';
+                }
+            });
+        });
+    </script>
+          </body>
+          </html>

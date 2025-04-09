@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - EventBox</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/style.css">
+    <link rel="stylesheet" href="/public/css/auth.css">
+    <link rel="stylesheet" href="/public/css/blog.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="logo">EventBox</a>
+                <div class="nav-links">
+                    <a href="index.html" class="nav-link">Khám phá</a>
+                    <a href="lich.html" class="nav-link">Lịch</a>
+                    <a href="blog.html" class="nav-link active">Blog</a>
+                    <a href="create-event.html" class="nav-link">Tạo sự kiện</a>
+                </div>
+                <div class="nav-right">
+                    <div class="auth-buttons">
+                        <a href="login.html" class="btn-login">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Đăng nhập
+                        </a>
+                        <a href="register.html" class="btn-register">
+                            <i class="fas fa-user-plus"></i>
+                            Đăng ký
+                        </a>
+                    </div>
+                </div>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="blog-hero">
+        <div class="container">
+            <h1>Blog Sự Kiện</h1>
+            <p>Khám phá những xu hướng mới nhất và chia sẻ kinh nghiệm về tổ chức sự kiện</p>
+            
+            <div class="blog-categories">
+                <a href="#" class="category-tag active" data-category="all">Tất cả</a>
+                <a href="#" class="category-tag" data-category="music">Âm nhạc</a>
+                <a href="#" class="category-tag" data-category="tech">Công nghệ</a>
+                <a href="#" class="category-tag" data-category="business">Kinh doanh</a>
+                <a href="#" class="category-tag" data-category="education">Giáo dục</a>
+                <a href="#" class="category-tag" data-category="lifestyle">Lifestyle</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Posts -->
+    <section class="featured-posts" data-category="all">
+        <div class="container">
+            <div class="featured-grid">
+                <article class="featured-main" data-category="all">
+                    <div class="post-image">
+                        <img src="images/event2.jpg" alt="Top 10 sự kiện âm nhạc">
+                        <span class="post-category">Nổi bật</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">10/06/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h2>Top 10 sự kiện không thể bỏ lỡ trong mùa hè này</h2>
+                        <p>Khám phá những sự kiện hấp dẫn nhất sẽ diễn ra trong mùa hè 2024...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="featured-secondary" data-category="all">
+                    <div class="post-image">
+                        <img src="images/event3.jpg" alt="Hướng dẫn tổ chức sự kiện">
+                        <span class="post-category">Kinh nghiệm</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">08/06/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Hướng dẫn tổ chức sự kiện thành công</h3>
+                        <p>Những bí quyết và kinh nghiệm quan trọng khi tổ chức một sự kiện...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Latest Posts -->
+    <section class="latest-posts">
+        <div class="container">
+            <h2 class="section-title">Bài viết mới nhất</h2>
+            
+            <div class="posts-grid">
+                <!-- Bài viết về Âm nhạc -->
+                <article class="post-card" data-category="music">
+                    <div class="post-image">
+                        <img src="images/event2.jpg" alt="Festival âm nhạc">
+                        <span class="post-category">Âm nhạc</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">04/06/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Những festival âm nhạc đáng mong đợi nhất 2024</h3>
+                        <p>Điểm qua các festival âm nhạc lớn sẽ được tổ chức trong năm 2024...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="music">
+                    <div class="post-image">
+                        <img src="images/event5.jpg" alt="Concert">
+                        <span class="post-category">Âm nhạc</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">31/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Lịch trình các concert quốc tế tại Việt Nam</h3>
+                        <p>Cập nhật lịch trình các nghệ sĩ quốc tế sẽ tổ chức concert tại Việt Nam...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="music">
+                    <div class="post-image">
+                        <img src="images/event3.jpg" alt="Nhạc hội mùa hè">
+                        <span class="post-category">Âm nhạc</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">25/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Nhạc hội mùa hè 2024 - Sự kiện không thể bỏ lỡ</h3>
+                        <p>Chuỗi sự kiện âm nhạc hoành tráng nhất mùa hè này...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Bài viết về Công nghệ -->
+                <article class="post-card" data-category="tech">
+                    <div class="post-image">
+                        <img src="images/event6.jpg" alt="Sự kiện công nghệ">
+                        <span class="post-category">Công nghệ</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">03/06/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Top 5 sự kiện công nghệ đáng chú ý trong tháng 6</h3>
+                        <p>Điểm qua những sự kiện công nghệ quan trọng sẽ diễn ra trong tháng 6...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="tech">
+                    <div class="post-image">
+                        <img src="images/event2.jpg" alt="Tech Startup">
+                        <span class="post-category">Công nghệ</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">29/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Triển lãm công nghệ AI và Machine Learning</h3>
+                        <p>Khám phá những ứng dụng mới nhất của AI trong cuộc sống...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="tech">
+                    <div class="post-image">
+                        <img src="images/event5.jpg" alt="Blockchain Summit">
+                        <span class="post-category">Công nghệ</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">22/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Vietnam Blockchain Summit 2024</h3>
+                        <p>Sự kiện quy tụ các chuyên gia blockchain hàng đầu thế giới...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Bài viết về Kinh doanh -->
+                <article class="post-card" data-category="business">
+                    <div class="post-image">
+                        <img src="images/banner3.jpg" alt="Hội nghị kinh doanh">
+                        <span class="post-category">Kinh doanh</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">30/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Hội nghị khởi nghiệp đổi mới sáng tạo 2024</h3>
+                        <p>Sự kiện quy tụ các chuyên gia hàng đầu trong lĩnh vực khởi nghiệp...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="business">
+                    <div class="post-image">
+                        <img src="images/event2.jpg" alt="Marketing Conference">
+                        <span class="post-category">Kinh doanh</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">20/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Digital Marketing Conference 2024</h3>
+                        <p>Khám phá xu hướng marketing mới nhất cùng các chuyên gia...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="business">
+                    <div class="post-image">
+                        <img src="images/event6.jpg" alt="Business Forum">
+                        <span class="post-category">Kinh doanh</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">15/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Vietnam Business Forum 2024</h3>
+                        <p>Diễn đàn kết nối doanh nghiệp và nhà đầu tư quốc tế...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Bài viết về Giáo dục -->
+                <article class="post-card" data-category="education">
+                    <div class="post-image">
+                        <img src="images/event5.jpg" alt="Hội thảo giáo dục">
+                        <span class="post-category">Giáo dục</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">02/06/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Chuỗi hội thảo về đổi mới giáo dục 2024</h3>
+                        <p>Khám phá những xu hướng mới trong giáo dục qua các hội thảo chuyên sâu...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="education">
+                    <div class="post-image">
+                        <img src="images/event6.jpg" alt="Hội thảo du học">
+                        <span class="post-category">Giáo dục</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">28/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Ngày hội tư vấn du học quốc tế 2024</h3>
+                        <p>Thông tin chi tiết về các chương trình học bổng và cơ hội du học...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="education">
+                    <div class="post-image">
+                        <img src="images/event3.jpg" alt="STEM Education">
+                        <span class="post-category">Giáo dục</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">18/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Ngày hội STEM Education 2024</h3>
+                        <p>Trải nghiệm các hoạt động giáo dục STEM thú vị và bổ ích...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- Bài viết về Lifestyle -->
+                <article class="post-card" data-category="lifestyle">
+                    <div class="post-image">
+                        <img src="images/event3.jpg" alt="Sự kiện lifestyle">
+                        <span class="post-category">Lifestyle</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">01/06/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Những sự kiện wellness không thể bỏ lỡ trong năm</h3>
+                        <p>Tổng hợp các sự kiện về sức khỏe và lối sống trong năm 2024...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="lifestyle">
+                    <div class="post-image">
+                        <img src="images/event3.jpg" alt="Yoga Festival">
+                        <span class="post-category">Lifestyle</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">27/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Lễ hội Yoga và Thiền định 2024</h3>
+                        <p>Trải nghiệm không gian thư giãn và tái tạo năng lượng tích cực...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <article class="post-card" data-category="lifestyle">
+                    <div class="post-image">
+                        <img src="images/event5.jpg" alt="Food Festival">
+                        <span class="post-category">Lifestyle</span>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">
+                            <span class="post-date">12/05/2024</span>
+                            <span class="post-author">Admin</span>
+                        </div>
+                        <h3>Lễ hội Ẩm thực Healthy Living 2024</h3>
+                        <p>Khám phá những xu hướng ẩm thực lành mạnh mới nhất...</p>
+                        <a href="#" class="read-more">Đọc thêm <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="pagination">
+                <a href="#" class="page-prev"><i class="fas fa-chevron-left"></i></a>
+                <a href="#" class="page-number active">1</a>
+                <a href="#" class="page-number">2</a>
+                <a href="#" class="page-number">3</a>
+                <span class="page-dots">...</span>
+                <a href="#" class="page-number">10</a>
+                <a href="#" class="page-next"><i class="fas fa-chevron-right"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Về chúng tôi</h3>
+                    <a href="#" class="footer-link">Giới thiệu</a>
+                    <a href="#" class="footer-link">Điều khoản sử dụng</a>
+                    <a href="#" class="footer-link">Chính sách bảo mật</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Hỗ trợ</h3>
+                    <a href="#" class="footer-link">Câu hỏi thường gặp</a>
+                    <a href="#" class="footer-link">Hướng dẫn đặt vé</a>
+                    <a href="#" class="footer-link">Liên hệ</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Kết nối</h3>
+                    <a href="#" class="footer-link">Facebook</a>
+                    <a href="#" class="footer-link">Instagram</a>
+                    <a href="#" class="footer-link">Twitter</a>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Đăng ký nhận tin</h3>
+                    <p class="newsletter-text">Đăng ký để nhận thông tin về các sự kiện mới nhất và ưu đãi đặc biệt</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Nhập email của bạn" class="newsletter-input">
+                        <button class="newsletter-button">ĐĂNG KÝ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 EventBox. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryTags = document.querySelectorAll('.category-tag');
+            const articles = document.querySelectorAll('article');
+            const featuredSection = document.querySelector('.featured-posts');
+
+            categoryTags.forEach(tag => {
+                tag.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all tags
+                    categoryTags.forEach(t => t.classList.remove('active'));
+                    
+                    // Add active class to clicked tag
+                    this.classList.add('active');
+                    
+                    const selectedCategory = this.getAttribute('data-category');
+                    
+                    // Show/hide featured section based on category
+                    if (selectedCategory === 'all') {
+                        featuredSection.style.display = '';
+                    } else {
+                        featuredSection.style.display = 'none';
+                    }
+                    
+                    // Show/hide articles based on category
+                    articles.forEach(article => {
+                        if (selectedCategory === 'all' || article.getAttribute('data-category') === selectedCategory) {
+                            article.style.display = '';
+                            article.style.opacity = '1';
+                        } else {
+                            article.style.opacity = '0';
+                            setTimeout(() => {
+                                article.style.display = 'none';
+                            }, 300);
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html> 
