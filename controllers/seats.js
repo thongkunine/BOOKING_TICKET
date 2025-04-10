@@ -25,7 +25,7 @@ module.exports = {
     },
 
     // Tạo một ghế mới
-    CreateASeat: async function(event_id, seat_number, status) {
+    CreateASeat: async function(event_id, seat_number, type, price, status) {
         try {
             let eventExists = await eventSchema.findById(event_id);
             if (!eventExists) {
@@ -34,6 +34,8 @@ module.exports = {
             let newSeat = new seatSchema({
                 event_id: event_id,
                 seat_number: seat_number,
+                type: type,
+                price: price,
                 status: status
             });
             return await newSeat.save();
@@ -64,6 +66,19 @@ module.exports = {
                 throw new Error("Seat không tồn tại!");
             }
             return deletedSeat;
+        } catch (error) {
+            throw new Error(error.message);
+        }
+    },
+    
+    // Lấy danh sách ghế theo ID sự kiện
+    GetSeatsByEventId: async function(eventId) {
+        try {
+            let seats = await seatSchema.find({ event_id: eventId });
+            if (!seats || seats.length === 0) {
+                throw new Error("Không tìm thấy ghế nào cho sự kiện này!");
+            }
+            return seats;
         } catch (error) {
             throw new Error(error.message);
         }

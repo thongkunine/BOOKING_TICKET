@@ -1,14 +1,15 @@
-let  express = require('express');
-let  router = express.Router();
+let express = require('express');
+var router = express.Router();
 let ticketController = require('../controllers/tickets');
-let {CreateSuccessResponse,CreateErrorResponse} = require('../utils/responseHandler')
+let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseHandler');
+
 // GET all tickets
 router.get('/', async function(req, res) {
     try {
         let tickets = await ticketController.GetAllTickets();
-        res.send({ success: true, data: tickets });
+        CreateSuccessResponse(res, 200, tickets);
     } catch (error) {
-        res.status(500).send({ success: false, message: error.message });
+        CreateErrorResponse(res, 500, error.message);
     }
 });
 
@@ -16,9 +17,9 @@ router.get('/', async function(req, res) {
 router.get('/:id', async function(req, res) {
     try {
         let ticket = await ticketController.GetTicketById(req.params.id);
-        res.send({ success: true, data: ticket });
+        CreateSuccessResponse(res, 200, ticket);
     } catch (error) {
-        res.status(404).send({ success: false, message: error.message });
+        CreateErrorResponse(res, 404, error.message);
     }
 });
 
@@ -27,18 +28,19 @@ router.post('/', async function(req, res) {
     try {
         let { event_id, type, quantity, price } = req.body;
         let newTicket = await ticketController.CreateATicket(event_id, type, quantity, price);
-        res.status(201).send({ success: true, data: newTicket });
+        CreateSuccessResponse(res, 201, newTicket);
     } catch (error) {
-        res.status(400).send({ success: false, message: error.message });
+        CreateErrorResponse(res, 400, error.message);
     }
 });
+
 // UPDATE ticket by ID
 router.put('/:id', async function(req, res) {
     try {
         let updatedTicket = await ticketController.UpdateATicket(req.params.id, req.body);
-        res.send({ success: true, data: updatedTicket });
+        CreateSuccessResponse(res, 200, updatedTicket);
     } catch (error) {
-        res.status(400).send({ success: false, message: error.message });
+        CreateErrorResponse(res, 400, error.message);
     }
 });
 
@@ -46,9 +48,19 @@ router.put('/:id', async function(req, res) {
 router.delete('/:id', async function(req, res) {
     try {
         let deletedTicket = await ticketController.DeleteATicket(req.params.id);
-        res.send({ success: true, data: deletedTicket });
+        CreateSuccessResponse(res, 200, deletedTicket);
     } catch (error) {
-        res.status(400).send({ success: false, message: error.message });
+        CreateErrorResponse(res, 400, error.message);
+    }
+});
+
+// GET tickets by event ID
+router.get('/event/:id', async function(req, res) {
+    try {
+        let tickets = await ticketController.GetTicketsByEventId(req.params.id);
+        CreateSuccessResponse(res, 200, tickets);
+    } catch (error) {
+        CreateErrorResponse(res, 404, error.message);
     }
 });
 

@@ -118,9 +118,6 @@
                     Ghi nhớ đăng nhập
                 </label>
             </div>
-            <div class="text-end mb-3">
-                <a href="forgot-password.html" class="text-decoration-none">Quên mật khẩu?</a>
-            </div>
             <button type="submit" class="btn btn-primary">
                 <i class="fas fa-sign-in-alt"></i> Đăng nhập
             </button>
@@ -161,7 +158,7 @@
                     
                     if (response.ok) {
                         console.log('Token hợp lệ, chuyển hướng đến trang profile');
-                        window.location.href = 'profile.html';
+                       window.location.href = 'profile.html';
                     } else {
                         console.log('Token không hợp lệ, xóa token và yêu cầu đăng nhập lại');
                         localStorage.removeItem('token');
@@ -238,10 +235,34 @@
                             successAlert.textContent = 'Đăng nhập thành công! Đang chuyển hướng...';
                             successAlert.style.display = 'block';
                             
-                            // Chuyển hướng đến trang profile sau 1 giây
-                            setTimeout(() => {
-                                window.location.href = 'profile.html';
-                            }, 1000);
+                            // Lấy thông tin người dùng để kiểm tra vai trò
+                            fetch('http://localhost:4000/auth/me', {
+                                headers: {
+                                    'Authorization': `Bearer ${token}`
+                                }
+                            })
+                            .then(response => response.json())
+                            .then(userData => {
+                                console.log('Thông tin người dùng:', userData);
+                                
+                                // Chuyển hướng đến trang index sau 1 giây
+                                setTimeout(() => {
+                                    if (userData.success && (userData.data.role.name === 'admin' || userData.data.role === 'admin' || 
+                                        userData.data.role.name === 'Admin' || userData.data.role === 'Admin' ||
+                                        userData.data.role.name === 'Administrator' || userData.data.role === 'Administrator')) {
+                                        // Nếu là admin, chuyển hướng đến trang admin
+                                        window.location.href = '../../index.html';
+                                    } else {
+                                        // Nếu là user thường, chuyển hướng đến trang chủ
+                                        window.location.href = '../../index.html';
+                                    }
+                                }, 1000);
+                            })
+                            .catch(error => {
+                                console.error('Lỗi khi lấy thông tin người dùng:', error);
+                                // Mặc định chuyển hướng đến trang chủ nếu không lấy được thông tin
+                                window.location.href = '../../index.html';
+                            });
                         } else {
                             console.error('Cấu trúc dữ liệu không hợp lệ:', data);
                             throw new Error('Dữ liệu đăng nhập không hợp lệ: Không tìm thấy token');

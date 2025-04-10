@@ -7,7 +7,6 @@ let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseH
 router.get('/', async function(req, res) {
     try {
         let seats = await seatController.GetAllSeats();
-        res.render('seats', { seats });
         CreateSuccessResponse(res, 200, seats);
     } catch (error) {
         CreateErrorResponse(res, 500, error.message);
@@ -52,6 +51,16 @@ router.delete('/:id', async function(req, res) {
         CreateSuccessResponse(res, 200, deletedSeat);
     } catch (error) {
         CreateErrorResponse(res, 400, error.message);
+    }
+});
+
+// GET seats by event ID
+router.get('/event/:id', async function(req, res) {
+    try {
+        let seats = await seatController.GetSeatsByEventId(req.params.id);
+        CreateSuccessResponse(res, 200, seats);
+    } catch (error) {
+        CreateErrorResponse(res, 404, error.message);
     }
 });
 

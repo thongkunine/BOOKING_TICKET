@@ -40,7 +40,7 @@ app.use('/auth', require('./routes/auth'));
 app.use('/roles', require('./routes/roles'));
 app.use('/events', require('./routes/events'));
 app.use('/tickets', require('./routes/tickets'));
-app.use('/oders', require('./routes/oders'));
+app.use('/orders', require('./routes/oders'));
 app.use('/seats',require('./routes/seats'));
 
 // catch 404 and forward to error handler

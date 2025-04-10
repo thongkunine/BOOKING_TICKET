@@ -39,14 +39,33 @@ module.exports = {
     }
   },
   UpdateAnUser: async function (id, body) {
-    let allowField = ["password", "email", "imgURL"];
-    let getUser = await userSchema.findById(id);
-    for (const key of Object.keys(body)) {
-      if (allowField.includes(key)) {
-        getUser[key] = body[key]
+    try {
+      let allowField = ["password", "email", "imgURL", "username", "role"];
+      let getUser = await userSchema.findById(id);
+      
+      if (!getUser) {
+        return null;
       }
+      
+      for (const key of Object.keys(body)) {
+        if (allowField.includes(key)) {
+          if (key === "role") {
+            // If updating role, find the role object first
+            let roleObj = await roleSchema.findOne({ name: body[key] });
+            if (roleObj) {
+              getUser[key] = roleObj._id;
+            } else {
+              throw new Error('Role does not exist');
+            }
+          } else {
+            getUser[key] = body[key];
+          }
+        }
+      }
+      return await getUser.save();
+    } catch (error) {
+      throw new Error(error.message);
     }
-    return await getUser.save();
   },
   DeleteAnUser: async function (id) {
     return await userSchema.findByIdAndUpdate(id, { status: false }
