@@ -11,20 +11,12 @@ let seatSchema = new mongoose.Schema({
         type: String, 
         required: true 
     },
-    type: {
-        type: String,
-        required: true,
-        enum: ['VIP', 'Thường']
-    },
-    price: {
-        type: Number,
-        required: true
-    },
     status: { 
         type: String, 
         required: true, 
         enum: ['available', 'reserved', 'sold'] 
-    }
+    },
+    
 },{
     timestamps: true // Tự động thêm createdAt và updatedAt
 });

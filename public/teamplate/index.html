@@ -6,6 +6,8 @@
     <title>Badminton Events - Trang chủ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add jQuery library -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -136,37 +138,122 @@
             display: block;
         }
         .seat-selection {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-            gap: 10px;
-            margin: 20px 0;
+            background-color: #f8f9fa;
+            padding: 3rem 0;
+        }
+        .seat-map {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        .seat-legend {
+            margin-bottom: 2.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .seat-legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.5rem 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         .seat {
-            width: 60px;
-            height: 60px;
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s;
+            font-size: 12px;
+            font-weight: 500;
+            color: #495057;
         }
         .seat.available {
-            background-color: #28a745;
-            color: white;
+            background-color: #e9ecef;
+            border: 2px solid #dee2e6;
+        }
+        .seat.available:hover {
+            background-color: #dee2e6;
+            transform: scale(1.1);
         }
         .seat.selected {
             background-color: #4a90e2;
+            border: 2px solid #357abd;
             color: white;
         }
-        .seat.unavailable {
+        .seat.reserved {
+            background-color: #ffc107;
+            border: 2px solid #d39e00;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        .seat.sold {
             background-color: #dc3545;
-            color: white;
+            border: 2px solid #bd2130;
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+        .seat-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 12px;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .booking-summary {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 2rem;
+        }
+        .selected-seats-list {
+            max-height: 250px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+        .selected-seat-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        .selected-seat-item:last-child {
+            margin-bottom: 0;
+        }
+        .booking-actions {
+            margin-top: 2rem;
+        }
+        .booking-actions button {
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        .booking-actions button:disabled {
+            opacity: 0.7;
             cursor: not-allowed;
         }
-        .seat:hover:not(.unavailable) {
-            transform: scale(1.1);
+        .booking-actions button:not(:disabled):hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.2);
         }
     </style>
 </head>
@@ -250,19 +337,58 @@
                         <h3 id="eventName">Tên sự kiện</h3>
                         <p id="eventDate">Ngày: </p>
                         <p id="eventLocation">Địa điểm: </p>
-                        <p id="eventDescription">Mô tả: </p>
                         
-                        <h4 class="mt-4">Chọn ghế</h4>
-                        <div class="seat-selection" id="seatSelection">
-                            <!-- Seats will be loaded here -->
-                        </div>
-                        
-                        <div class="mt-4">
-                            <h5>Ghế đã chọn: <span id="selectedSeats">Không có</span></h5>
-                            <h5>Tổng tiền: <span id="totalPrice">0</span> VNĐ</h5>
-                            <button class="btn btn-primary" id="bookButton">Đặt vé</button>
-                            <button class="btn btn-secondary" id="backButton">Quay lại</button>
-                        </div>
+                        <!-- Seat Selection Section -->
+                        <section class="seat-selection">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-8">
+                                        <div class="seat-map">
+                                            <h3 class="mb-4">Chọn ghế của bạn</h3>
+                                            <div class="seat-legend">
+                                                <div class="d-flex flex-wrap gap-3">
+                                                    <div class="seat-legend-item">
+                                                        <div class="seat available"></div>
+                                                        <span>Còn trống</span>
+                                                    </div>
+                                                    <div class="seat-legend-item">
+                                                        <div class="seat selected"></div>
+                                                        <span>Đã chọn</span>
+                                                    </div>
+                                                    <div class="seat-legend-item">
+                                                        <div class="seat reserved"></div>
+                                                        <span>Đã đặt trước</span>
+                                                    </div>
+                                                    <div class="seat-legend-item">
+                                                        <div class="seat sold"></div>
+                                                        <span>Đã bán</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="seatMap" class="seat-grid">
+                                                <!-- Seats will be dynamically added here -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="booking-summary">
+                                            <h3 class="mb-4">Tổng quan đặt vé</h3>
+                                            <div class="selected-seats mb-4">
+                                                <h5>Ghế đã chọn</h5>
+                                                <div id="selectedSeatsList" class="selected-seats-list">
+                                                    <!-- Selected seats will be listed here -->
+                                                </div>
+                                            </div>
+                                            <div class="booking-actions">
+                                                <button id="proceedToBooking" class="btn btn-primary w-100" disabled>
+                                                    Tiếp tục đặt vé
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
                     </div>
                     <div class="col-md-4">
                         <div class="card">
@@ -278,6 +404,51 @@
                                     <p class="card-text">Vui lòng chọn ghế và số lượng vé mong muốn.</p>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add Seat Modal -->
+            <div class="modal fade" id="addSeatModal" tabindex="-1" aria-labelledby="addSeatModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addSeatModalLabel">Thêm ghế mới</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addSeatForm">
+                                <div class="mb-3">
+                                    <label for="eventSelect" class="form-label">Sự kiện</label>
+                                    <select class="form-select" id="eventSelect" required>
+                                        <option value="">Chọn sự kiện</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="seatNumber" class="form-label">Số ghế</label>
+                                    <input type="text" class="form-control" id="seatNumber" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="seatType" class="form-label">Loại ghế</label>
+                                    <select class="form-select" id="seatType" required>
+                                        <option value="VIP">VIP</option>
+                                        <option value="Thường">Thường</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="seatStatus" class="form-label">Trạng thái</label>
+                                    <select class="form-select" id="seatStatus" required>
+                                        <option value="available">Còn trống</option>
+                                        <option value="reserved">Đã đặt trước</option>
+                                        <option value="sold">Đã bán</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                            <button type="button" class="btn btn-primary" id="saveSeatBtn">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -335,9 +506,9 @@
             const successAlert = document.getElementById('successAlert');
             const errorAlert = document.getElementById('errorAlert');
             const seatSelection = document.getElementById('seatSelection');
-            const selectedSeatsDisplay = document.getElementById('selectedSeats');
+            const selectedSeatsDisplay = document.getElementById('selectedSeatsList');
             const totalPriceDisplay = document.getElementById('totalPrice');
-            const bookButton = document.getElementById('bookButton');
+            const bookButton = document.getElementById('proceedToCheckout');
             const backButton = document.getElementById('backButton');
             
             // Kiểm tra trạng thái đăng nhập
@@ -472,14 +643,21 @@
             
             // Lấy chi tiết sự kiện từ API
             function loadEventDetails(eventId) {
-                // Hiển thị loading
-                loading.style.display = 'block';
+                // Save current event ID
+                currentEventId = eventId;
                 
-                // Lấy thông tin sự kiện
+                // Show loading
+                if (loading) loading.style.display = 'block';
+                
+                // Hide alerts
+                if (successAlert) successAlert.style.display = 'none';
+                if (errorAlert) errorAlert.style.display = 'none';
+                
+                // Get event details
                 fetch(`http://localhost:4000/events/${eventId}`)
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Không thể tải thông tin sự kiện. Vui lòng thử lại sau.');
+                            throw new Error('Không thể tải thông tin sự kiện');
                         }
                         return response.json();
                     })
@@ -487,74 +665,78 @@
                         if (data.success) {
                             const event = data.data;
                             
-                            // Lưu ID sự kiện hiện tại
-                            currentEventId = event._id;
+                            // Update event information with null checks
+                            const eventNameElement = document.getElementById('eventName');
+                            const eventDateElement = document.getElementById('eventDate');
+                            const eventLocationElement = document.getElementById('eventLocation');
+                            const eventDescriptionElement = document.getElementById('eventDescription');
                             
-                            // Cập nhật thông tin sự kiện
-                            document.getElementById('eventName').textContent = event.name;
-                            document.getElementById('eventDate').textContent = `Ngày: ${new Date(event.date).toLocaleDateString()}`;
-                            document.getElementById('eventLocation').textContent = `Địa điểm: ${event.location}`;
-                            document.getElementById('eventDescription').textContent = `Mô tả: ${event.description || 'Không có mô tả'}`;
+                            if (eventNameElement) eventNameElement.textContent = event.name;
+                            if (eventDateElement) eventDateElement.textContent = `Ngày: ${new Date(event.date).toLocaleDateString()}`;
+                            if (eventLocationElement) eventLocationElement.textContent = `Địa điểm: ${event.location}`;
+                            if (eventDescriptionElement) eventDescriptionElement.textContent = `Mô tả: ${event.description || 'Không có mô tả'}`;
                             
-                            // Lấy danh sách ghế cho sự kiện
+                            // Show event details section
+                            const eventsList = document.getElementById('eventsList');
+                            const eventDetails = document.getElementById('eventDetails');
+                            
+                            if (eventsList) eventsList.style.display = 'none';
+                            if (eventDetails) {
+                                eventDetails.style.display = 'block';
+                                // Scroll to event details
+                                eventDetails.scrollIntoView({ behavior: 'smooth' });
+                            }
+                            
+                            // Get seats for the event
                             return fetch(`http://localhost:4000/seats/event/${eventId}`);
                         } else {
-                            throw new Error(data.message || 'Không thể tải thông tin sự kiện.');
+                            throw new Error(data.message || 'Không thể tải thông tin sự kiện');
                         }
                     })
                     .then(response => {
                         if (!response.ok) {
-                            throw new Error('Không thể tải danh sách ghế. Vui lòng thử lại sau.');
+                            throw new Error('Không thể tải danh sách ghế');
                         }
                         return response.json();
                     })
                     .then(data => {
                         if (data.success) {
-                            // Hiển thị danh sách ghế
+                            // Display seats
                             displaySeats(data.data);
-                            
-                            // Hiển thị phần chi tiết sự kiện
-                            eventsList.style.display = 'none';
-                            eventDetails.style.display = 'block';
-                            
-                            // Cuộn đến phần chi tiết sự kiện
-                            eventDetails.scrollIntoView({ behavior: 'smooth' });
                         } else {
-                            throw new Error(data.message || 'Không thể tải danh sách ghế.');
+                            // If no seats found, display a message
+                            const seatsContainer = document.getElementById('seatsContainer');
+                            if (seatsContainer) {
+                                seatsContainer.innerHTML = '<div class="alert alert-info">Chưa có ghế nào được tạo cho sự kiện này.</div>';
+                            }
                         }
                     })
                     .catch(error => {
                         console.error('Error loading event details:', error);
                         
-                        // Nếu không tìm thấy ghế, vẫn hiển thị thông tin sự kiện
-                        if (error.message.includes('Không tìm thấy ghế nào')) {
-                            // Hiển thị thông báo không có ghế
-                            seatSelection.innerHTML = '<div class="col-12 text-center"><p>Chưa có ghế nào được tạo cho sự kiện này.</p></div>';
-                            
-                            // Hiển thị phần chi tiết sự kiện
-                            eventsList.style.display = 'none';
-                            eventDetails.style.display = 'block';
-                            
-                            // Cuộn đến phần chi tiết sự kiện
-                            eventDetails.scrollIntoView({ behavior: 'smooth' });
-                        } else {
-                            // Hiển thị thông báo lỗi
-                            errorAlert.textContent = error.message || 'Đã xảy ra lỗi khi tải thông tin sự kiện.';
+                        // Hide loading
+                        if (loading) loading.style.display = 'none';
+                        
+                        // Show error message
+                        if (errorAlert) {
+                            errorAlert.textContent = error.message || 'Đã xảy ra lỗi khi tải thông tin sự kiện. Vui lòng thử lại sau.';
                             errorAlert.style.display = 'block';
                         }
-                    })
-                    .finally(() => {
-                        // Ẩn loading
-                        loading.style.display = 'none';
                     });
             }
             
             // Hiển thị danh sách ghế
             function displaySeats(seats) {
-                seatSelection.innerHTML = '';
+                const seatMap = document.getElementById('seatMap');
+                if (!seatMap) {
+                    console.error('Seat map container not found');
+                    return;
+                }
+                
+                seatMap.innerHTML = '';
                 
                 if (!seats || seats.length === 0) {
-                    seatSelection.innerHTML = '<div class="col-12 text-center"><p>Chưa có ghế nào được tạo cho sự kiện này.</p></div>';
+                    seatMap.innerHTML = '<div class="col-12 text-center"><p>Chưa có ghế nào được tạo cho sự kiện này.</p></div>';
                     return;
                 }
                 
@@ -576,9 +758,9 @@
                     typeHeader.className = 'col-12 mt-3';
                     
                     // Kiểm tra xem ghế đầu tiên có thuộc tính price không
-                    const price = typeSeats[0].price ? typeSeats[0].price.toLocaleString() : '0';
-                    typeHeader.innerHTML = `<h5>${type} - ${price} VNĐ</h5>`;
-                    seatSelection.appendChild(typeHeader);
+                    const price = typeSeats[0].price ? typeSeats[0].price.toLocaleString() : '';
+                    typeHeader.innerHTML = `<h5>${type} ${price ? '- ' + price + ' VNĐ' : ''}</h5>`;
+                    seatMap.appendChild(typeHeader);
                     
                     // Tạo container cho ghế
                     const seatsContainer = document.createElement('div');
@@ -589,6 +771,7 @@
                         const seatElement = document.createElement('div');
                         seatElement.className = `seat ${seat.status === 'available' ? 'available' : 'unavailable'}`;
                         seatElement.textContent = seat.seat_number;
+                        seatElement.dataset.seatId = seat._id;
                         
                         // Kiểm tra xem ghế có thuộc tính price không
                         const seatPrice = seat.price ? seat.price.toLocaleString() : '0';
@@ -603,33 +786,25 @@
                         seatsContainer.appendChild(seatElement);
                     });
                     
-                    seatSelection.appendChild(seatsContainer);
+                    seatMap.appendChild(seatsContainer);
                 });
                 
-                // Thêm chú thích
+                // Tạo chú thích cho các loại ghế
                 const legend = document.createElement('div');
                 legend.className = 'col-12 mt-3';
                 legend.innerHTML = `
-                    <div class="d-flex gap-3">
-                        <div class="d-flex align-items-center">
-                            <div class="seat available me-2"></div>
-                            <span>Còn trống</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="seat unavailable me-2"></div>
-                            <span>Đã đặt</span>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <div class="seat selected me-2"></div>
-                            <span>Đã chọn</span>
-                        </div>
+                    <div class="seat-legend">
+                        <span class="badge bg-success me-2">Ghế trống</span>
+                        <span class="badge bg-primary me-2">Ghế đã chọn</span>
+                        <span class="badge bg-danger me-2">Ghế đã đặt</span>
                     </div>
                 `;
-                seatSelection.appendChild(legend);
+                
+                seatMap.appendChild(legend);
             }
             
             // Biến lưu trữ ghế đã chọn
-            let selectedSeats = [];
+            let selectedSeats = new Set();
             
             // Chọn/bỏ chọn ghế
             function toggleSeatSelection(seat) {
@@ -654,105 +829,136 @@
                     return;
                 }
                 
-                if (selectedSeats.some(s => s._id === seat._id)) {
+                if (selectedSeats.has(seat._id)) {
                     // Bỏ chọn ghế
-                    selectedSeats = selectedSeats.filter(s => s._id !== seat._id);
+                    selectedSeats.delete(seat._id);
                     seatElement.classList.remove('selected');
                 } else {
                     // Chọn ghế
-                    selectedSeats.push(seat);
+                    selectedSeats.add(seat._id);
                     seatElement.classList.add('selected');
                 }
                 
                 // Cập nhật hiển thị ghế đã chọn và tổng tiền
-                updateSelectedSeatsDisplay();
+                updateSelectedSeatsList();
             }
             
             // Cập nhật hiển thị ghế đã chọn và tổng tiền
-            function updateSelectedSeatsDisplay() {
-                if (selectedSeats.length === 0) {
-                    selectedSeatsDisplay.textContent = 'Không có';
-                    totalPriceDisplay.textContent = '0';
-                } else {
-                    selectedSeatsDisplay.textContent = selectedSeats.map(seat => seat.seat_number).join(', ');
-                    const totalPrice = selectedSeats.reduce((total, seat) => total + seat.price, 0);
-                    totalPriceDisplay.textContent = totalPrice.toLocaleString();
+            function updateSelectedSeatsList() {
+                const selectedSeatsList = document.getElementById('selectedSeatsList');
+                if (!selectedSeatsList) {
+                    console.error('Selected seats list container not found');
+                    return;
+                }
+                
+                selectedSeatsList.innerHTML = '';
+                
+                selectedSeats.forEach(seatId => {
+                    const seatElement = document.querySelector(`[data-seat-id="${seatId}"]`);
+                    if (!seatElement) {
+                        console.error(`Seat element with ID ${seatId} not found`);
+                        return;
+                    }
+                    
+                    const seatNumber = seatElement.textContent;
+                    
+                    const seatItem = document.createElement('div');
+                    seatItem.className = 'selected-seat-item';
+                    seatItem.innerHTML = `
+                        <span>Seat ${seatNumber}</span>
+                        <button class="btn btn-sm btn-outline-danger" onclick="removeSeat('${seatId}')">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    
+                    selectedSeatsList.appendChild(seatItem);
+                });
+                
+                // Cập nhật trạng thái nút đặt vé
+                const proceedButton = document.getElementById('proceedToBooking');
+                if (proceedButton) {
+                    proceedButton.disabled = selectedSeats.size === 0;
                 }
             }
             
             // Xử lý nút đặt vé
-            bookButton.addEventListener('click', function() {
-                if (!token) {
-                    // Nếu chưa đăng nhập, chuyển đến trang đăng nhập
-                    window.location.href = 'login/login_signup/login.html';
-                    return;
-                }
-                
-                if (selectedSeats.length === 0) {
-                    // Hiển thị thông báo lỗi nếu chưa chọn ghế
-                    errorAlert.textContent = 'Vui lòng chọn ít nhất một ghế để đặt vé.';
-                    errorAlert.style.display = 'block';
-                    return;
-                }
-                
-                // Hiển thị loading
-                loading.style.display = 'block';
-                
-                // Tạo dữ liệu đơn hàng
-                const orderData = {
-                    event_id: currentEventId,
-                    seats: selectedSeats.map(seat => seat._id),
-                    total_price: selectedSeats.reduce((total, seat) => total + seat.price, 0),
-                    status: 'pending',
-                    payment_method: 'cash'
-                };
-                
-                // Gửi yêu cầu đặt vé đến API
-                fetch('http://localhost:4000/orders', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify(orderData)
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Không thể đặt vé. Vui lòng thử lại sau.');
+            const proceedButton = document.getElementById('proceedToBooking');
+            if (proceedButton) {
+                proceedButton.addEventListener('click', function() {
+                    if (!token) {
+                        // Nếu chưa đăng nhập, chuyển đến trang đăng nhập
+                        window.location.href = 'login/login_signup/login.html';
+                        return;
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    // Ẩn loading
-                    loading.style.display = 'none';
                     
-                    // Hiển thị thông báo thành công
-                    successAlert.textContent = 'Đặt vé thành công! Vui lòng kiểm tra email để xem chi tiết vé.';
-                    successAlert.style.display = 'block';
+                    if (selectedSeats.size === 0) {
+                        // Hiển thị thông báo lỗi nếu chưa chọn ghế
+                        errorAlert.textContent = 'Vui lòng chọn ít nhất một ghế để đặt vé.';
+                        errorAlert.style.display = 'block';
+                        return;
+                    }
                     
-                    // Reset ghế đã chọn
-                    selectedSeats = [];
-                    updateSelectedSeatsDisplay();
+                    // Hiển thị loading
+                    loading.style.display = 'block';
                     
-                    // Quay lại danh sách sự kiện sau 2 giây
-                    setTimeout(() => {
-                        backToList();
-                    }, 2000);
-                })
-                .catch(error => {
-                    // Ẩn loading
-                    loading.style.display = 'none';
+                    // Tạo dữ liệu đơn hàng
+                    const orderData = {
+                        event_id: currentEventId,
+                        seats: Array.from(selectedSeats),
+                        total_price: 0, // Tổng giá tiền sẽ được tính ở server
+                        status: 'pending',
+                        payment_method: 'cash'
+                    };
                     
-                    // Hiển thị thông báo lỗi
-                    errorAlert.textContent = error.message || 'Đã xảy ra lỗi khi đặt vé. Vui lòng thử lại sau.';
-                    errorAlert.style.display = 'block';
+                    // Gửi yêu cầu đặt vé đến API
+                    fetch('http://localhost:4000/orders', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                        },
+                        body: JSON.stringify(orderData)
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Không thể đặt vé. Vui lòng thử lại sau.');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Ẩn loading
+                        loading.style.display = 'none';
+                        
+                        // Hiển thị thông báo thành công
+                        successAlert.textContent = 'Đặt vé thành công! Vui lòng kiểm tra email để xem chi tiết vé.';
+                        successAlert.style.display = 'block';
+                        
+                        // Reset ghế đã chọn
+                        selectedSeats.clear();
+                        updateSelectedSeatsList();
+                        
+                        // Quay lại danh sách sự kiện sau 2 giây
+                        setTimeout(() => {
+                            backToList();
+                        }, 2000);
+                    })
+                    .catch(error => {
+                        // Ẩn loading
+                        loading.style.display = 'none';
+                        
+                        // Hiển thị thông báo lỗi
+                        errorAlert.textContent = error.message || 'Đã xảy ra lỗi khi đặt vé. Vui lòng thử lại sau.';
+                        errorAlert.style.display = 'block';
+                    });
                 });
-            });
+            }
             
             // Xử lý nút quay lại
-            backButton.addEventListener('click', function() {
-                backToList();
-            });
+            if (backButton) {
+                backButton.addEventListener('click', function() {
+                    backToList();
+                });
+            }
             
             // Quay lại danh sách sự kiện
             function backToList() {
@@ -763,6 +969,88 @@
                 
                 // Cuộn đến danh sách sự kiện
                 eventsList.scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Function to load events for the seat form
+        async function loadEventsForSeatForm() {
+            try {
+                const response = await fetch('http://localhost:4000/events');
+                const events = await response.json();
+                const eventSelect = document.getElementById('eventSelect');
+                eventSelect.innerHTML = '<option value="">Chọn sự kiện</option>';
+                
+                events.forEach(event => {
+                    const option = document.createElement('option');
+                    option.value = event._id;
+                    option.textContent = `${event.name} - ${new Date(event.date).toLocaleDateString()}`;
+                    eventSelect.appendChild(option);
+                });
+            } catch (error) {
+                console.error('Error loading events:', error);
+                showAlert('error', 'Không thể tải danh sách sự kiện');
+            }
+        }
+
+        // Function to save a new seat
+        async function saveSeat() {
+            const formData = {
+                event_id: document.getElementById('eventSelect').value,
+                seat_number: document.getElementById('seatNumber').value,
+                type: document.getElementById('seatType').value,
+                status: document.getElementById('seatStatus').value
+            };
+
+            // Validate form data
+            if (!formData.event_id || !formData.seat_number || !formData.type || !formData.status) {
+                showAlert('error', 'Vui lòng điền đầy đủ thông tin');
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:4000/seats', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    showAlert('success', 'Thêm ghế thành công');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addSeatModal'));
+                    modal.hide();
+                    document.getElementById('addSeatForm').reset();
+                    // Reload seats if we're on the event details page
+                    if (currentEventId) {
+                        loadEventDetails(currentEventId);
+                    }
+                } else {
+                    const error = await response.json();
+                    showAlert('error', error.message || 'Không thể thêm ghế');
+                }
+            } catch (error) {
+                console.error('Error saving seat:', error);
+                showAlert('error', 'Không thể thêm ghế');
+            }
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if the modal exists
+            const addSeatModal = document.getElementById('addSeatModal');
+            if (addSeatModal) {
+                // Add event listener for modal show event
+                addSeatModal.addEventListener('show.bs.modal', function() {
+                    loadEventsForSeatForm();
+                });
+            }
+            
+            // Check if the save button exists
+            const saveSeatBtn = document.getElementById('saveSeatBtn');
+            if (saveSeatBtn) {
+                saveSeatBtn.addEventListener('click', saveSeat);
             }
         });
     </script>

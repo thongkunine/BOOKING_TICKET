@@ -5,8 +5,12 @@ module.exports = {
     // Lấy tất cả ghế
     GetAllSeats: async function() {
         try {
-            return await seatSchema.find({}).populate('event_id');
+            console.log('Getting all seats...');
+            const seats = await seatSchema.find({}).populate('event_id');
+            console.log('Found seats:', seats);
+            return seats;
         } catch (error) {
+            console.error('Error in GetAllSeats:', error);
             throw new Error(error.message);
         }
     },
@@ -25,7 +29,7 @@ module.exports = {
     },
 
     // Tạo một ghế mới
-    CreateASeat: async function(event_id, seat_number, type, price, status) {
+    CreateASeat: async function(event_id, seat_number, status) {
         try {
             let eventExists = await eventSchema.findById(event_id);
             if (!eventExists) {
@@ -34,8 +38,6 @@ module.exports = {
             let newSeat = new seatSchema({
                 event_id: event_id,
                 seat_number: seat_number,
-                type: type,
-                price: price,
                 status: status
             });
             return await newSeat.save();

@@ -135,6 +135,30 @@
         .modal-dialog {
             max-width: 500px;
         }
+        .seat {
+            background-color: #ccc;
+            color: white;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .seat.available {
+            background-color: #28a745;
+        }
+        .seat.reserved {
+            background-color: #ffc107;
+        }
+        .seat.sold {
+            background-color: #dc3545;
+        }
+        .form-text {
+            font-size: 0.8rem;
+            color: #6c757d;
+        }
+        .seat-preview {
+            background-color: #f8f9fa;
+        }
     </style>
 </head>
 <body>
@@ -454,29 +478,28 @@
     </div>
 
     <!-- Add Seat Modal -->
-    <div class="modal fade" id="addSeatModal" tabindex="-1">
+    <div class="modal fade" id="addSeatModal" tabindex="-1" aria-labelledby="addSeatModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add New Seat</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="addSeatModalLabel">Add New Seat</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addSeatForm">
                         <div class="mb-3">
-                            <label class="form-label">Event</label>
-                            <select class="form-control" name="event_id" required>
-                                <option value="">Select an event</option>
-                                <!-- Events will be loaded dynamically -->
+                            <label for="event_id" class="form-label">Event</label>
+                            <select class="form-control" id="event_id" name="event_id" required>
+                                <option value="">Select Event</option>
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Seat Number</label>
-                            <input type="text" class="form-control" name="seat_number" required>
+                            <label for="seat_number" class="form-label">Seat Number</label>
+                            <input type="text" class="form-control" id="seat_number" name="seat_number" required>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select class="form-control" name="status" required>
+                            <label for="status" class="form-label">Status</label>
+                            <select class="form-control" id="status" name="status" required>
                                 <option value="available">Available</option>
                                 <option value="reserved">Reserved</option>
                                 <option value="sold">Sold</option>
@@ -485,7 +508,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" id="saveSeatBtn">Save</button>
                 </div>
             </div>
@@ -807,10 +830,20 @@
                     
                     const data = await response.json();
                     if (data.success) {
-                        document.getElementById('userName').textContent = data.data.username;
-                        document.getElementById('userRole').textContent = data.data.role;
-                        if (data.data.avatarUrl) {
-                            document.getElementById('userAvatar').src = data.data.avatarUrl;
+                        const userNameElement = document.getElementById('userName');
+                        const userRoleElement = document.getElementById('userRole');
+                        const userAvatarElement = document.getElementById('userAvatar');
+
+                        if (userNameElement) {
+                            userNameElement.textContent = data.data.username;
+                        }
+                        
+                        if (userRoleElement) {
+                            userRoleElement.textContent = data.data.role;
+                        }
+                        
+                        if (userAvatarElement && data.data.avatarUrl) {
+                            userAvatarElement.src = data.data.avatarUrl;
                         }
                     }
                 } catch (error) {
@@ -926,28 +959,43 @@
                 loading.style.display = 'block';
                 
                 try {
+                    console.log('Fetching seats from API...');
                     const response = await fetch(`${API_BASE_URL}/seats`, {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }
                     });
                     
+                    console.log('Seats API response status:', response.status);
+                    
                     if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        throw new Error(`Server responded with status: ${response.status}`);
                     }
                     
                     const data = await response.json();
-                    if (data.success) {
-                        const seatsTableBody = document.getElementById('seatsTableBody');
-                        seatsTableBody.innerHTML = '';
-                        
-                        data.data.forEach(seat => {
+                    console.log('Seats data:', data);
+                    
+                    const seatsTableBody = document.getElementById('seatsTableBody');
+                    if (!seatsTableBody) {
+                        console.error('Seats table body element not found!');
+                        showError('Error: Seats table element not found');
+                        return;
+                    }
+                    
+                    seatsTableBody.innerHTML = '';
+                    
+                    if (data && data.length > 0) {
+                        data.forEach(seat => {
                             const row = document.createElement('tr');
                             row.innerHTML = `
                                 <td>${seat._id}</td>
                                 <td>${seat.seat_number}</td>
-                                <td>${seat.event_id.name}</td>
-                                <td>${seat.status}</td>
+                                <td>${seat.event_id ? seat.event_id.name : 'N/A'}</td>
+                                <td>
+                                    <span class="badge ${getStatusBadgeClass(seat.status)}">
+                                        ${seat.status}
+                                    </span>
+                                </td>
                                 <td>
                                     <button class="btn btn-sm btn-primary edit-seat" data-id="${seat._id}">
                                         <i class="fas fa-edit"></i>
@@ -959,21 +1007,41 @@
                             `;
                             seatsTableBody.appendChild(row);
                         });
-
-                        // Add event listeners
-                        addSeatEventListeners();
+                    } else {
+                        seatsTableBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" class="text-center">No seats found</td>
+                            </tr>
+                        `;
                     }
+
+                    // Add event listeners for seat actions
+                    addSeatEventListeners();
                 } catch (error) {
                     console.error('Error loading seats:', error);
-                    showError('Failed to load seats');
+                    showError('Failed to load seats: ' + error.message);
+                    const seatsTableBody = document.getElementById('seatsTableBody');
+                    if (seatsTableBody) {
+                        seatsTableBody.innerHTML = `
+                            <tr>
+                                <td colspan="5" class="text-center text-danger">Error loading seats: ${error.message}</td>
+                            </tr>
+                        `;
+                    }
+                } finally {
+                    loading.style.display = 'none';
                 }
-                
-                loading.style.display = 'none';
             }
 
-            // Load events for the seat form
+            // Add event listener to load events when the add seat modal is opened
+            document.getElementById('addSeatModal').addEventListener('show.bs.modal', function() {
+                loadEventsForSeatForm();
+            });
+
+            // Load events for seat form
             async function loadEventsForSeatForm() {
                 try {
+                    console.log('Loading events for seat form...');
                     const response = await fetch(`${API_BASE_URL}/events`, {
                         headers: {
                             'Authorization': `Bearer ${token}`
@@ -981,22 +1049,26 @@
                     });
                     
                     if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                        throw new Error(`Server responded with status: ${response.status}`);
                     }
                     
                     const data = await response.json();
+                    console.log('Events data:', data);
+                    
                     if (data.success) {
-                        // Update both add and edit form selects
-                        const addEventSelect = document.querySelector('#addSeatForm select[name="event_id"]');
-                        const editEventSelect = document.querySelector('#editSeatForm select[name="event_id"]');
-                        
                         const options = data.data.map(event => 
-                            `<option value="${event._id}">${event.name} (${new Date(event.date).toLocaleDateString()})</option>`
+                            `<option value="${event._id}">${event.name} - ${new Date(event.date).toLocaleDateString()}</option>`
                         ).join('');
+                        
+                        // Update both add and edit forms
+                        const addEventSelect = document.getElementById('event_id');
+                        const editEventSelect = document.getElementById('editSeatEventId');
                         
                         if (addEventSelect) {
                             addEventSelect.innerHTML = '<option value="">Select an event</option>' + options;
+                            console.log('Updated add seat event select:', addEventSelect.innerHTML);
                         }
+                        
                         if (editEventSelect) {
                             editEventSelect.innerHTML = '<option value="">Select an event</option>' + options;
                         }
@@ -1008,57 +1080,67 @@
             }
 
             // Save seat button click handler
-            document.getElementById('saveSeatBtn').addEventListener('click', async function() {
-                const form = document.getElementById('addSeatForm');
-                const formData = new FormData(form);
-                
-                // Validate form data
-                const eventId = formData.get('event_id');
-                const seatNumber = formData.get('seat_number');
-                const status = formData.get('status');
-                
-                if (!eventId || !seatNumber || !status) {
-                    showError('Please fill in all required fields');
-                    return;
-                }
-                
-                // Convert status to match schema enum
-                let seatStatus;
-                if (status === 'available') {
-                    seatStatus = 'available';
-                } else if (status === 'reserved') {
-                    seatStatus = 'reserved';
-                } else {
-                    seatStatus = status;
-                }
-                
-                try {
-                    const response = await fetch(`${API_BASE_URL}/seats`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify({
+            const saveSeatBtn = document.getElementById('saveSeatBtn');
+            if (saveSeatBtn) {
+                saveSeatBtn.addEventListener('click', async function() {
+                    const form = document.getElementById('addSeatForm');
+                    if (!form) {
+                        console.error('Form not found');
+                        return;
+                    }
+                    
+                    // Get form values
+                    const eventId = document.getElementById('event_id').value;
+                    const seatNumber = document.getElementById('seat_number').value;
+                    const status = document.getElementById('status').value;
+                    
+                    console.log('Form values:', { eventId, seatNumber, status });
+                    
+                    // Validate form data
+                    if (!eventId || !seatNumber || !status) {
+                        showError('Please fill in all required fields');
+                        return;
+                    }
+                    
+                    try {
+                        const seatData = {
                             event_id: eventId,
                             seat_number: seatNumber,
-                            status: seatStatus
-                        })
-                    });
-                    
-                    if (response.ok) {
-                        showSuccess('Seat added successfully');
-                        $('#addSeatModal').modal('hide');
-                        loadSeats();
-                    } else {
-                        const errorData = await response.json();
-                        throw new Error(errorData.message || 'Failed to add seat');
+                            status: status
+                        };
+                        
+                        console.log('Sending seat data:', seatData);
+                        
+                        const response = await fetch(`${API_BASE_URL}/seats`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'Authorization': `Bearer ${token}`
+                            },
+                            body: JSON.stringify(seatData)
+                        });
+                        
+                        const responseData = await response.json();
+                        console.log('Server response:', responseData);
+                        
+                        if (response.ok) {
+                            showSuccess('Seat added successfully');
+                            // Close modal using Bootstrap 5 API
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('addSeatModal'));
+                            if (modal) {
+                                modal.hide();
+                            }
+                            form.reset();
+                            loadSeats();
+                        } else {
+                            throw new Error(responseData.message || 'Failed to add seat');
+                        }
+                    } catch (error) {
+                        console.error('Error adding seat:', error);
+                        showError(error.message || 'Failed to add seat');
                     }
-                } catch (error) {
-                    console.error('Error adding seat:', error);
-                    showError(error.message || 'Failed to add seat');
-                }
-            });
+                });
+            }
 
             // Add event listeners for seat management
             function addSeatEventListeners() {
@@ -1168,133 +1250,14 @@
                 }
             });
 
-            // Functions for ticket management
-            async function loadTickets() {
-                const loading = document.getElementById('loading');
-                loading.style.display = 'block';
-                
-                try {
-                    console.log("Fetching tickets data...");
-                    const response = await fetch(`${API_BASE_URL}/tickets`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                    
-                    console.log("Tickets response status:", response.status);
-                    
-                    if (!response.ok) {
-                        if (response.status === 403) {
-                            console.error('Access denied: You need admin permissions to view tickets');
-                            showError('Access denied: You need admin permissions to view tickets');
-                            return;
-                        }
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    console.log("Tickets data:", data);
-                    
-                    if (data.success) {
-                        const ticketsTableBody = document.getElementById('ticketsTableBody');
-                        ticketsTableBody.innerHTML = '';
-                        
-                        data.data.forEach(ticket => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${ticket._id}</td>
-                                <td>${ticket.event_id ? ticket.event_id.name : 'N/A'}</td>
-                                <td>${ticket.type}</td>
-                                <td>${ticket.price.toLocaleString('vi-VN')} VNĐ</td>
-                                <td>${ticket.quantity}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary edit-ticket" data-id="${ticket._id}">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-ticket" data-id="${ticket._id}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            `;
-                            ticketsTableBody.appendChild(row);
-                        });
-
-                        // Add event listeners
-                        addTicketEventListeners();
-                    }
-                } catch (error) {
-                    console.error('Error loading tickets:', error);
-                    showError('Failed to load tickets: ' + error.message);
-                } finally {
-                    loading.style.display = 'none';
-                }
-            }
-
-            // Functions for order management
-            async function loadOrders() {
-                const loading = document.getElementById('loading');
-                loading.style.display = 'block';
-                
-                try {
-                    const response = await fetch(`${API_BASE_URL}/orders`, {
-                        headers: {
-                            'Authorization': `Bearer ${token}`
-                        }
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`Server responded with status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    if (data.success) {
-                        const ordersTableBody = document.getElementById('ordersTableBody');
-                        ordersTableBody.innerHTML = '';
-                        
-                        data.data.forEach(order => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${order._id}</td>
-                                <td>${order.user_id ? order.user_id.username : 'N/A'}</td>
-                                <td>${order.event_id ? order.event_id.name : 'N/A'}</td>
-                                <td>${order.ticket_id ? order.ticket_id._id : 'N/A'}</td>
-                                <td>${order.total_price ? order.total_price.toLocaleString('vi-VN') + ' VNĐ' : '0 VNĐ'}</td>
-                                <td>
-                                    <span class="badge ${getStatusBadgeClass(order.status)}">
-                                        ${order.status || 'Pending'}
-                                    </span>
-                                </td>
-                                <td>
-                                    <button class="btn btn-sm btn-primary edit-order" data-id="${order._id}">
-                                        <i class="fas fa-edit"></i>
-                                    </button>
-                                    <button class="btn btn-sm btn-danger delete-order" data-id="${order._id}">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </td>
-                            `;
-                            ordersTableBody.appendChild(row);
-                        });
-
-                        // Add event listeners
-                        addOrderEventListeners();
-                    }
-                } catch (error) {
-                    console.error('Error loading orders:', error);
-                    showError('Failed to load orders');
-                }
-                
-                loading.style.display = 'none';
-            }
-
             // Helper function to get badge class based on status
             function getStatusBadgeClass(status) {
                 switch(status?.toLowerCase()) {
-                    case 'completed':
+                    case 'available':
                         return 'bg-success';
-                    case 'pending':
+                    case 'reserved':
                         return 'bg-warning';
-                    case 'cancelled':
+                    case 'sold':
                         return 'bg-danger';
                     default:
                         return 'bg-secondary';
@@ -2065,6 +2028,168 @@
                         }
                     });
                 });
+            }
+
+            // Functions for order management
+            async function loadOrders() {
+                const loading = document.getElementById('loading');
+                loading.style.display = 'block';
+                
+                try {
+                    const response = await fetch(`${API_BASE_URL}/orders`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`Server responded with status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Orders data:', data);
+                    
+                    const ordersTableBody = document.getElementById('ordersTableBody');
+                    ordersTableBody.innerHTML = '';
+                    
+                    if (data.success && data.data && data.data.length > 0) {
+                        data.data.forEach(order => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${order._id}</td>
+                                <td>${order.user_id ? order.user_id.username : 'N/A'}</td>
+                                <td>${order.event_id ? order.event_id.name : 'N/A'}</td>
+                                <td>${order.ticket_id ? order.ticket_id._id : 'N/A'}</td>
+                                <td>${order.total_price}</td>
+                                <td>
+                                    <span class="badge ${getOrderStatusBadgeClass(order.status)}">
+                                        ${order.status}
+                                    </span>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-order" data-id="${order._id}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-order" data-id="${order._id}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            `;
+                            ordersTableBody.appendChild(row);
+                        });
+                    } else {
+                        ordersTableBody.innerHTML = `
+                            <tr>
+                                <td colspan="7" class="text-center">No orders found</td>
+                            </tr>
+                        `;
+                    }
+
+                    // Add event listeners for order actions
+                    addOrderEventListeners();
+                } catch (error) {
+                    console.error('Error loading orders:', error);
+                    showError('Failed to load orders: ' + error.message);
+                    const ordersTableBody = document.getElementById('ordersTableBody');
+                    ordersTableBody.innerHTML = `
+                        <tr>
+                            <td colspan="7" class="text-center text-danger">Error loading orders</td>
+                        </tr>
+                    `;
+                } finally {
+                    loading.style.display = 'none';
+                }
+            }
+
+            // Helper function to get badge class based on order status
+            function getOrderStatusBadgeClass(status) {
+                switch(status?.toLowerCase()) {
+                    case 'pending':
+                        return 'bg-warning';
+                    case 'paid':
+                        return 'bg-success';
+                    case 'cancelled':
+                        return 'bg-danger';
+                    default:
+                        return 'bg-secondary';
+                }
+            }
+
+            // Functions for ticket management
+            async function loadTickets() {
+                const loading = document.getElementById('loading');
+                loading.style.display = 'block';
+                
+                try {
+                    console.log('Fetching tickets from API...');
+                    const response = await fetch(`${API_BASE_URL}/tickets`, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    });
+                    
+                    console.log('Tickets API response status:', response.status);
+                    
+                    if (!response.ok) {
+                        throw new Error(`Server responded with status: ${response.status}`);
+                    }
+                    
+                    const data = await response.json();
+                    console.log('Tickets data:', data);
+                    
+                    const ticketsTableBody = document.getElementById('ticketsTableBody');
+                    if (!ticketsTableBody) {
+                        console.error('Tickets table body element not found!');
+                        showError('Error: Tickets table element not found');
+                        return;
+                    }
+                    
+                    ticketsTableBody.innerHTML = '';
+                    
+                    if (data.success && data.data && data.data.length > 0) {
+                        data.data.forEach(ticket => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${ticket._id}</td>
+                                <td>${ticket.event_id ? ticket.event_id.name : 'N/A'}</td>
+                                <td>${ticket.type}</td>
+                                <td>${ticket.price}</td>
+                                <td>${ticket.quantity}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-ticket" data-id="${ticket._id}">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <button class="btn btn-sm btn-danger delete-ticket" data-id="${ticket._id}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </td>
+                            `;
+                            ticketsTableBody.appendChild(row);
+                        });
+                    } else {
+                        ticketsTableBody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center">No tickets found</td>
+                            </tr>
+                        `;
+                    }
+
+                    // Add event listeners for ticket actions
+                    addTicketEventListeners();
+                } catch (error) {
+                    console.error('Error loading tickets:', error);
+                    showError('Failed to load tickets: ' + error.message);
+                    const ticketsTableBody = document.getElementById('ticketsTableBody');
+                    if (ticketsTableBody) {
+                        ticketsTableBody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center text-danger">Error loading tickets: ${error.message}</td>
+                            </tr>
+                        `;
+                    }
+                } finally {
+                    loading.style.display = 'none';
+                }
             }
         });
     </script>

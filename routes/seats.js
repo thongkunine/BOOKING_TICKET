@@ -7,8 +7,12 @@ let { CreateSuccessResponse, CreateErrorResponse } = require('../utils/responseH
 router.get('/', async function(req, res) {
     try {
         let seats = await seatController.GetAllSeats();
-        CreateSuccessResponse(res, 200, seats);
+        if (!seats) {
+            return CreateErrorResponse(res, 404, "No seats found");
+        }
+        res.json(seats);
     } catch (error) {
+        console.error('Error getting seats:', error);
         CreateErrorResponse(res, 500, error.message);
     }
 });
@@ -26,8 +30,20 @@ router.get('/:id', async function(req, res) {
 // CREATE new seat
 router.post('/', async function(req, res) {
     try {
-        let { row, event_id,status,seat_number } = req.body;
-        let newSeat = await seatController.CreateASeat(event_id,seat_number,status);
+        let { event_id, seat_number, status } = req.body;
+        
+        // Validate required fields
+        if (!event_id || !seat_number || !status) {
+            return CreateErrorResponse(res, 400, "Missing required fields");
+        }
+        
+        // Validate status enum
+        const validStatuses = ['available', 'reserved', 'sold'];
+        if (!validStatuses.includes(status)) {
+            return CreateErrorResponse(res, 400, "Invalid status value");
+        }
+        
+        let newSeat = await seatController.CreateASeat(event_id, seat_number, status);
         CreateSuccessResponse(res, 201, newSeat);
     } catch (error) {
         CreateErrorResponse(res, 400, error.message);
