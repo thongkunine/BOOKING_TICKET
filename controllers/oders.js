@@ -79,5 +79,55 @@ module.exports = {
         } catch (error) {
             throw new Error(error.message);
         }
+    },
+
+    // Handle booking process
+    handleBooking: async function(req, res) {
+        try {
+            const { user_id, event_id, seat_ids } = req.body;
+            
+            // Validate input
+            if (!user_id || !event_id || !seat_ids || seat_ids.length === 0) {
+                return CreateErrorResponse(res, 400, "Missing required fields");
+            }
+            
+            // Calculate total price and create tickets
+            let totalPrice = 0;
+            const tickets = [];
+            for (const seat_id of seat_ids) {
+                const seat = await seatSchema.findById(seat_id);
+                if (!seat || seat.status !== 'available') {
+                    return CreateErrorResponse(res, 400, "Invalid or unavailable seat");
+                }
+                
+                // Assume each seat has a fixed price for simplicity
+                const price = 100; // Example price
+                totalPrice += price;
+                
+                // Create ticket
+                const ticket = await ticketSchema.create({
+                    event_id,
+                    type: 'Standard',
+                    quantity: 1,
+                    price
+                });
+                tickets.push(ticket);
+            }
+            
+            // Create order
+            const order = await orderSchema.create({
+                user_id,
+                event_id,
+                ticket_id: tickets.map(t => t._id),
+                seat_id: seat_ids,
+                total_price: totalPrice,
+                status: 'pending'
+            });
+            
+            CreateSuccessResponse(res, 201, order);
+        } catch (error) {
+            console.error('Error handling booking:', error);
+            CreateErrorResponse(res, 500, error.message);
+        }
     }
 };

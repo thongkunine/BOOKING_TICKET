@@ -898,58 +898,9 @@
                         return;
                     }
                     
-                    // Hiển thị loading
-                    loading.style.display = 'block';
-                    
-                    // Tạo dữ liệu đơn hàng
-                    const orderData = {
-                        event_id: currentEventId,
-                        seats: Array.from(selectedSeats),
-                        total_price: 0, // Tổng giá tiền sẽ được tính ở server
-                        status: 'pending',
-                        payment_method: 'cash'
-                    };
-                    
-                    // Gửi yêu cầu đặt vé đến API
-                    fetch('http://localhost:4000/orders', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
-                        },
-                        body: JSON.stringify(orderData)
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Không thể đặt vé. Vui lòng thử lại sau.');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Ẩn loading
-                        loading.style.display = 'none';
-                        
-                        // Hiển thị thông báo thành công
-                        successAlert.textContent = 'Đặt vé thành công! Vui lòng kiểm tra email để xem chi tiết vé.';
-                        successAlert.style.display = 'block';
-                        
-                        // Reset ghế đã chọn
-                        selectedSeats.clear();
-                        updateSelectedSeatsList();
-                        
-                        // Quay lại danh sách sự kiện sau 2 giây
-                        setTimeout(() => {
-                            backToList();
-                        }, 2000);
-                    })
-                    .catch(error => {
-                        // Ẩn loading
-                        loading.style.display = 'none';
-                        
-                        // Hiển thị thông báo lỗi
-                        errorAlert.textContent = error.message || 'Đã xảy ra lỗi khi đặt vé. Vui lòng thử lại sau.';
-                        errorAlert.style.display = 'block';
-                    });
+                    // Chuyển hướng đến trang ticket.html với dữ liệu sự kiện và ghế
+                    const seatIds = Array.from(selectedSeats).join(',');
+                    window.location.href = `ticket/ticket.html?event_id=${currentEventId}&seats=${seatIds}`;
                 });
             }
             
